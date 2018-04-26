@@ -30,7 +30,7 @@ void Configuracion::cargarCultivos(){
 
 	cultivos = new Lista<Cultivo*>();
 
-	FileParser parser("cultivos.txt", ",", 6);
+	FileParser parser("resources/cultivos.txt", ",", 6);
 	parser.abrir();
 
 	while(!parser.esFinArchivo()){
@@ -50,7 +50,7 @@ void Configuracion::cargarDestinos(){
 
 	destinos = new Lista<Destino*>();
 
-	FileParser parser("destinos.txt", ",", 3);
+	FileParser parser("resources/destinos.txt", ",", 3);
 	parser.abrir();
 
 	while(!parser.esFinArchivo()){
