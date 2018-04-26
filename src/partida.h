@@ -32,7 +32,7 @@ class Partida{
 
 		//Pre:
 		//Post:
-		unsigned int cantidadDeJugadores();
+		unsigned int getCantidadDeJugadores();
 
 		//Pre:
 		//Post:
@@ -42,7 +42,7 @@ class Partida{
 		Jugador* verJugadorActual();
 
 		//Pre:
-		//Post: se avanzó un posicion en la ronda
+		//Post: se avanzï¿½ un posicion en la ronda
 		void avanzarProximoJugador();
 
 		//Pre:

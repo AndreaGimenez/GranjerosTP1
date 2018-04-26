@@ -8,11 +8,13 @@
 #ifndef RONDA_H_
 #define RONDA_H_
 
+#include "jugador.h"
+
 class Ronda{
 	private:
 		unsigned int cantidadDeJugadores;
-		Nodo* primerJugador;
-		Nodo* jugadorActual;
+		Jugador* primerJugador;
+		Jugador* jugadorActual;
 
 	public:
 		Ronda();

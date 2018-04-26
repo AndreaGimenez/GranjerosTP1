@@ -5,6 +5,11 @@
  *      Author: Usuario
  */
 
+#include "ronda.h"
 
+
+Ronda::Ronda(){
+
+}
 
 

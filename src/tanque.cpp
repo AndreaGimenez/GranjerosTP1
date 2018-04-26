@@ -74,7 +74,7 @@ bool Tanque::usarAguaAlmacenada(unsigned int aguaAUtilizar){
 void Tanque::imprimirEstado(){
 
 	cout<<"Tanque \n Capacidad = "<<this->capacidad<<"\nVolumen Utilizado = "
-		<<this->volumenUtilizado<<"\nVolumen Libre = "
+		<<this->volumenUtilizado()<<"\nVolumen Libre = "
 		<<this->volumenLibre()<<endl ;
 
 }

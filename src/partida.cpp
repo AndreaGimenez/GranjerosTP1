@@ -17,8 +17,10 @@ Partida::Partida(unsigned int dificultad, unsigned int jugadores){
 
 	this->nivelDeDificultad = dificultad ;
 	this->cantidadDeJugadores = jugadores ;
-	this->ronda = new Ronda() ;
+	this->ronda = new Ronda();
 
+	this->primerJugador = NULL;
+	this->jugadorActual = NULL;
 }
 
 unsigned int Partida::obtenerDificultad(){
@@ -27,7 +29,7 @@ unsigned int Partida::obtenerDificultad(){
 
 }
 
-unsigned int Partida::cantidadDeJugadores(){
+unsigned int Partida::getCantidadDeJugadores(){
 
 	return this->cantidadDeJugadores ;
 
@@ -35,7 +37,8 @@ unsigned int Partida::cantidadDeJugadores(){
 
 Jugador* Partida::verJugadorActual(){
 
-	return ronda->verActual();
+	return NULL;
+	//ronda->verJugadorActual();
 
 }
 

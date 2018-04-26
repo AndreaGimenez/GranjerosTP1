@@ -7,7 +7,7 @@
 
 #include <iostream>
 
-#include "nodo.h"
+#include "nodoJugador.h"
 
 
 Nodo::Nodo(Jugador* dato){
@@ -31,7 +31,7 @@ Nodo* Nodo::obtenerSiguiente(){
 
 void Nodo::cambiarSiguiente(Nodo* nuevoNodo){
 
-	nuevoNodo->siguiente = this->obtenerSiguiente; //funciona tambien cuando se agrega al final
+	nuevoNodo->siguiente = this->obtenerSiguiente(); //funciona tambien cuando se agrega al final
 	this->siguiente = nuevoNodo;
 
 }

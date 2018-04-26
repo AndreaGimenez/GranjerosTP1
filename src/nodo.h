@@ -1,40 +1,62 @@
-/*
- * nodo.h
- *
- *  Created on: 20 Apr 2018
- *      Author: Usuario
- */
-
 #ifndef NODO_H_
 #define NODO_H_
 
-#include "jugador.h"
+#ifndef NULL
+#define NULL 0
+#endif
 
-class Nodo{
-	public:
-		Jugador* dato ;		//puse dato como un puntero a jugador porque en este caso lo vamos a usar para eso
-		Nodo* siguiente ;   //lo mas generico seria usar un void* pero no queria complicar mucho el codigo.
-							// Despues si quieren lo podemos hacer con void*
+template<class T> class Nodo {
 
-	private:
-		//Pre: -
-		//Post:El nodo fue creado, su referencia a "siguiente" es NULL
-		Nodo(Jugador* dato);
+    private:
 
-		//Pre:-
-		Jugador* obtenerDato();
+        T dato;
 
-		//Pre: -
-		//Post:Devuelve una referencia al siguiente nodo. Si es el ultimo devuelve NULL.
-		Nodo* obtenerSiguiente();
+        Nodo<T>* siguiente;
 
-		//Pre:-
-		//Post: Se cambio la referencia al siguiente nodo por "nuevoSiguiente"
-		void cambiarSiguiente(Nodo* nuevoNodo);
+    public:
 
-		~Nodo();
+        /*
+         * post: el Nodo resulta inicializado con el dato dado
+         *       y sin un Nodo siguiente.
+         */
+        Nodo(T dato) {
+
+            this->dato = dato;
+            this->siguiente = NULL;
+        }
+
+        /*
+         * post: devuelve el valor del dato.
+         */
+        T obtenerDato() {
+
+            return this->dato;
+        }
+
+        /*
+         * post: cambia el valor del dato.
+         */
+        void cambiarDato(T nuevoDato) {
+
+            this->dato = nuevoDato;
+        }
+
+        /*
+         * post: devuelve el siguiente Nodo.
+         */
+        Nodo<T>* obtenerSiguiente() {
+
+            return this->siguiente;
+        }
+
+        /*
+         * post: cambia el siguiente Nodo por nuevoSiguiente.
+         */
+        void cambiarSiguiente(Nodo<T>* nuevoSiguiente) {
+
+            this->siguiente = nuevoSiguiente;
+        }
 };
-
 
 
 #endif /* NODO_H_ */
