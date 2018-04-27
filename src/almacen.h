@@ -31,7 +31,6 @@ private:
 	Lista<UnidadAlmacenamiento*> cosechasAlmacenadas;
 
 	UnidadAlmacenamiento* buscarUnidadAlmacenamiento(Cultivo* cultivo);
-	Destino* buscarDestino(Cultivo* cultivo);
 	void inicializar(unsigned int capacidad);
 
 public:
@@ -62,10 +61,10 @@ public:
 	unsigned int obtenerCantidadAlmacenada(Cultivo* cultivo);
 
 	//Pos: Incrementa en 1 la cantidad almacenada de 'cultivoAAlmacenar'.
-	void almacenarCosecha(Cultivo* cultivoAAlmacenar);
+	bool almacenarCosecha(Cultivo* cultivoAAlmacenar);
 
 	//Pos: Incrementa en 'cantidadAAlmacenar' la cantidad almacenada de 'cultivoAAlmacenar'.
-	void almacenarCosecha(Cultivo* cultivoAAlmacenar, unsigned int cantidadAAlmacenar);
+	bool almacenarCosecha(Cultivo* cultivoAAlmacenar, unsigned int cantidadAAlmacenar);
 
 	//Pre: 'obtenerCantidadAlmacenada' de 'cultivoAEnviar' debe ser mayor o igual que 1.
 	//Post: Envia toda la cantidad almacenada de 'cultivoAEnviar'. Si 'cultivoAEnviar' no se encuentra almacenado o la cantidad almacenada es 0 devuelve 'false'.
@@ -87,6 +86,8 @@ public:
 
 	//Pos: Aumenta la capacidad maxima de almacenamiento en 'unidadesAmpliacion'. La nueva capacidad maxima va a ser 'obtenerCapacidad' + 'unidadesAmpliacion'.
 	void ampliarAlmacen(unsigned int unidadesAmpliacion);
+
+	~Almacen();
 };
 
 #endif /* ALMACEN_H_ */

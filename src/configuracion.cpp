@@ -133,9 +133,48 @@ Lista<Cultivo*>* Configuracion::obtenerCultivos(){
 	return cultivos;
 }
 
+Cultivo* Configuracion::obtenerCultivo(string nombreCultivo){
+
+
+	Cultivo* cultivo = NULL;
+
+	Lista<Cultivo*>* cultivosDisponibles = Configuracion::obtenerCultivos();
+	cultivosDisponibles->iniciarCursor();
+
+	while(cultivosDisponibles->avanzarCursor() && cultivo == NULL){
+
+		Cultivo* cultivoActual = cultivosDisponibles->obtenerCursor();
+		if(cultivoActual->obtenerNombre() == nombreCultivo){
+
+			cultivo = cultivoActual;
+		}
+	}
+
+	return cultivo;
+}
+
 Lista<Destino*>* Configuracion::obtenerDestinos(){
 
 	return destinos;
+}
+
+Destino* Configuracion::obtenerDestino(Cultivo* cultivo){
+
+	Destino* destino = NULL;
+
+	Lista<Destino*>* destinosDisponibles = Configuracion::obtenerDestinos();
+	destinosDisponibles->iniciarCursor();
+
+	while(destinosDisponibles->avanzarCursor() && destino == NULL){
+
+		Destino* destinoActual = destinosDisponibles->obtenerCursor();
+		if(destinoActual->obtenerNombreCultivo() == cultivo->obtenerNombre()){
+
+			destino = destinoActual;
+		}
+	}
+
+	return destino;
 }
 
 void Configuracion::destruirCultivos(){

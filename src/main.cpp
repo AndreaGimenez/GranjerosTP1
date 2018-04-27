@@ -6,6 +6,7 @@
  */
 
 #include "configuracion.h"
+#include "almacen.h"
 #include <iostream>
 
 using namespace std;
@@ -52,9 +53,52 @@ void testParametros(){
 	}
 }
 
+void testAlmacen(){
+
+	Almacen almacen;
+
+	cout << "Inicio Test Almacen: " << endl << endl;
+	cout << "Capacidad Inicial: " << almacen.obtenerCapacidad() << endl;
+	cout << "Volumen Utilizado: " << almacen.obtenerVolumenUtilizado() << endl;
+	cout << "Volumen Disponible: " << almacen.obtenerVolumenDisponible() << endl;
+	cout << "Esta vacio: " << almacen.estaVacio() << endl;
+	cout << "Esta lleno: " << almacen.estaLleno() << endl;
+
+	cout << endl;
+
+	Cultivo* cultivoA = Configuracion::obtenerCultivo("A");
+	Cultivo* cultivoB = Configuracion::obtenerCultivo("B");
+
+	cout << "Almaceno 5 unidades de Cultivo A" << endl;
+	almacen.almacenarCosecha(cultivoA, 5);
+	cout << "Almaceno 1 unidad de Cultivo B" << endl;
+	almacen.almacenarCosecha(cultivoB);
+
+	cout << "Capacidad: " << almacen.obtenerCapacidad() << endl;
+	cout << "Volumen Utilizado: " << almacen.obtenerVolumenUtilizado() << endl;
+	cout << "Volumen Disponible: " << almacen.obtenerVolumenDisponible() << endl;
+	cout << "Esta vacio: " << almacen.estaVacio() << endl;
+	cout << "Esta lleno: " << almacen.estaLleno() << endl;
+	cout << "Cantidad Almacenada Cultivo A: " << almacen.obtenerCantidadAlmacenada(cultivoA) << endl;
+	cout << "Cantidad Almacenada Cultivo B: " << almacen.obtenerCantidadAlmacenada(cultivoB) << endl;
+	cout << "Costo envio A: " << almacen.obtenerCostoEnvio(cultivoA) << endl;
+	cout << "Costo envio B: " << almacen.obtenerCostoEnvio(cultivoB) << endl << endl;
+
+	cout << "Intento almacenar 10000: " << almacen.almacenarCosecha(cultivoA, 10000) << endl << endl;
+
+	cout << "Amplio almacen en 200" << endl;
+	almacen.ampliarAlmacen(200);
+	cout << "Capacidad: " << almacen.obtenerCapacidad() << endl;
+	cout << "Volumen Utilizado: " << almacen.obtenerVolumenUtilizado() << endl;
+	cout << "Volumen Disponible: " << almacen.obtenerVolumenDisponible() << endl;
+
+	cout << "Fin Test Almacen" << endl << endl;
+}
+
 int main(){
 
 	testParametros();
+	testAlmacen();
 	return 0;
 }
 

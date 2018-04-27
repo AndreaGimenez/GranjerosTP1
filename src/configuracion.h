@@ -69,8 +69,12 @@ public:
 	//Pre: La configuracion debe haberse inicializado previamente llamando a 'inicializar'.
 	static Lista<Cultivo*>* obtenerCultivos();
 
+	static Cultivo* obtenerCultivo(std::string nombreCultivo);
+
 	//Pre: La configuracion debe haberse inicializado previamente llamando a 'inicializar'.
 	static Lista<Destino*>* obtenerDestinos();
+
+	static Destino* obtenerDestino(Cultivo* cultivo);
 
 	~Configuracion();
 };
