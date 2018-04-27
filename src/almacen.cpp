@@ -6,31 +6,37 @@
  */
 
 #include "almacen.h"
+#include "configuracion.h"
+
+
+Almacen::Almacen(){
+	this->inicializar(Configuracion::obtenerCapacidadInicialAlmacen());
+}
 
 Almacen::Almacen(unsigned int capacidad){
+
+	this->inicializar(capacidad);
+}
+
+void Almacen::inicializar(unsigned int capacidad){
 
 	this->capacidad = capacidad;
 	this->volumenUtilizado = 0;
 }
 
-unsigned int Almacen::getCapacidad(){
+unsigned int Almacen::obtenerCapacidad(){
 
 	return this->capacidad;
 }
 
-void Almacen::setCapacidad(unsigned int capacidad){
-
-	this->capacidad = capacidad;
-}
-
-unsigned int Almacen::getVolumenUtilizado(){
+unsigned int Almacen::obtenerVolumenUtilizado(){
 
 	return this->volumenUtilizado;
 }
 
-void Almacen::setVolumenUtilizado(unsigned int volumenUtilizado){
+unsigned int Almacen::obtenerVolumenDisponible(){
 
-	this->volumenUtilizado = volumenUtilizado;
+	return this->capacidad - this->volumenUtilizado;
 }
 
 bool Almacen::estaLleno(){
@@ -41,21 +47,114 @@ bool Almacen::estaLleno(){
 bool Almacen::estaVacio(){
 
 	return (this->volumenUtilizado == 0);
-
 }
 
-void Almacen::almacenarCosechas(){
+unsigned int Almacen::obtenerCantidadAlmacenada(Cultivo* cultivo){
 
+	unsigned int cantidadAlmacenada = 0;
+
+	UnidadAlmacenamiento* unidadAlmacenamiento = this->buscarUnidadAlmacenamiento(cultivo);
+	if(unidadAlmacenamiento != NULL){
+		cantidadAlmacenada = unidadAlmacenamiento->obtenerCantidadAlmacenada();
+	}
+
+	return cantidadAlmacenada;
 }
 
-void Almacen::enviarCosechas(){
+void Almacen::almacenarCosecha(Cultivo* cultivoAAlmacenar){
 
-}
-void Almacen::imprimirAlmacen(){
-
-}
-void Almacen::ampliarAlmacen(){
-
+	this->almacenarCosecha(cultivoAAlmacenar, 1);
 }
 
+void Almacen::almacenarCosecha(Cultivo* cultivoAAlmacenar, unsigned int cantidadAAlmacenar){
 
+	UnidadAlmacenamiento* unidadAlmacenamientoCosechaAAlmacenar = this->buscarUnidadAlmacenamiento(cultivoAAlmacenar);
+
+	//Si no encontre la unidad de almacenamiento del cultivo cosechado hay que agregarlo
+	if(unidadAlmacenamientoCosechaAAlmacenar == NULL){
+		unidadAlmacenamientoCosechaAAlmacenar = new UnidadAlmacenamiento(cultivoAAlmacenar);
+	}
+
+	unidadAlmacenamientoCosechaAAlmacenar->almacenar(cantidadAAlmacenar);
+	this->volumenUtilizado += cantidadAAlmacenar;
+}
+
+bool Almacen::enviarCosecha(Cultivo* cultivoAEnviar){
+
+	return this->enviarCosecha(cultivoAEnviar, this->obtenerCantidadAlmacenada(cultivoAEnviar));
+}
+
+bool Almacen::enviarCosecha(Cultivo* cultivoAEnviar, unsigned int cantidadAEnviar){
+
+	UnidadAlmacenamiento* unidadAlmacenamientoCosechaAEnviar = this->buscarUnidadAlmacenamiento(cultivoAEnviar);
+	bool cosechaEnviada = false;
+
+	if(unidadAlmacenamientoCosechaAEnviar != NULL){
+
+		cosechaEnviada = unidadAlmacenamientoCosechaAEnviar->desalmacenar(cantidadAEnviar);
+
+		if(cosechaEnviada){
+			this->volumenUtilizado -= cantidadAEnviar;
+		}
+	}
+
+	return cosechaEnviada;
+}
+
+unsigned int Almacen::obtenerCostoEnvio(Cultivo* cultivoAEnviar){
+
+	unsigned int costo = 0;
+	unsigned int cantidadAlmacenada = this->obtenerCantidadAlmacenada(cultivoAEnviar);
+
+	if(cantidadAlmacenada > 0){
+
+		Destino* destino = this->buscarDestino(cultivoAEnviar);
+
+		if(destino != NULL){
+			costo = cantidadAlmacenada * destino->obtenerPrecio();
+		}
+	}
+
+	return costo;
+}
+
+UnidadAlmacenamiento* Almacen::buscarUnidadAlmacenamiento(Cultivo* cultivoABuscar){
+
+	UnidadAlmacenamiento* unidadAlmacenamientoCosechaAAlmacenar = NULL;
+
+	//Busco la unidad de almacenamiento del cultivo cosechado
+	cosechasAlmacenadas.iniciarCursor();
+	while (cosechasAlmacenadas.avanzarCursor() && unidadAlmacenamientoCosechaAAlmacenar == NULL){
+
+		UnidadAlmacenamiento* unidadAlmacenamiento = cosechasAlmacenadas.obtenerCursor();
+		if(unidadAlmacenamiento->obtenerCultivo()->obtenerNombre() == cultivoABuscar->obtenerNombre()){
+			unidadAlmacenamientoCosechaAAlmacenar = unidadAlmacenamiento;
+		}
+	}
+
+	return unidadAlmacenamientoCosechaAAlmacenar;
+}
+
+Destino* Almacen::buscarDestino(Cultivo* cultivo){
+
+	Destino* destino = NULL;
+
+	Lista<Destino*>* destinosDisponibles = Configuracion::obtenerDestinos();
+	destinosDisponibles->iniciarCursor();
+
+	while(destinosDisponibles->avanzarCursor() && destino == NULL){
+
+		Destino* destinoActual = destinosDisponibles->obtenerCursor();
+		if(destinoActual->obtenerNombreCultivo() == cultivo->obtenerNombre()){
+
+			destino = destinoActual;
+		}
+	}
+
+	return destino;
+}
+
+void Almacen::ampliarAlmacen(unsigned int unidadesAmpliacion){
+
+	this->capacidad += unidadesAmpliacion;
+}

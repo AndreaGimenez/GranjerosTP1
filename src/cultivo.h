@@ -26,29 +26,17 @@ public:
 	Cultivo(std::string nombre, unsigned int costo, unsigned int tiempoCrecimiento, unsigned int rentabilidad,
 			unsigned int tiempoRecuperacion, unsigned int consumoAgua);
 
-	unsigned int getConsumoAgua();
+	unsigned int obtenerConsumoAgua();
 
-	void setConsumoAgua(unsigned int consumoAgua);
+	unsigned int obtenerCosto();
 
-	unsigned int getCosto();
+	std::string obtenerNombre();
 
-	void setCosto(unsigned int costo);
+	unsigned int obtenerRentabilidad();
 
-	std::string getNombre();
+	unsigned int obtenerTiempoCrecimiento();
 
-	void setNombre(std::string nombre);
-
-	unsigned int getRentabilidad();
-
-	void setRentabilidad(unsigned int rentabilidad);
-
-	unsigned int getTiempoCrecimiento();
-
-	void setTiempoCrecimiento(unsigned int tiempoCrecimiento);
-
-	unsigned int getTiempoRecuperacion();
-
-	void setTiempoRecuperacion(unsigned int tiempoRecuperacion);
+	unsigned int obtenerTiempoRecuperacion();
 };
 
 #endif /* CULTIVO_H_ */

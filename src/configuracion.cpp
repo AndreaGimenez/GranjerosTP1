@@ -13,6 +13,11 @@
 
 using namespace std;
 
+Dificultad Configuracion::dificultad = FACIL;
+unsigned int Configuracion::cantidadJugadores = 0;
+unsigned int Configuracion::parametroN = 0;
+unsigned int Configuracion::parametroM = 0;
+unsigned int Configuracion::cantidadTurnos = 0;
 Lista<Cultivo*>* Configuracion::cultivos = NULL;
 Lista<Destino*>* Configuracion::destinos = NULL;
 
@@ -20,7 +25,13 @@ Configuracion::Configuracion(){
 
 }
 
-void Configuracion::inicializar(){
+void Configuracion::inicializar(ParametroConfiguracion parametros){
+
+	dificultad = parametros.obtenerDificultad();
+	cantidadJugadores = parametros.obtenerCantidadJugadores();
+	parametroN = parametros.obtenerParametroN();
+	parametroM = parametros.obtenerParametroM();
+	cantidadTurnos = parametros.obtenerCantidadTurnos();
 
 	cargarCultivos();
 	cargarDestinos();
@@ -50,14 +61,14 @@ void Configuracion::cargarDestinos(){
 
 	destinos = new Lista<Destino*>();
 
-	FileParser parser("resources/destinos.txt", ",", 3);
+	FileParser parser("resources/destinos.txt", ",", 4);
 	parser.abrir();
 
 	while(!parser.esFinArchivo()){
 
 		string* lineaParseada = parser.leerLinea();
 
-		Destino* destino = new Destino(lineaParseada[0], atoi(lineaParseada[1].c_str()), lineaParseada[2]);
+		Destino* destino = new Destino(lineaParseada[0], atoi(lineaParseada[1].c_str()), atoi(lineaParseada[2].c_str()), lineaParseada[3]);
 
 		destinos->agregar(destino);
 	}
@@ -65,12 +76,64 @@ void Configuracion::cargarDestinos(){
 	parser.cerrar();
 }
 
-Lista<Cultivo*>* Configuracion::getCultivos(){
+unsigned int Configuracion::obtenerCoeficienteDificultad(){
+
+	unsigned int coeficienteDificultad;
+
+	switch(dificultad){
+
+	case FACIL:
+		coeficienteDificultad = 10;
+		break;
+	case MEDIO:
+		coeficienteDificultad = 5;
+		break;
+	case DIFICIL:
+		coeficienteDificultad = 2;
+		break;
+	}
+
+	return coeficienteDificultad;
+}
+
+Dificultad Configuracion::obtenerDificultad(){
+	return dificultad;
+}
+
+unsigned int Configuracion::obtenerCantidadJugadores(){
+	return cantidadJugadores;
+}
+
+unsigned int Configuracion::obtenerLargoTerreno(){
+	return parametroN;
+}
+
+unsigned int Configuracion::obtenerAnchoTerreno(){
+	return parametroM;
+}
+
+unsigned int Configuracion::obtenerCreditosIniciales(){
+	return 2 * parametroN * parametroM * obtenerCoeficienteDificultad();
+}
+
+unsigned int Configuracion::obtenerCapacidadInicialTanque(){
+	return parametroN * parametroM * obtenerCoeficienteDificultad();
+}
+
+unsigned int Configuracion::obtenerCantidadTurnos(){
+	return cantidadTurnos;
+}
+
+unsigned int Configuracion::obtenerCapacidadInicialAlmacen(){
+	return 2 * (parametroN + parametroM) * obtenerCoeficienteDificultad();
+}
+
+Lista<Cultivo*>* Configuracion::obtenerCultivos(){
 
 	return cultivos;
 }
 
-Lista<Destino*>* Configuracion::getDestinos(){
+Lista<Destino*>* Configuracion::obtenerDestinos(){
 
 	return destinos;
 }

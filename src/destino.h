@@ -16,23 +16,20 @@ private:
 
 	std::string nombre;
 	unsigned int distancia;
+	unsigned int precio;
 	std::string nombreCultivo;
 
 public:
 
-	Destino(std::string nombre, unsigned int distacia, std::string nombreCultivo);
+	Destino(std::string nombre, unsigned int distacia, unsigned int precio, std::string nombreCultivo);
 
-	unsigned int getDistancia();
+	unsigned int obtenerDistancia();
 
-	void setDistancia(unsigned int distancia);
+	std::string obtenerNombre();
 
-	std::string getNombre();
+	unsigned int obtenerPrecio();
 
-	void setNombre(std::string nombre);
-
-	std::string getNombreCultivo();
-
-	void setNombreCultivo(std::string nombreCultivo);
+	std::string obtenerNombreCultivo();
 };
 
 #endif /* DESTINO_H_ */

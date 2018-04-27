@@ -9,34 +9,26 @@
 
 using namespace std;
 
-Destino::Destino(string nombre, unsigned int distacia, string nombreCultivo){
+Destino::Destino(string nombre, unsigned int distacia, unsigned int precio, string nombreCultivo){
 
 	this->nombre = nombre;
 	this->distancia = distancia;
+	this->precio = precio;
 	this->nombreCultivo = nombreCultivo;
 }
 
-unsigned int Destino::getDistancia() {
+unsigned int Destino::obtenerDistancia() {
 	return distancia;
 }
 
-void Destino::setDistancia(unsigned int distancia) {
-	this->distancia = distancia;
-}
-
-string Destino::getNombre() {
+string Destino::obtenerNombre() {
 	return nombre;
 }
 
-void Destino::setNombre(string nombre) {
-	this->nombre = nombre;
+unsigned int Destino::obtenerPrecio(){
+	return this->precio;
 }
 
-string Destino::getNombreCultivo() {
+string Destino::obtenerNombreCultivo() {
 	return nombreCultivo;
 }
-
-void Destino::setNombreCultivo(string nombreCultivo) {
-	this->nombreCultivo = nombreCultivo;
-}
-

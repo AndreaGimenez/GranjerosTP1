@@ -20,52 +20,26 @@ Cultivo::Cultivo(string nombre, unsigned int costo, unsigned int tiempoCrecimien
 	this->consumoAgua = consumoAgua;
 }
 
-unsigned int Cultivo::getConsumoAgua() {
+unsigned int Cultivo::obtenerConsumoAgua() {
 	return consumoAgua;
 }
 
-void Cultivo::setConsumoAgua(unsigned int consumoAgua) {
-	this->consumoAgua = consumoAgua;
-}
-
-unsigned int Cultivo::getCosto() {
+unsigned int Cultivo::obtenerCosto() {
 	return costo;
 }
 
-void Cultivo::setCosto(unsigned int costo) {
-	this->costo = costo;
-}
-
-std::string Cultivo::getNombre() {
+std::string Cultivo::obtenerNombre() {
 	return nombre;
 }
 
-void Cultivo::setNombre(std::string nombre) {
-	this->nombre = nombre;
-}
-
-unsigned int Cultivo::getRentabilidad() {
+unsigned int Cultivo::obtenerRentabilidad() {
 	return rentabilidad;
 }
 
-void Cultivo::setRentabilidad(unsigned int rentabilidad) {
-	this->rentabilidad = rentabilidad;
-}
-
-unsigned int Cultivo::getTiempoCrecimiento() {
+unsigned int Cultivo::obtenerTiempoCrecimiento() {
 	return tiempoCrecimiento;
 }
 
-void Cultivo::setTiempoCrecimiento(unsigned int tiempoCrecimiento) {
-	this->tiempoCrecimiento = tiempoCrecimiento;
-}
-
-unsigned int Cultivo::getTiempoRecuperacion() {
+unsigned int Cultivo::obtenerTiempoRecuperacion() {
 	return tiempoRecuperacion;
 }
-
-void Cultivo::setTiempoRecuperacion(unsigned int tiempoRecuperacion) {
-	this->tiempoRecuperacion = tiempoRecuperacion;
-}
-
-

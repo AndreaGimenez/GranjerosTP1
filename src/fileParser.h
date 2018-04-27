@@ -17,7 +17,8 @@
 #include "lista.h"
 
 /*
- * Parsea las lineas del archivo de acuerdo a los parametros indicados en el constructor
+ * Parsea las lineas del archivo de acuerdo a los parametros indicados en el constructor.
+ * En cada lectura del archivo devuelve un array con los elementos parseados.
  */
 class FileParser {
 
@@ -51,9 +52,9 @@ public:
 	//	   Cada posicion de 'lineaParseada' representa un elemento que se encuentra separado por 'regex'
 	//	   Ejemplo: linea de archivo: A,100,3
 	//				regex = ","
-	//				lineaParsead[0] -> A
-	//				lineaParsead[1] -> 100
-	//				lineaParsead[2] -> 3
+	//				lineaParseada[0] -> A
+	//				lineaParseada[1] -> 100
+	//				lineaParseada[2] -> 3
 	std::string* leerLinea();
 
 	//Post: indica si FileParser se encuentra disponible para hacer una lectura.
