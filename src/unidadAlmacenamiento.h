@@ -33,7 +33,8 @@ public:
 	void almacenar(unsigned int cantidadAAlmacenar);
 
 	//Pre: 'cantidadADesalmacenar' debe ser menor o igual a 'obtenerCantidadAlmacenada'.
-	//Pos: Se reduce en 'cantidadADesalmacenar' la cantidad almacenada de la cosecha. Devuelve 'false' si 'cantidadADesalmacenar' es mayor que 'obtenerCantidadAlmacenada'.
+	//Pos: Se reduce en 'cantidadADesalmacenar' la cantidad almacenada de la cosecha.
+	//	   Devuelve 'false' si 'cantidadADesalmacenar' es mayor que 'obtenerCantidadAlmacenada'.
 	bool desalmacenar(unsigned int cantidadADesalmacenar);
 
 	//Pos: Devuelve la cantidad almacenada.

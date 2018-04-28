@@ -19,7 +19,8 @@
 
 /*
  * 'Almacen' representa un espacio de almacenamiento de cosechas.
- * Se puede almacenar cualquier tipo de cultivo y cualquier cantidad de cada cultivo siempre y cuando la sumatoria de 'obtenerCantidadAlmacenada' de todos los cultivos no supere 'obtenerCapacidad'.
+ * Se puede almacenar cualquier tipo de cultivo y cualquier cantidad de cada cultivo siempre y cuando la sumatoria
+ * de 'obtenerCantidadAlmacenada' de todos los cultivos no supere 'obtenerCapacidad'.
  * A medida que se almacenan cosechas se reduce la capacidad restante del almacen.
  */
 class Almacen{
@@ -67,11 +68,13 @@ public:
 	bool almacenarCosecha(Cultivo* cultivoAAlmacenar, unsigned int cantidadAAlmacenar);
 
 	//Pre: 'obtenerCantidadAlmacenada' de 'cultivoAEnviar' debe ser mayor o igual que 1.
-	//Post: Envia toda la cantidad almacenada de 'cultivoAEnviar'. Si 'cultivoAEnviar' no se encuentra almacenado o la cantidad almacenada es 0 devuelve 'false'.
+	//Post: Envia toda la cantidad almacenada de 'cultivoAEnviar'. Si 'cultivoAEnviar' no se encuentra almacenado
+	//		o la cantidad almacenada es 0 devuelve 'false'.
 	bool enviarCosecha(Cultivo* cultivoAEnviar);
 
 	//Pre: 'cantidadAEnviar' debe ser menor o igual que 'obtenerCantidadAlmacenada' de 'cultivoAEnviar'
-	//Pos: Envia la cantidad almacenada el cultivo indicado. Si 'cultivoAEnviar' no se encuentra almacenado o la cantidad almacenada es menor a 'cantidadAEnviar' devuelve 'false'.
+	//Pos: Envia la cantidad almacenada el cultivo indicado. Si 'cultivoAEnviar' no se encuentra almacenado
+	//	   o la cantidad almacenada es menor a 'cantidadAEnviar' devuelve 'false'.
 	bool enviarCosecha(Cultivo* cultivoAEnviar, unsigned int cantidadAEnviar);
 
 	//Pre: 'cultivoAEnviar' debe encontrarse almacenado.
