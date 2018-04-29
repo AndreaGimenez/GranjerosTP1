@@ -6,12 +6,15 @@
  */
 
 #include "test.h"
+#include "granjeros.h"
 
 using namespace std;
 
 int main(){
 
-	Test::correrTests();
+	//Test::correrTests();
+	Granjeros granjeros;
+	granjeros.jugar();
 
 	return 0;
 }
