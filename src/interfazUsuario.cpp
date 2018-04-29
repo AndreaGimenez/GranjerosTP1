@@ -11,12 +11,13 @@
 using namespace std;
 
 InterfazUsuario::InterfazUsuario() {
+	this->menuPrincipal = NULL;
 }
 
 void InterfazUsuario::mostrarMenuPrincipal(){
 
-	Menu* menuPrincipal = new Menu(PRINCIPAL);
-	this->menues.apilar(menuPrincipal);
+	this->menuPrincipal = new Menu(PRINCIPAL);
+	this->menues.apilar(this->menuPrincipal);
 	this->obtenerMenuActual()->mostrar();
 }
 
@@ -69,15 +70,14 @@ void InterfazUsuario::agregarMenu(Menu* menu){
 }
 
 void InterfazUsuario::irAMenuAnterior(){
-	delete this->menues.desapilar();
+
+	Menu* menuDesapilado = this->menues.desapilar();
+
+	if(menuDesapilado == this->menuPrincipal){
+		delete this->menuPrincipal;
+	}
 }
 
 InterfazUsuario::~InterfazUsuario(){
-
-	if(!this->menues.estaVacia()){
-		while(this->menues.estaVacia()){
-			delete this->menues.desapilar();
-		}
-	}
 }
 

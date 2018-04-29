@@ -10,6 +10,7 @@
 
 #include <string>
 #include "lista.h"
+#include "parametro.h"
 
 namespace accion{
 
@@ -50,16 +51,19 @@ private:
 
 	accion::Tipo tipo;
 	accion::Accion accion;
-	Lista<std::string>* parametros;
+	Lista<Parametro*>* parametros;
+	Lista<void*>* parametrosConvertidos;
 
 public:
 
-	Accion(accion::Tipo tipo, accion::Accion accion);
+	Accion(accion::Accion accion, unsigned int cantidadParametros, parametro::Tipo tiposParametros[]);
+	Accion(accion::Accion accion);
 
 	accion::Tipo obtenerTipo();
 	void cambiarParametros(std::string parametros);
 	accion::Accion obtenerAccion();
-	Lista<std::string>* obtenerParametros();
+	Lista<Parametro*>* obtenerParametros();
+	Lista<void*>* obtenerParametrosConvertidos();
 
 	~Accion();
 };

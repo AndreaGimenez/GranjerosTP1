@@ -55,6 +55,7 @@ public:
 
 	std::string obtenerNombre();
 	Accion* obtenerAccion();
+	Menu* obtenerSubMenu();
 
 	Respuesta ejecutar();
 

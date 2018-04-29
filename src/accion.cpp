@@ -6,14 +6,29 @@
  */
 
 #include "accion.h"
+#include <cstdlib>
 
 using namespace std;
 
-Accion::Accion(accion::Tipo tipo, accion::Accion accion){
+Accion::Accion(accion::Accion accion, unsigned int cantidadParametros, parametro::Tipo tiposParametros[]){
 
-	this->tipo = tipo;
+	this->tipo = accion::CON_PARAMETROS_USUARIO;
 	this->accion = accion;
-	this->parametros = NULL;
+	this->parametros = new Lista<Parametro*>;
+	this->parametrosConvertidos = new Lista<void*>;
+
+	for(unsigned int iParametro = 0; iParametro < cantidadParametros; iParametro++){
+		Parametro* parametro = new Parametro(tiposParametros[0], "");
+		this->parametros->agregar(parametro);
+	}
+}
+
+Accion::Accion(accion::Accion accion){
+
+	this->tipo = accion::SIN_PARAMETROS_USUARIO;
+	this->accion = accion;
+	this->parametros = new Lista<Parametro*>;
+	this->parametrosConvertidos = new Lista<void*>;
 }
 
 accion::Tipo Accion::obtenerTipo(){
@@ -22,25 +37,25 @@ accion::Tipo Accion::obtenerTipo(){
 
 void Accion::cambiarParametros(string parametros){
 
-	if(this->parametros != NULL){
-		delete this->parametros;
-	}
-
-	this->parametros = new Lista<string>;
 	int posicionRegex = parametros.find(" ");
+	unsigned int indiceParametros = 1;
 
 	while(posicionRegex > 0){
 
-		string elemento = parametros.substr(0, posicionRegex);
-		this->parametros->agregar(elemento);
+		string strParametro = parametros.substr(0, posicionRegex);
+		Parametro* parametro = this->parametros->obtener(indiceParametros);
+		parametro->cambiarValor(strParametro);
+		this->parametrosConvertidos->agregar(parametro->obtenerValorConvertido());
 
 		parametros = parametros.substr(posicionRegex + 1);
 		posicionRegex = parametros.find(" ");
+		indiceParametros++;
 	}
 
 	if(parametros != ""){
 
-		this->parametros->agregar(parametros);
+		Parametro* parametro = this->parametros->obtener(indiceParametros);
+		parametro->cambiarValor(parametros);
 	}
 }
 
@@ -48,12 +63,30 @@ accion::Accion Accion::obtenerAccion(){
 	return this->accion;
 }
 
-Lista<std::string>* Accion::obtenerParametros(){
+Lista<Parametro*>* Accion::obtenerParametros(){
 	return this->parametros;
 }
 
+Lista<void*>* Accion::obtenerParametrosConvertidos(){
+
+	return this->parametrosConvertidos;
+}
+
 Accion::~Accion(){
+
 	if(this->parametros != NULL){
+
+		if(!this->parametros->estaVacia()){
+
+				this->parametros->iniciarCursor();
+				while(this->parametros->avanzarCursor()){
+					delete this->parametros->obtenerCursor();
+				}
+			}
 		delete this->parametros;
+	}
+	if(this->parametrosConvertidos != NULL){
+
+		delete this->parametrosConvertidos;
 	}
 }

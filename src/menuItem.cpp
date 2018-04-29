@@ -49,6 +49,10 @@ Accion* MenuItem::obtenerAccion(){
 	return this->accion;
 }
 
+Menu* MenuItem::obtenerSubMenu(){
+	return this->subMenu;
+}
+
 Respuesta MenuItem::ejecutar(){
 
 	Respuesta respuesta;

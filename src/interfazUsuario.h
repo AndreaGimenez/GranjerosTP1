@@ -16,8 +16,8 @@ class InterfazUsuario {
 
 private:
 
+	Menu* menuPrincipal;
 	Pila<Menu*> menues;
-	bool flagSalir;
 
 public:
 

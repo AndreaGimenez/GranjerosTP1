@@ -41,9 +41,14 @@ void Granjeros::ejecutarAccionPartida(Accion* accion){
 	//Lista<string>* parametros;
 	//Lista<void*> parametrosConvertidos;
 
+	Lista<void*>* parametrosConvertidos;
+
 	switch (accion->obtenerAccion()){
 
 			case accion::CAMBIAR_CANTIDAD_JUGADORES:
+				parametrosConvertidos = accion->obtenerParametrosConvertidos();
+
+				this->parametros.cambiarCantidadJugadores(*((int*)parametrosConvertidos->obtener(1)));
 /*
 				parametros = accion->obtenerParametros();
 
