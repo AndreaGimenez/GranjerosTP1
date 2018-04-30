@@ -7,6 +7,7 @@
 
 #include "interfazUsuario.h"
 #include <iostream>
+#include <cstdlib>
 
 using namespace std;
 
@@ -24,18 +25,19 @@ void InterfazUsuario::mostrarMenuPrincipal(){
 unsigned int InterfazUsuario::solicitarOpcion(){
 
 	cout << this->obtenerMenuActual()->obtenerLeyendaIngresoUsuario() << ": ";
+	cout.flush();
 
 	unsigned int opcionElegida;
 	cin >> opcionElegida;
 	return opcionElegida;
 }
 
-Respuesta InterfazUsuario::ejecutarOpcion(unsigned int iMenuItem){
+Respuesta* InterfazUsuario::ejecutarOpcion(unsigned int iMenuItem){
 
-	Respuesta respuesta = this->obtenerMenuActual()->ejecutarOpcion(iMenuItem);
+	Respuesta* respuesta = this->obtenerMenuActual()->ejecutarOpcion(iMenuItem);
 
-	if(respuesta.obtenerTipo() == respuesta::SUBMENU){
-		this->agregarMenu(respuesta.obtenerSubMenu());
+	if(respuesta->obtenerTipo() == respuesta::SUBMENU){
+		this->agregarMenu(respuesta->obtenerSubMenu());
 	}
 
 	return respuesta;
@@ -71,13 +73,13 @@ void InterfazUsuario::agregarMenu(Menu* menu){
 
 void InterfazUsuario::irAMenuAnterior(){
 
-	Menu* menuDesapilado = this->menues.desapilar();
-
-	if(menuDesapilado == this->menuPrincipal){
-		delete this->menuPrincipal;
-	}
+	this->menues.desapilar();
 }
 
 InterfazUsuario::~InterfazUsuario(){
+
+	if(this->menuPrincipal != NULL){
+		delete this->menuPrincipal;
+	}
 }
 

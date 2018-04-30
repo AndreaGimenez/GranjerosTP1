@@ -26,7 +26,7 @@ public:
 	void mostrarMenuPrincipal();
 	void mostrarMenuPartida();
 	unsigned int solicitarOpcion();
-	Respuesta ejecutarOpcion(unsigned int opcion);
+	Respuesta* ejecutarOpcion(unsigned int opcion);
 	void mostrarBienvenida();
 	bool salir();
 	Menu* obtenerMenuActual();

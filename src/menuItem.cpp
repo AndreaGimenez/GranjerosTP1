@@ -8,36 +8,38 @@
 #include "menuItem.h"
 #include "accion.h"
 #include <iostream>
+#include "configuracion.h"
+#include "granjeros.h"
 
 using namespace std;
 
 MenuItem::MenuItem(){
+	inicializarMenu(menuItem::SUBMENU, "", NULL, accion::NINGUNA);
 }
 
 MenuItem::MenuItem(std::string nombre, Menu* subMenu){
-	inicializarMenu(menuItem::SUBMENU, nombre, subMenu, NULL);
+	inicializarMenu(menuItem::SUBMENU, nombre, subMenu, accion::NINGUNA);
 }
 
 
-MenuItem::MenuItem(std::string nombre, Accion* accion){
+MenuItem::MenuItem(std::string nombre, accion::EAccion accion){
 	inicializarMenu(menuItem::ACCION, nombre, NULL, accion);
 }
 
-MenuItem::MenuItem(std::string nombre, Accion* accion, string leyendaIngresoUsuario){
+MenuItem::MenuItem(std::string nombre, accion::EAccion accion, string leyendaIngresoUsuario){
 
 	inicializarMenu(menuItem::ACCION, nombre, NULL, accion);
 	this->leyendaIngresoUsuario = leyendaIngresoUsuario;
 }
 
-
-
-void MenuItem::inicializarMenu(menuItem::Tipo tipo, string nombre, Menu* subMenu, Accion* accion){
+void MenuItem::inicializarMenu(menuItem::Tipo tipo, string nombre, Menu* subMenu, accion::EAccion accion){
 
 	this->tipo = tipo;
 	this->nombre = nombre;
 	this->subMenu = subMenu;
 	this->accion = accion;
 	this->leyendaIngresoUsuario = "";
+	this->respuesta = NULL;
 }
 
 string MenuItem::obtenerNombre(){
@@ -45,7 +47,7 @@ string MenuItem::obtenerNombre(){
 	return this->nombre;
 }
 
-Accion* MenuItem::obtenerAccion(){
+accion::EAccion MenuItem::obtenerAccion(){
 	return this->accion;
 }
 
@@ -53,23 +55,27 @@ Menu* MenuItem::obtenerSubMenu(){
 	return this->subMenu;
 }
 
-Respuesta MenuItem::ejecutar(){
+Respuesta* MenuItem::ejecutar(){
 
-	Respuesta respuesta;
+	if(this->respuesta != NULL){
+		delete this->respuesta;
+	}
 
 	switch(this->tipo){
 
 		case menuItem::SUBMENU:
 
 			this->subMenu->mostrar();
-			respuesta = Respuesta(this->subMenu);
+			respuesta = new Respuesta(this->subMenu);
 			break;
 
 		case menuItem::ACCION:
 
 			string parametrosIngresados = "";
+			respuesta = new Respuesta(this->obtenerAccion());
+			Accion* accion = respuesta->obtenerAccion();
 
-			switch(this->accion->obtenerTipo()){
+			switch(accion->obtenerTipo()){
 
 				case accion::CON_PARAMETROS_USUARIO:
 
@@ -81,20 +87,20 @@ Respuesta MenuItem::ejecutar(){
 					cin.ignore();
 					getline(cin, parametrosIngresados);
 
-					this->accion->cambiarParametros(parametrosIngresados);
-					respuesta = Respuesta(accion);
+					accion->cambiarParametros(parametrosIngresados);
 
 					break;
 
-				case accion::SIN_PARAMETROS_USUARIO:
-
-					respuesta = Respuesta(this->accion);
-
-					break;
-				}
+				default:;
+			}
 	}
 
-	return respuesta;
+	return this->respuesta;
 }
 
+MenuItem::~MenuItem(){
 
+	if(this->respuesta != NULL){
+		delete this->respuesta;
+	}
+}

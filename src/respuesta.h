@@ -35,17 +35,19 @@ private:
 	Menu* subMenu;
 	Accion* accion;
 
-	void inicializar(respuesta::Tipo tipo, Menu* subMenu, Accion* accion);
+	void inicializar(respuesta::Tipo tipo, Menu* subMenu, accion::EAccion accion);
 
 public:
 
 	Respuesta();
 	Respuesta(Menu* subMenu);
-	Respuesta(Accion* accion);
+	Respuesta(accion::EAccion accion);
 
 	respuesta::Tipo obtenerTipo();
 	Menu* obtenerSubMenu();
 	Accion* obtenerAccion();
+
+	~Respuesta();
 };
 
 #endif /* RESPUESTAMENU_H_ */

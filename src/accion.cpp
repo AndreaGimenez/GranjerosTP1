@@ -10,83 +10,104 @@
 
 using namespace std;
 
-Accion::Accion(accion::Accion accion, unsigned int cantidadParametros, parametro::Tipo tiposParametros[]){
+Accion::Accion(){
 
-	this->tipo = accion::CON_PARAMETROS_USUARIO;
-	this->accion = accion;
-	this->parametros = new Lista<Parametro*>;
-	this->parametrosConvertidos = new Lista<void*>;
+	this->tipo = accion::SIN_PARAMETROS_USUARIO;
+	this->accion = accion::NINGUNA;
+	this->cantidadParametros = 0;
+	this->parametros = NULL;
+}
 
-	for(unsigned int iParametro = 0; iParametro < cantidadParametros; iParametro++){
-		Parametro* parametro = new Parametro(tiposParametros[0], "");
-		this->parametros->agregar(parametro);
+Accion::Accion(Accion* accion){
+
+	this->tipo = accion->obtenerTipo();
+	this->accion = accion->obtenerAccion();
+	this->cantidadParametros = accion->obtenerCantidadParametros();
+
+	if(accion->obtenerParametros() != NULL){
+		this->parametros = new string[this->cantidadParametros];
+
+		for(unsigned int iParametro = 0; iParametro < this->cantidadParametros; iParametro++){
+			this->parametros[iParametro] = accion->obtenerParametros()[iParametro];
+		}
+	}else{
+		this->parametros = NULL;
 	}
 }
 
-Accion::Accion(accion::Accion accion){
+Accion::Accion(accion::Tipo tipoAccion, accion::EAccion accion){
 
-	this->tipo = accion::SIN_PARAMETROS_USUARIO;
+	this->tipo = tipoAccion;
 	this->accion = accion;
-	this->parametros = new Lista<Parametro*>;
-	this->parametrosConvertidos = new Lista<void*>;
+	this->cantidadParametros = 0;
+	this->parametros = NULL;
+}
+
+Accion::Accion(accion::Tipo tipoAccion, accion::EAccion accion, unsigned int cantidadParametros){
+
+	this->tipo = tipoAccion;
+	this->accion = accion;
+	this->cantidadParametros = cantidadParametros;
+	this->parametros = new string[this->cantidadParametros];
+}
+
+void Accion::cambiarTipo(accion::Tipo tipo){
+	this->tipo = tipo;
+}
+
+void Accion::cambiarAccion(accion::EAccion accion){
+	this->accion = accion;
+}
+
+void Accion::cambiarCantidadParametros(unsigned int cantidadParametros){
+	this->cantidadParametros = cantidadParametros;
 }
 
 accion::Tipo Accion::obtenerTipo(){
 	return this->tipo;
 }
 
+std::string* Accion::obtenerParametros(){
+	return this->parametros;
+}
+
+void Accion::cambiarParametros(string* parametros){
+
+	this->parametros = parametros;
+}
+
 void Accion::cambiarParametros(string parametros){
 
 	int posicionRegex = parametros.find(" ");
-	unsigned int indiceParametros = 1;
+	unsigned int indiceParametro = 0;
 
 	while(posicionRegex > 0){
 
 		string strParametro = parametros.substr(0, posicionRegex);
-		Parametro* parametro = this->parametros->obtener(indiceParametros);
-		parametro->cambiarValor(strParametro);
-		this->parametrosConvertidos->agregar(parametro->obtenerValorConvertido());
+		this->parametros[indiceParametro] = strParametro;
 
 		parametros = parametros.substr(posicionRegex + 1);
 		posicionRegex = parametros.find(" ");
-		indiceParametros++;
+		indiceParametro++;
 	}
 
 	if(parametros != ""){
 
-		Parametro* parametro = this->parametros->obtener(indiceParametros);
-		parametro->cambiarValor(parametros);
+		this->parametros[indiceParametro] = parametros;
 	}
 }
 
-accion::Accion Accion::obtenerAccion(){
+accion::EAccion Accion::obtenerAccion(){
 	return this->accion;
 }
 
-Lista<Parametro*>* Accion::obtenerParametros(){
-	return this->parametros;
-}
-
-Lista<void*>* Accion::obtenerParametrosConvertidos(){
-
-	return this->parametrosConvertidos;
+unsigned int Accion::obtenerCantidadParametros(){
+	return this->cantidadParametros;
 }
 
 Accion::~Accion(){
 
 	if(this->parametros != NULL){
-
-		if(!this->parametros->estaVacia()){
-
-				this->parametros->iniciarCursor();
-				while(this->parametros->avanzarCursor()){
-					delete this->parametros->obtenerCursor();
-				}
-			}
-		delete this->parametros;
-	}
-	if(this->parametrosConvertidos != NULL){
-
-		delete this->parametrosConvertidos;
+		delete[] this->parametros;
 	}
 }

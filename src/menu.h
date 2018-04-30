@@ -48,7 +48,7 @@ public:
 	std::string obtenerLeyendaIngresoUsuario();
 
 	void mostrar();
-	Respuesta ejecutarOpcion(unsigned int opcion);
+	Respuesta* ejecutarOpcion(unsigned int opcion);
 
 	~Menu();
 };

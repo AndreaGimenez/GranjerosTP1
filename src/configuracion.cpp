@@ -21,6 +21,7 @@ unsigned int Configuracion::cantidadTurnos = 0;
 Lista<Cultivo*>* Configuracion::cultivos = NULL;
 Lista<Destino*>* Configuracion::destinos = NULL;
 
+
 Configuracion::Configuracion(){
 
 }

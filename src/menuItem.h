@@ -42,24 +42,26 @@ private:
 
 	//Atributos para items de tipo accion
 	std::string leyendaIngresoUsuario;
-	Accion* accion;
+	accion::EAccion accion;
 
-	void inicializarMenu(menuItem::Tipo tipo, std::string nombre, Menu* subMenu, Accion* accion);
+	//Para devolver luego de ejecutar la opcion
+	Respuesta* respuesta;
+
+	void inicializarMenu(menuItem::Tipo tipo, std::string nombre, Menu* subMenu, accion::EAccion accion);
 
 public:
 
 	MenuItem();
 	MenuItem(std::string nombre, Menu* subMenu);
-	MenuItem(std::string nombre, Accion* accion);
-	MenuItem(std::string nombre, Accion* accion, std::string leyendaIngresoUsuario);
+	MenuItem(std::string nombre, accion::EAccion accion);
+	MenuItem(std::string nombre, accion::EAccion accion, std::string leyendaIngresoUsuario);
 
 	std::string obtenerNombre();
-	Accion* obtenerAccion();
+	accion::EAccion obtenerAccion();
 	Menu* obtenerSubMenu();
+	Respuesta* ejecutar();
 
-	Respuesta ejecutar();
-
-	Lista<std::string> parseParametros(std::string);
+	~MenuItem();
 };
 
 #endif /* MENUITEM_H_ */
