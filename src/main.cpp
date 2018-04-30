@@ -14,7 +14,7 @@ int main(){
 
 	//Test::correrTests();
 	Granjeros granjeros;
-	granjeros.jugar();
+	granjeros.iniciarJuego();
 
 	return 0;
 }

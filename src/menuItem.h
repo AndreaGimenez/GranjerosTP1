@@ -14,12 +14,12 @@
 
 #include <string>
 #include "menu.h"
-#include "respuesta.h"
+#include "resultadoOpcion.h"
 #include "accion.h"
 
 //Para cortar la referencia circular
 class Menu;
-class Respuesta;
+class ResultadoOpcion;
 
 namespace menuItem{
 
@@ -45,7 +45,7 @@ private:
 	accion::EAccion accion;
 
 	//Para devolver luego de ejecutar la opcion
-	Respuesta* respuesta;
+	ResultadoOpcion* respuesta;
 
 	void inicializarMenu(menuItem::Tipo tipo, std::string nombre, Menu* subMenu, accion::EAccion accion);
 
@@ -59,7 +59,7 @@ public:
 	std::string obtenerNombre();
 	accion::EAccion obtenerAccion();
 	Menu* obtenerSubMenu();
-	Respuesta* ejecutar();
+	ResultadoOpcion* ejecutar();
 
 	~MenuItem();
 };

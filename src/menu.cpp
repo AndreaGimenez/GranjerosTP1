@@ -53,9 +53,9 @@ void Menu::crearMenuConfiguracion() {
 								  "Indique la cantidad de turnos a jugar en cada partida");
 }
 
-void Menu::crearMenuAcciones() {
+void Menu::crearMenuJuego() {
 
-	this->inicializarMenu(ACCIONES, "ACCIONES", 9);
+	this->inicializarMenu(JUEGO, "ACCIONES", 9);
 
 	this->itemsMenu[1] = MenuItem("Sembrar",
 			  	  	  	  	  	  accion::SEMBRAR,
@@ -110,9 +110,9 @@ Menu::Menu(TipoMenu tipo) {
 			crearMenuConfiguracion();
 			break;
 
-		case ACCIONES:
+		case JUEGO:
 
-			crearMenuAcciones();
+			crearMenuJuego();
 			break;
 	}
 }
@@ -135,7 +135,7 @@ void Menu::mostrar(){
 	cout << endl << "0" << " - " << itemsMenu[0].obtenerNombre() << endl << endl;
 }
 
-Respuesta* Menu::ejecutarOpcion(unsigned int opcion){
+ResultadoOpcion* Menu::ejecutarOpcion(unsigned int opcion){
 
 	return this->itemsMenu[opcion].ejecutar();
 }

@@ -17,23 +17,27 @@ class InterfazUsuario {
 private:
 
 	Menu* menuPrincipal;
+	Menu* menuPartida;
+
 	Pila<Menu*> menues;
+
+	void agregarMenu(Menu* menu);
 
 public:
 
 	InterfazUsuario();
 
-	void mostrarMenuPrincipal();
-	void mostrarMenuPartida();
-	unsigned int solicitarOpcion();
-	Respuesta* ejecutarOpcion(unsigned int opcion);
 	void mostrarBienvenida();
-	bool salir();
+	void solicitarNombresJugadores(unsigned int cantidadJugadores, Lista<std::string>& listaNombres);
+	void cargarMenuPrincipal();
+	void cargarMenuPartida();
 	Menu* obtenerMenuActual();
-	void agregarMenu(Menu* menu);
-	void irAMenuAnterior();
-	void mostrarDespedida();
 	void mostrarMenuActual();
+	void irAMenuAnterior();
+	unsigned int solicitarOpcion();
+	ResultadoOpcion* ejecutarOpcion(unsigned int opcion);
+	bool salir();
+	void mostrarDespedida();
 
 	~InterfazUsuario();
 };

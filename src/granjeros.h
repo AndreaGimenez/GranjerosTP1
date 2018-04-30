@@ -18,7 +18,7 @@ class Granjeros {
 private:
 
 	InterfazUsuario interfaz;
-	ParametroConfiguracion parametros;
+	ParametroConfiguracion parametrosConfiguracion;
 	//Partida partida;
 
 	static unsigned int cantidadAcciones;
@@ -28,16 +28,18 @@ private:
 	static void destruirAcciones();
 
 public:
+
 	Granjeros();
 
-	bool jugar();
-	void ejecutarAccionPartida(Accion* accion);
-
-	//Pre: Se debe haber inicializado la configuracion con 'inicializar'.
-	//Pos: Devuelve el destino que corresponde al cultivo pasado por parametro 'cultivo'.
-	//	   En caso que no haya ningun destino para el cultivo devuelve NULL.
-	static Accion obtenerAccion(accion::EAccion accion);
+	bool iniciarJuego();
+	void ejecutarAccion(Accion* accion);
+	bool ejecutarAccionConfiguracion(Accion* accion);
+	bool ejecutarAccionPartida(Accion* accion);
+	void comenzarPartida();
+	bool avanzarTurno();
 	static Accion* crearNuevaAccion(accion::EAccion accion);
+
+	~Granjeros();
 };
 
 #endif /* GRANJEROS_H_ */

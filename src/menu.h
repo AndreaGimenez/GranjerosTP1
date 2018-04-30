@@ -14,7 +14,7 @@
 
 #include <string>
 #include "menuItem.h"
-#include "respuesta.h"
+#include "resultadoOpcion.h"
 
 //Para cortar la referencia circular
 class MenuItem;
@@ -23,7 +23,7 @@ enum TipoMenu{
 
 	PRINCIPAL,
 	CONFIGURACION,
-	ACCIONES
+	JUEGO
 };
 
 class Menu {
@@ -39,16 +39,15 @@ private:
 	void inicializarMenu(TipoMenu tipo, std::string titulo, unsigned int cantidadItems);
 	void crearMenuPrincipal();
 	void crearMenuConfiguracion();
-	void crearMenuAcciones();
+	void crearMenuJuego();
 
 public:
 
 	Menu(TipoMenu tipo);
 
 	std::string obtenerLeyendaIngresoUsuario();
-
 	void mostrar();
-	Respuesta* ejecutarOpcion(unsigned int opcion);
+	ResultadoOpcion* ejecutarOpcion(unsigned int opcion);
 
 	~Menu();
 };

@@ -55,7 +55,7 @@ Menu* MenuItem::obtenerSubMenu(){
 	return this->subMenu;
 }
 
-Respuesta* MenuItem::ejecutar(){
+ResultadoOpcion* MenuItem::ejecutar(){
 
 	if(this->respuesta != NULL){
 		delete this->respuesta;
@@ -66,13 +66,13 @@ Respuesta* MenuItem::ejecutar(){
 		case menuItem::SUBMENU:
 
 			this->subMenu->mostrar();
-			respuesta = new Respuesta(this->subMenu);
+			respuesta = new ResultadoOpcion(this->subMenu);
 			break;
 
 		case menuItem::ACCION:
 
 			string parametrosIngresados = "";
-			respuesta = new Respuesta(this->obtenerAccion());
+			respuesta = new ResultadoOpcion(this->obtenerAccion());
 			Accion* accion = respuesta->obtenerAccion();
 
 			switch(accion->obtenerTipo()){
