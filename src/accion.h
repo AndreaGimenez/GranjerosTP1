@@ -19,8 +19,9 @@ namespace accion{
 		SIN_PARAMETROS_USUARIO
 	};
 
-	enum Accion{
+	enum EAccion{
 
+		NINGUNA = 0,
 		//ACCIONES DE CONFIGURACION
 		CAMBIAR_CANTIDAD_JUGADORES,
 		CAMBIAR_PARAMETRO_N,
@@ -42,24 +43,35 @@ namespace accion{
 		JUGAR,
 		SALIR
 	};
+
 }
+
 
 class Accion {
 
 private:
 
 	accion::Tipo tipo;
-	accion::Accion accion;
-	Lista<std::string>* parametros;
+	accion::EAccion accion;
+	unsigned int cantidadParametros;
+	std::string* parametros;
 
 public:
 
-	Accion(accion::Tipo tipo, accion::Accion accion);
+	Accion();
+	Accion(Accion* accion);
+	Accion(accion::Tipo tipoAccion, accion::EAccion accion);
+	Accion(accion::Tipo tipoAccion, accion::EAccion accion, unsigned int cantidadParametros);
 
+	void cambiarTipo(accion::Tipo tipo);
 	accion::Tipo obtenerTipo();
+	void cambiarParametros(std::string* parametros);
 	void cambiarParametros(std::string parametros);
-	accion::Accion obtenerAccion();
-	Lista<std::string>* obtenerParametros();
+	std::string* obtenerParametros();
+	void cambiarAccion(accion::EAccion accion);
+	accion::EAccion obtenerAccion();
+	void cambiarCantidadParametros(unsigned int cantidadParametros);
+	unsigned int obtenerCantidadParametros();
 
 	~Accion();
 };

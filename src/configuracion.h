@@ -13,6 +13,7 @@
 #include "lista.h"
 #include "parametroConfiguracion.h"
 
+
 /*
  * Clase que representa las configuraciones del juego.
  * Contiene los valores iniciales, dificultades, realiza todos los calculos que dependan de la dificultad del juego, contiene los recursos disponibles, constantes, etc.
@@ -54,6 +55,7 @@ private:
 
 	//Pos: Libera memoria pedida para los destinos
 	static void destruirDestinos();
+
 
 public:
 

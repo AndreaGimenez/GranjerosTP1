@@ -13,42 +13,29 @@
 #endif
 
 #include <string>
-#include "menuItem.h"
-#include "respuesta.h"
+#include "opcionMenu.h"
+#include "resultadoOpcion.h"
 
 //Para cortar la referencia circular
-class MenuItem;
-
-enum TipoMenu{
-
-	PRINCIPAL,
-	CONFIGURACION,
-	ACCIONES
-};
+class OpcionMenu;
 
 class Menu {
 
 private:
 
-	TipoMenu tipo;
-	unsigned int cantidadItemsMenu;
-	MenuItem* itemsMenu ;
 	std::string titulo;
 	std::string leyendaIngresoUsuario;
-
-	void inicializarMenu(TipoMenu tipo, std::string titulo, unsigned int cantidadItems);
-	void crearMenuPrincipal();
-	void crearMenuConfiguracion();
-	void crearMenuAcciones();
+	unsigned int cantidadItemsMenu;
+	OpcionMenu* opciones;
 
 public:
 
-	Menu(TipoMenu tipo);
+	Menu(std::string titulo, unsigned int cantidadOpciones);
 
+	void cambiarOpcion(unsigned int indice, OpcionMenu opcion);
+	ResultadoOpcion* ejecutarOpcion(unsigned int opcion);
 	std::string obtenerLeyendaIngresoUsuario();
-
 	void mostrar();
-	Respuesta ejecutarOpcion(unsigned int opcion);
 
 	~Menu();
 };

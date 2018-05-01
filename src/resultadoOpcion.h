@@ -5,8 +5,8 @@
  *      Author: administrador
  */
 
-#ifndef RESPUESTA_H_
-#define RESPUESTA_H_
+#ifndef RESULTADOOPCION_H_
+#define RESULTADOOPCION_H_
 
 #ifndef NULL
 #define NULL 0
@@ -18,7 +18,7 @@
 //Para cortar la referencia circular
 class Menu;
 
-namespace respuesta{
+namespace resultadoOpcion{
 
 	enum Tipo{
 
@@ -27,25 +27,27 @@ namespace respuesta{
 	};
 }
 
-class Respuesta {
+class ResultadoOpcion {
 
 private:
 
-	respuesta::Tipo tipo;
+	resultadoOpcion::Tipo tipo;
 	Menu* subMenu;
 	Accion* accion;
 
-	void inicializar(respuesta::Tipo tipo, Menu* subMenu, Accion* accion);
+	void inicializar(resultadoOpcion::Tipo tipo, Menu* subMenu, accion::EAccion accion);
 
 public:
 
-	Respuesta();
-	Respuesta(Menu* subMenu);
-	Respuesta(Accion* accion);
+	ResultadoOpcion();
+	ResultadoOpcion(Menu* subMenu);
+	ResultadoOpcion(accion::EAccion accion);
 
-	respuesta::Tipo obtenerTipo();
+	resultadoOpcion::Tipo obtenerTipo();
 	Menu* obtenerSubMenu();
 	Accion* obtenerAccion();
+
+	~ResultadoOpcion();
 };
 
 #endif /* RESPUESTAMENU_H_ */
