@@ -5,8 +5,8 @@
  *      Author: administrador
  */
 
-#ifndef MENUITEM_H_
-#define MENUITEM_H_
+#ifndef OPCIONMENU_H_
+#define OPCIONMENU_H_
 
 #ifndef NULL
 #define NULL 0
@@ -21,7 +21,7 @@
 class Menu;
 class ResultadoOpcion;
 
-namespace menuItem{
+namespace opcionMenu{
 
 	enum Tipo{
 
@@ -30,11 +30,11 @@ namespace menuItem{
 	};
 }
 
-class MenuItem {
+class OpcionMenu {
 
 private:
 
-	menuItem::Tipo tipo;
+	opcionMenu::Tipo tipo;
 	std::string nombre;
 
 	//Atributos para items que contienen submenues
@@ -47,21 +47,21 @@ private:
 	//Para devolver luego de ejecutar la opcion
 	ResultadoOpcion* respuesta;
 
-	void inicializarMenu(menuItem::Tipo tipo, std::string nombre, Menu* subMenu, accion::EAccion accion);
+	void inicializarMenu(opcionMenu::Tipo tipo, std::string nombre, Menu* subMenu, accion::EAccion accion);
 
 public:
 
-	MenuItem();
-	MenuItem(std::string nombre, Menu* subMenu);
-	MenuItem(std::string nombre, accion::EAccion accion);
-	MenuItem(std::string nombre, accion::EAccion accion, std::string leyendaIngresoUsuario);
+	OpcionMenu();
+	OpcionMenu(std::string nombre, Menu* subMenu);
+	OpcionMenu(std::string nombre, accion::EAccion accion);
+	OpcionMenu(std::string nombre, accion::EAccion accion, std::string leyendaIngresoUsuario);
 
 	std::string obtenerNombre();
 	accion::EAccion obtenerAccion();
 	Menu* obtenerSubMenu();
 	ResultadoOpcion* ejecutar();
 
-	~MenuItem();
+	~OpcionMenu();
 };
 
-#endif /* MENUITEM_H_ */
+#endif /* OPCIONMENU_H_ */

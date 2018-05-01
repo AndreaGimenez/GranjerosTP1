@@ -5,7 +5,8 @@
  *      Author: administrador
  */
 
-#include "menuItem.h"
+#include "opcionMenu.h"
+
 #include "accion.h"
 #include <iostream>
 #include "configuracion.h"
@@ -13,26 +14,26 @@
 
 using namespace std;
 
-MenuItem::MenuItem(){
-	inicializarMenu(menuItem::SUBMENU, "", NULL, accion::NINGUNA);
+OpcionMenu::OpcionMenu(){
+	inicializarMenu(opcionMenu::SUBMENU, "", NULL, accion::NINGUNA);
 }
 
-MenuItem::MenuItem(std::string nombre, Menu* subMenu){
-	inicializarMenu(menuItem::SUBMENU, nombre, subMenu, accion::NINGUNA);
+OpcionMenu::OpcionMenu(std::string nombre, Menu* subMenu){
+	inicializarMenu(opcionMenu::SUBMENU, nombre, subMenu, accion::NINGUNA);
 }
 
 
-MenuItem::MenuItem(std::string nombre, accion::EAccion accion){
-	inicializarMenu(menuItem::ACCION, nombre, NULL, accion);
+OpcionMenu::OpcionMenu(std::string nombre, accion::EAccion accion){
+	inicializarMenu(opcionMenu::ACCION, nombre, NULL, accion);
 }
 
-MenuItem::MenuItem(std::string nombre, accion::EAccion accion, string leyendaIngresoUsuario){
+OpcionMenu::OpcionMenu(std::string nombre, accion::EAccion accion, string leyendaIngresoUsuario){
 
-	inicializarMenu(menuItem::ACCION, nombre, NULL, accion);
+	inicializarMenu(opcionMenu::ACCION, nombre, NULL, accion);
 	this->leyendaIngresoUsuario = leyendaIngresoUsuario;
 }
 
-void MenuItem::inicializarMenu(menuItem::Tipo tipo, string nombre, Menu* subMenu, accion::EAccion accion){
+void OpcionMenu::inicializarMenu(opcionMenu::Tipo tipo, string nombre, Menu* subMenu, accion::EAccion accion){
 
 	this->tipo = tipo;
 	this->nombre = nombre;
@@ -42,20 +43,20 @@ void MenuItem::inicializarMenu(menuItem::Tipo tipo, string nombre, Menu* subMenu
 	this->respuesta = NULL;
 }
 
-string MenuItem::obtenerNombre(){
+string OpcionMenu::obtenerNombre(){
 
 	return this->nombre;
 }
 
-accion::EAccion MenuItem::obtenerAccion(){
+accion::EAccion OpcionMenu::obtenerAccion(){
 	return this->accion;
 }
 
-Menu* MenuItem::obtenerSubMenu(){
+Menu* OpcionMenu::obtenerSubMenu(){
 	return this->subMenu;
 }
 
-ResultadoOpcion* MenuItem::ejecutar(){
+ResultadoOpcion* OpcionMenu::ejecutar(){
 
 	if(this->respuesta != NULL){
 		delete this->respuesta;
@@ -63,13 +64,13 @@ ResultadoOpcion* MenuItem::ejecutar(){
 
 	switch(this->tipo){
 
-		case menuItem::SUBMENU:
+		case opcionMenu::SUBMENU:
 
 			this->subMenu->mostrar();
 			respuesta = new ResultadoOpcion(this->subMenu);
 			break;
 
-		case menuItem::ACCION:
+		case opcionMenu::ACCION:
 
 			string parametrosIngresados = "";
 			respuesta = new ResultadoOpcion(this->obtenerAccion());
@@ -98,7 +99,7 @@ ResultadoOpcion* MenuItem::ejecutar(){
 	return this->respuesta;
 }
 
-MenuItem::~MenuItem(){
+OpcionMenu::~OpcionMenu(){
 
 	if(this->respuesta != NULL){
 		delete this->respuesta;

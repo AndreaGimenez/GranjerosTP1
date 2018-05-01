@@ -21,6 +21,9 @@ private:
 
 	Pila<Menu*> menues;
 
+	Menu* crearMenuPrincipal();
+	Menu* crearMenuConfiguracion();
+	Menu* crearMenuPartida();
 	void agregarMenu(Menu* menu);
 
 public:

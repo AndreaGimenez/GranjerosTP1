@@ -66,6 +66,10 @@ void Granjeros::cargarAcciones(){
 }
 
 void Granjeros::destruirAcciones(){
+
+	for(unsigned int iAccion = 0; iAccion < 16; iAccion++){
+		delete acciones[iAccion];
+	}
 	delete[] acciones;
 }
 
