@@ -13,32 +13,37 @@
 #include "parametroConfiguracion.h"
 #include "accion.h"
 
+/*
+ * Clase principal del juego. Se encarga de gestionar el juego.
+ * Utiliza 'InterfazUsuario' para interactuar con el usuario y enviar a la partida los datos que ingresan los usuarios.
+ * Contiene la configuracion de los parametros que elige el usuario.
+ */
 class Granjeros {
 
 private:
 
-	InterfazUsuario interfaz;
 	ParametroConfiguracion parametrosConfiguracion;
+	InterfazUsuario interfaz;
 	//Partida partida;
 
-	static unsigned int cantidadAcciones;
-	static Accion** acciones;
-
-	static void cargarAcciones();
-	static void destruirAcciones();
+	void ejecutarAccion(Accion* accion);
+	void ejecutarAccionConfiguracion(Accion* accion);
+	bool ejecutarAccionPartida(Accion* accion);
+	void comenzarPartida();
+	bool avanzarTurno();
 
 public:
 
 	Granjeros();
 
+	/*
+	 * Pos: Comienza la ejecucion del juego.
+	 */
 	bool iniciarJuego();
-	void ejecutarAccion(Accion* accion);
-	bool ejecutarAccionConfiguracion(Accion* accion);
-	bool ejecutarAccionPartida(Accion* accion);
-	void comenzarPartida();
-	bool avanzarTurno();
-	static Accion* crearNuevaAccion(accion::EAccion accion);
 
+	/*
+	 * Pos: Libera los recursos reservados.
+	 */
 	~Granjeros();
 };
 

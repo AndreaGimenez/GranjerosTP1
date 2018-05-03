@@ -8,6 +8,7 @@
 #include "accion.h"
 #include <cstdlib>
 
+
 using namespace std;
 
 Accion::Accion(){
@@ -35,32 +36,26 @@ Accion::Accion(Accion* accion){
 	}
 }
 
-Accion::Accion(accion::Tipo tipoAccion, accion::EAccion accion){
+Accion::Accion(accion::EAccion accion){
 
-	this->tipo = tipoAccion;
+	this->tipo = accion::SIN_PARAMETROS_USUARIO;
 	this->accion = accion;
 	this->cantidadParametros = 0;
 	this->parametros = NULL;
 }
 
-Accion::Accion(accion::Tipo tipoAccion, accion::EAccion accion, unsigned int cantidadParametros){
+Accion::Accion(accion::EAccion accion, unsigned int cantidadParametros){
 
-	this->tipo = tipoAccion;
 	this->accion = accion;
 	this->cantidadParametros = cantidadParametros;
-	this->parametros = new string[this->cantidadParametros];
-}
 
-void Accion::cambiarTipo(accion::Tipo tipo){
-	this->tipo = tipo;
-}
-
-void Accion::cambiarAccion(accion::EAccion accion){
-	this->accion = accion;
-}
-
-void Accion::cambiarCantidadParametros(unsigned int cantidadParametros){
-	this->cantidadParametros = cantidadParametros;
+	if(cantidadParametros == 0){
+		this->tipo = accion::SIN_PARAMETROS_USUARIO;
+		this->parametros = NULL;
+	}else{
+		this->tipo = accion::CON_PARAMETROS_USUARIO;
+		this->parametros = new string[this->cantidadParametros];
+	}
 }
 
 accion::Tipo Accion::obtenerTipo(){

@@ -7,14 +7,12 @@
 
 #include "granjeros.h"
 #include <iostream>
-#include <cstdlib>
 #include "utils.h"
 #include "configuracion.h"
+#include "creadorAcciones.h"
 
 using namespace std;
 
-unsigned int Granjeros::cantidadAcciones = 16;
-Accion** Granjeros::acciones = NULL;
 
 Granjeros::Granjeros() {
 }
@@ -22,8 +20,9 @@ Granjeros::Granjeros() {
 bool Granjeros::iniciarJuego(){
 
 	interfaz.mostrarBienvenida();
+	CreadorAcciones::inicializar();
 	interfaz.cargarMenuPrincipal();
-	cargarAcciones();
+
 
 	interfaz.mostrarMenuActual();
 
@@ -43,41 +42,11 @@ bool Granjeros::iniciarJuego(){
 	return true;
 }
 
-void Granjeros::cargarAcciones(){
-
-	acciones = new Accion*[cantidadAcciones];
-
-	acciones[0] = new Accion(accion::SIN_PARAMETROS_USUARIO, accion::NINGUNA);
-	acciones[1] = new Accion(accion::CON_PARAMETROS_USUARIO, accion::CAMBIAR_CANTIDAD_JUGADORES, 1);
-	acciones[2] = new Accion(accion::CON_PARAMETROS_USUARIO, accion::CAMBIAR_PARAMETRO_N, 1);
-	acciones[3] = new Accion(accion::CON_PARAMETROS_USUARIO, accion::CAMBIAR_PARAMETRO_M, 1);
-	acciones[4] = new Accion(accion::CON_PARAMETROS_USUARIO, accion::CAMBIAR_CANTIDAD_TURNOS, 1);
-	acciones[5] = new Accion(accion::CON_PARAMETROS_USUARIO, accion::SEMBRAR, 2);
-	acciones[6] = new Accion(accion::CON_PARAMETROS_USUARIO, accion::REGAR, 1);
-	acciones[7] = new Accion(accion::CON_PARAMETROS_USUARIO, accion::COSECHAR, 1);
-	acciones[8] = new Accion(accion::CON_PARAMETROS_USUARIO, accion::ENVIAR_COSECHA, 1);
-	acciones[9] = new Accion(accion::SIN_PARAMETROS_USUARIO, accion::COMPRAR_TERRENO);
-	acciones[10] = new Accion(accion::CON_PARAMETROS_USUARIO, accion::VENDER_TERRENO, 1);
-	acciones[11] = new Accion(accion::SIN_PARAMETROS_USUARIO, accion::COMPRAR_CAPACIDAD_AGUA);
-	acciones[12] = new Accion(accion::SIN_PARAMETROS_USUARIO, accion::COMPRAR_CAPACIDAD_ALMACEN);
-	acciones[13] = new Accion(accion::SIN_PARAMETROS_USUARIO, accion::FINALIZAR_TURNO);
-	acciones[14] = new Accion(accion::SIN_PARAMETROS_USUARIO, accion::JUGAR);
-	acciones[15] = new Accion(accion::SIN_PARAMETROS_USUARIO, accion::SALIR);
-}
-
-void Granjeros::destruirAcciones(){
-
-	for(unsigned int iAccion = 0; iAccion < 16; iAccion++){
-		delete acciones[iAccion];
-	}
-	delete[] acciones;
-}
-
 void Granjeros::ejecutarAccion(Accion* accion){
 
 	bool partidaFinalizada = false;
 
-	partidaFinalizada = ejecutarAccionConfiguracion(accion);
+	ejecutarAccionConfiguracion(accion);
 	partidaFinalizada = ejecutarAccionPartida(accion);
 
 	if(!partidaFinalizada){
@@ -85,7 +54,7 @@ void Granjeros::ejecutarAccion(Accion* accion){
 	}
 }
 
-bool Granjeros::ejecutarAccionConfiguracion(Accion* accion){
+void Granjeros::ejecutarAccionConfiguracion(Accion* accion){
 
 	switch (accion->obtenerAccion()){
 
@@ -115,8 +84,6 @@ bool Granjeros::ejecutarAccionConfiguracion(Accion* accion){
 
 		default:;
 	}
-
-	return false;
 }
 
 bool Granjeros::ejecutarAccionPartida(Accion* accion){
@@ -198,7 +165,6 @@ void Granjeros::comenzarPartida(){
 	Lista<string> nombresJugadores;
 	interfaz.solicitarNombresJugadores(this->parametrosConfiguracion.obtenerCantidadJugadores(), nombresJugadores);
 
-
 	Configuracion::inicializar(this->parametrosConfiguracion);
 	interfaz.cargarMenuPartida();
 
@@ -219,13 +185,5 @@ bool Granjeros::avanzarTurno(){
 	return finPartida;
 }
 
-Accion* Granjeros::crearNuevaAccion(accion::EAccion accion){
-
-	Accion* nuevaAccion = new Accion(acciones[accion]);
-	return nuevaAccion;
-}
-
 Granjeros::~Granjeros(){
-
-	destruirAcciones();
 }

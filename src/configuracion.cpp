@@ -129,6 +129,10 @@ unsigned int Configuracion::obtenerCapacidadInicialAlmacen(){
 	return 2 * (parametroN + parametroM) * obtenerCoeficienteDificultad();
 }
 
+unsigned int Configuracion::obtenerCostoTerreno(unsigned int numeroTerrenoAComprar){
+	return numeroTerrenoAComprar * (parametroN + parametroM) * obtenerCoeficienteDificultad();
+}
+
 Lista<Cultivo*>* Configuracion::obtenerCultivos(){
 
 	return cultivos;

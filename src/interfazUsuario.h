@@ -12,6 +12,11 @@
 #include "menu.h"
 #include "pila.h"
 
+/*
+ * 'InterfazUsuario' permite la interaccion con el usuario, tanto la salida como la entrada.
+ * Se encarga de crear los menues y gestionarlos. Permite cargar y mostrar los menues principal
+ * y de la partida así como ejecutar las acciones de esos menues.
+ */
 class InterfazUsuario {
 
 private:
@@ -28,20 +33,70 @@ private:
 
 public:
 
+	/*
+	 * Pos: Inicializa la interfaz para comenzar a interactuar.
+	 */
 	InterfazUsuario();
 
+	/*
+	 * Pos: Muestra por pantalla un mensaje de bienvenida.
+	 */
 	void mostrarBienvenida();
+
+	/*
+	 * Pre: 'cantidadJugadores' debe ser mayor a 0.
+	 * Pos: Solicita al usuario el ingreso de 'cantidadJugadores' nombres y los almacena en 'listaNombres'.
+	 */
 	void solicitarNombresJugadores(unsigned int cantidadJugadores, Lista<std::string>& listaNombres);
+
+	/*
+	 * Pos: Carga en la interfaz el menu principal, el mismo pasa a ser el menu actual. No lo muestra por pantalla.
+	 */
 	void cargarMenuPrincipal();
+
+	/*
+	 * Pos: Carga en la interfaz el menu de partida, el mismo pasa a ser el menu actual. No lo muestra por pantalla.
+	 */
 	void cargarMenuPartida();
+
+	/*
+	 * Pos: Devuelve el ultimo menu cargado. En caso de no haber ningun menu cargado devuelve NULL.
+	 */
 	Menu* obtenerMenuActual();
+
+	/*
+	 * Pos: Muestra por pantalla el ultimo menu cargado.
+	 */
 	void mostrarMenuActual();
+
+	/*
+	 * Pos: Actualiza el menu actual al menu anterior.
+	 */
 	void irAMenuAnterior();
+
+	/*
+	 * Pos: Solicita al usuario el ingreso de una de las opciones del menu actual y devuelve el numero de opcion elegida.
+	 */
 	unsigned int solicitarOpcion();
-	ResultadoOpcion* ejecutarOpcion(unsigned int opcion);
+
+	/*
+	 * Pos: Ejecuta el numero de opcion pasado por parametro y devuelve el resultado de la ejecucion.
+	 */
+	ResultadoOpcion* ejecutarOpcion(unsigned int numeroOpcion);
+
+	/*
+	 * Pos: Indica si el usuario salio del primero menu que se genero con la interfaz.
+	 */
 	bool salir();
+
+	/*
+	 * Pos: Muestra por pantalla un mensaje de despedida.
+	 */
 	void mostrarDespedida();
 
+	/*
+	 * Pos: Libera los recursos reservados.
+	 */
 	~InterfazUsuario();
 };
 

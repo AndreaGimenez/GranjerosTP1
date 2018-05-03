@@ -6,12 +6,8 @@
  */
 
 #include "resultadoOpcion.h"
+#include "creadorAcciones.h"
 
-#include "granjeros.h"
-
-ResultadoOpcion::ResultadoOpcion(){
-	this->inicializar(resultadoOpcion::SUBMENU, NULL, accion::NINGUNA);
-}
 
 ResultadoOpcion::ResultadoOpcion(Menu* subMenu){
 
@@ -31,7 +27,7 @@ void ResultadoOpcion::inicializar(resultadoOpcion::Tipo tipo, Menu* subMenu, acc
 
 	if(accion != accion::NINGUNA){
 
-		this->accion = Granjeros::crearNuevaAccion(accion);
+		this->accion = CreadorAcciones::crearNuevaAccion(accion);
 	}
 }
 

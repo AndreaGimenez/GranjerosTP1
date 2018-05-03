@@ -8,60 +8,70 @@
 #include "terreno.h"
 #include "utilidades.h"
 #include "cultivo.h"
+#include "configuracion.h"
 
 using namespace std;
 
-	Terreno::Terreno(ParametroConfiguracion parametros){
+Terreno::Terreno(){
 
-		this->cantidadColumnas=parametros.obtenerParametroM();
-		this->cantidadFilas=parametros.obtenerParametroN();
-		this->precio=PRECIO_INICIAL*cantidadColumnas*cantidadFilas;
-		terreno=new Cultivo[cantidadFilas][cantidadColumnas];
-	}
+	this->cantidadColumnas = Configuracion::obtenerAnchoTerreno();
+	this->cantidadFilas = Configuracion::obtenerLargoTerreno();
+	//this->precio = PRECIO_INICIAL*cantidadColumnas*cantidadFilas;
+	//this->parcelas = new Parcela[cantidadFilas][cantidadColumnas];
+	this->parcelas = new Parcela*[this->cantidadFilas * this->cantidadColumnas];
+}
 
-	unsigned int Terreno::obtenerCantidadColumnas(){
+unsigned int Terreno::obtenerCantidadColumnas(){
 
-		return this->cantidadColumnas;
-	}
+	return this->cantidadColumnas;
+}
 
-	unsigned int Terreno::obtenerCantidadFilas(){
+unsigned int Terreno::obtenerCantidadFilas(){
 
-		return this->cantidadFilas;
-	}
+	return this->cantidadFilas;
+}
 
-	unsigned int Terreno::obtenerPrecio(){
-
-		unsigned int precioActual=this->precio;
-		for(int i=0; i<this->cantidadFilas; i++){
-			for(int j=0; j<this->cantidadColumnas; j++){
-				precioActual+=(this->(terreno*)[i][j]).costo;
-			}
-		}
-		return precioActual;
-	}
-
-	unsigned int Terreno::obtenerCantidadParcelas(){
-
-		return this->cantidadFilas * this->cantidadColumnas;
-	}
-
-	bool parcelaCultivada(char)
-
-	unsigned int Terreno::obtenerCantidadCultivos(){
-
-		unsigned int cantidadCultivos=0;
-		for(int i=0; i<this->cantidadFilas; i++){
-			for(int j=0; j<this->cantidadColumnas; j++){
-				if()
-			}
+unsigned int Terreno::obtenerPrecio(){
+	/*
+	unsigned int precioActual=this->precio;
+	for(int i=0; i<this->cantidadFilas; i++){
+		for(int j=0; j<this->cantidadColumnas; j++){
+			precioActual+=(this->(terreno*)[i][j]).costo;
 		}
 	}
+	return precioActual;
+	*/
+	return 0;
+}
 
-	Terreno::~Terreno(){
+unsigned int Terreno::obtenerCantidadParcelas(){
 
-		delete terreno;
+	return this->cantidadFilas * this->cantidadColumnas;
+}
+
+//bool parcelaCultivada(char)
+
+unsigned int Terreno::obtenerCantidadCultivos(){
+
+	/*
+	unsigned int cantidadCultivos=0;
+	for(int i=0; i<this->cantidadFilas; i++){
+		for(int j=0; j<this->cantidadColumnas; j++){
+			if()
+		}
 	}
+	*/
+	return 0;
+}
 
+Parcela* Terreno::buscarParcela(std::string strCoordenadas){
 
+	//TODO: obtener las coordendas de strCoordenadas
+	unsigned int coordenadas[2] = {0,0};
+	return this->parcelas[coordenadas[0] * this->cantidadColumnas + coordenadas[1]];
+}
 
+Terreno::~Terreno(){
 
+	delete parcelas;
+}

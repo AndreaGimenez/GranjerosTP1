@@ -6,12 +6,14 @@
  */
 
 #include "interfazUsuario.h"
-#include <iostream>
 #include <cstdlib>
+#include <iostream>
+
 
 using namespace std;
 
 InterfazUsuario::InterfazUsuario() {
+
 	this->menuPrincipal = NULL;
 	this->menuPartida = NULL;
 }
@@ -65,12 +67,7 @@ void InterfazUsuario::irAMenuAnterior(){
 
 unsigned int InterfazUsuario::solicitarOpcion(){
 
-	cout << this->obtenerMenuActual()->obtenerLeyendaIngresoUsuario() << ": ";
-	cout.flush();
-
-	unsigned int opcionElegida;
-	cin >> opcionElegida;
-	return opcionElegida;
+	return this->obtenerMenuActual()->solicitarOpcion();
 }
 
 ResultadoOpcion* InterfazUsuario::ejecutarOpcion(unsigned int iMenuItem){

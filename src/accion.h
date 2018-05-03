@@ -11,6 +11,7 @@
 #include <string>
 #include "lista.h"
 
+
 namespace accion{
 
 	enum Tipo{
@@ -43,9 +44,15 @@ namespace accion{
 		JUGAR,
 		SALIR
 	};
-
 }
 
+/*
+ * 'Accion' representa la accion que realiza un usuario.
+ * Cuando un usuario elige una opcion de menu de tipo accion la informacion de la accion realizada junto con los parametros ingresados por el usuario
+ * (en caso de que la accion requiera parametros) se almacenan en una 'Accion'.
+ * Las acciones posibles se encuentran definidas, para obtener una accion debe llamarse a 'Granjeros::crearNuevaAccion' pasando un 'EAccion' que indica
+ * la accion que se realiza. Una vez obtenida la accion se podran completar tanto parametro como 'obtenerCantidadParametros'. Para cambiar los parametros utilizar 'cambiarParametros'.
+ */
 
 class Accion {
 
@@ -58,21 +65,64 @@ private:
 
 public:
 
+	/*
+	 * Pos: Inicializa la accion sin parametros y sin accion.
+	 */
 	Accion();
-	Accion(Accion* accion);
-	Accion(accion::Tipo tipoAccion, accion::EAccion accion);
-	Accion(accion::Tipo tipoAccion, accion::EAccion accion, unsigned int cantidadParametros);
 
-	void cambiarTipo(accion::Tipo tipo);
+	/*
+	 * Pos: Inicializa la accion con los datos de la otra accion.
+	 * 		Crea una nueva referencia de parametros y copia los parametros de 'accion' a this.
+	 */
+	Accion(Accion* accion);
+
+	/*
+	 * Pos: Inicializa la accion sin parametros.
+	 */
+	Accion(accion::EAccion accion);
+
+	/*
+	 * Pos: Inicializa la accion con la cantidad de parametros 'cantidadParametros'.
+	 * 		Si 'cantidadParametros' es 0, se inicializa sin acciones, es igual que llamar a 'Accion(accion::EAccion accion'.
+	 */
+	Accion(accion::EAccion accion, unsigned int cantidadParametros);
+
+	/*
+	 * Pos: Devuelve el tipo de accion. Puede ser 'SIN_PARAMETROS_USUARIO' o 'CON_PARAMETROS_USUARIO'.
+	 */
 	accion::Tipo obtenerTipo();
-	void cambiarParametros(std::string* parametros);
-	void cambiarParametros(std::string parametros);
+
+	/*
+	 * Pos: Devuelve los parametros que se encuentran seteados en la accion.
+	 */
 	std::string* obtenerParametros();
-	void cambiarAccion(accion::EAccion accion);
+
+	/*
+	 * Pos: Devuelve la accion asociada.
+	 */
 	accion::EAccion obtenerAccion();
-	void cambiarCantidadParametros(unsigned int cantidadParametros);
+
+	/*
+	 * Pos: Devuelve la cantidad de parametros que soporta la accion.
+	 */
 	unsigned int obtenerCantidadParametros();
 
+	/*
+	 * Pre: La cantidad de parametros en 'parametros' debe ser igual a 'obtenerCantidadParametros'.
+	 * Pos: Actualiza los parametros de la accion a los pasados por parametro.
+	 */
+	void cambiarParametros(std::string* parametros);
+
+	/*
+	 * Pre: 'parametros' representa los parametros separados por espacios. Solo puede haber 1 espacio de separacion.
+	 * 		 La cantidad de parametros obtenidos debe ser igual a 'obtenerCantidadParametros'.
+	 * Pos: Asigna los parametros al resultado de separar 'parametros' por espacios.
+	 */
+	void cambiarParametros(std::string parametros);
+
+	/*
+	 * Pos: Libera los recursos reservados.
+	 */
 	~Accion();
 };
 

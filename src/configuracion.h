@@ -95,6 +95,11 @@ public:
 	static unsigned int obtenerCapacidadInicialAlmacen();
 
 	//Pre: Se debe haber inicializado la configuracion con 'inicializar'.
+	//	   'numeroTerrenoAComprar' debe ser la cantidad de terrenos del jugador + 1.
+	//Pos: Devuelve el costo de comprar el terreno.
+	static unsigned int obtenerCostoTerreno(unsigned int numeroTerrenoAComprar);
+
+	//Pre: Se debe haber inicializado la configuracion con 'inicializar'.
 	//Pos: Devuelve los cultivos disponibles para que utilicen los jugadores.
 	//	   Los mismos dependerán de la configuración del archivo 'cultivos.txt'.
 	static Lista<Cultivo*>* obtenerCultivos();
