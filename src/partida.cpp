@@ -12,18 +12,22 @@
 #include <string>
 
 #include "partida.h"
+#include "lista.h"
+#include "jugador.h"
+#include "configuracion.h"
 
-Partida::Partida(unsigned int dificultad, unsigned int jugadores){
+using namespace std ;
 
-	this->nivelDeDificultad = dificultad ;
-	this->cantidadDeJugadores = jugadores ;
-	this->ronda = new Ronda();
+Partida::Partida(Lista<string>* nombresJugadores){
 
-	this->primerJugador = NULL;
-	this->jugadorActual = NULL;
+	this->nivelDeDificultad = Configuracion::obtenerDificultad(); ;
+	this->cantidadDeJugadores =  Configuracion::obtenerCantidadJugadores() ;
+	Lista<Jugador*>* rondaJugadores = new Lista<Jugador*>();
+	cargarJugadoresEnLaRonda(nombresJugadores);
+	
 }
 
-unsigned int Partida::obtenerDificultad(){
+Dificultad Partida::obtenerDificultad(){
 
 	return this->nivelDeDificultad ;
 
@@ -37,17 +41,44 @@ unsigned int Partida::getCantidadDeJugadores(){
 
 Jugador* Partida::verJugadorActual(){
 
-	return NULL;
-	//ronda->verJugadorActual();
+	return rondaJugadores->obtenerCursor();
 
 }
+
+void Partida::avanzarProximoJugador(){
+
+	rondaJugadores->avanzarCursor();	//Si hacemos las modificaciones q propuse en las primitivas del cursor
+									//de la lista, con esta linea de codigo creo q abarcamos todos los casos
+}									//sino habria que contemplar los casos en que se este en el ultimo jugador,etc
+
 
 Partida::~Partida(){
-	delete[] this->ronda ;
+
+	rondaJugadores->iniciarCursor() ;
+	for(unsigned int i = 0 ; i < this->cantidadDeJugadores ; i++ ){
+
+		Jugador* jugadorObtenido = rondaJugadores->obtenerCursor() ;
+		delete jugadorObtenido ;
+		rondaJugadores->avanzarCursor() ;
+
+	}
+
 }
 
+void Partida::cargarJugadoresEnLaRonda(Lista<string>* nombresJugadores){
 
+	nombresJugadores->iniciarCursor() ;
 
+	for(unsigned int i = 0 ; i < this->cantidadDeJugadores ; i++){
+
+		Jugador* nuevoJugador = new Jugador();
+		nuevoJugador->asignarNombre(nombresJugadores->obtenerCursor());
+		this->rondaJugadores->agregar(nuevoJugador);
+		nombresJugadores->avanzarCursor();
+
+	}
+
+}
 
 
 

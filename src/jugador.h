@@ -2,28 +2,31 @@
  * jugador.h
  *
  *  Created on: 19 Apr 2018
- *      Author: Usuario
+ *      Author: Andrea
  */
 
 #ifndef JUGADOR_H_
 #define JUGADOR_H_
 
+#include<string>
+
+using namespace std ;
+
 class Jugador{
 
 	private:
-	unsigned int monedas;
-	unsigned int turnos;
-	unsigned int terrenos;
+		unsigned int monedas;
+		unsigned int turnos;
+		unsigned int terrenos;
+		string nombre ;
 
 	public:
 		//Constructor
-	    //Pre: Recibe la cantidad de monedas y turnos con la que comienza el jugador. Deben ser enteros positivos.
-		//Post: Inicializa un jugador con su cantidad de monedas y turnos. Por default la cantidad de terrenos inicial es uno (1).
-		Jugador (unsigned int cantidadDeMonedas, unsigned int cantidadDeTurnos);
-
-		//Destructor
-		//Porst: Libera los recursos asociados.
-		~Jugador();
+	    //Pre: -
+		//Post: Inicializa un jugador con su cantidad de monedas y turnos. 
+		//		Por default la cantidad de terrenos inicial es uno (1).
+		//		La referencia al siguiente jugador es NULL.
+		Jugador ();
 
 		//Post: devuelve la cantidad de monedas que posee el jugador.
 		unsigned int monedasDisponibles();
@@ -46,6 +49,14 @@ class Jugador{
 
 		//Post: devuelve la cantidad de terrenos que posee el jugador.
 		unsigned int cantidadDeTerrenos();
+
+		//Pre:
+		//Post: Asigna el nombre del jugador
+		void asignarNombre(string nombre) ;
+
+		//Pre:
+		//Post: Devuelve el nombre del jugador
+		string obtenerNombre();
 
 		//Post: imprime el estado actual del jugador
 		void imprimirJugador();

@@ -168,7 +168,7 @@ void Granjeros::comenzarPartida(){
 	Configuracion::inicializar(this->parametrosConfiguracion);
 	interfaz.cargarMenuPartida();
 
-	//TODO: partida.inicializarPartida(nombresJugadores);
+	//TODO: partida.inicializarPartida(nombresJugadores);//inicializarPartida ahora es Partida
 	//TODO: interfaz.mostrarEstadoPartida(partida);
 }
 

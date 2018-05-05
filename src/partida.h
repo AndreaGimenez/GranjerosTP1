@@ -9,34 +9,33 @@
 #define PARTIDA_H_
 
 #include "jugador.h"
-#include "ronda.h"
+#include "lista.h"
+#include "parametroConfiguracion.h"
+
+
+using namespace std ;
 
 class Partida{
 	private:
 
-		unsigned int nivelDeDificultad ;
+		Dificultad nivelDeDificultad ;
 		unsigned int cantidadDeJugadores;
-		Jugador* primerJugador ;
-		Jugador* jugadorActual ;
-		Ronda* ronda ;
+		Lista<Jugador*>* rondaJugadores;
 
 	public:
 		//Constructor
 		//Pre:
 		//Post:
-		Partida(unsigned int dificultad, unsigned int jugadores);
+		Partida(Lista<string>*);
 
 		//Pre:
 		//Post:
-		unsigned int obtenerDificultad();
+		Dificultad obtenerDificultad();
 
 		//Pre:
 		//Post:
 		unsigned int getCantidadDeJugadores();
-
-		//Pre:
-		//Post:
-		void cargarJugadoresEnLaRonda();
+		
 		//Pre:
 		//Post: Devuelve un puntero con la referencia al jugador actual de la partida
 		Jugador* verJugadorActual();
@@ -48,6 +47,11 @@ class Partida{
 		//Pre:
 		//Post:
 		~Partida();
+
+	private:
+		//Pre:
+		//Post:
+		void cargarJugadoresEnLaRonda(Lista<string>* nombresJugadores);
 
 };
 

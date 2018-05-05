@@ -2,25 +2,22 @@
  * jugador.cpp
  *
  *  Created on: 19 Apr 2018
- *      Author: Usuario
+ *      Author: Andrea
  */
 
 #include <iostream>
-#include<string>
+#include <string>
 
 #include "jugador.h"
 #include "utilidades.h"
+#include "configuracion.h"
 
 using namespace std ;
 
-Jugador::Jugador(unsigned int cantidadDeMonedas, unsigned int cantidadDeTurnos){
+Jugador::Jugador(){
 
-	if(cantidadDeMonedas < 0 || cantidadDeTurnos <0){
-		throw string("Cantidades iniciales invalidas \n");
-	}
-
-	this->monedas = cantidadDeMonedas ;
-	this->turnos = cantidadDeTurnos ;
+	this->monedas = Configuracion::obtenerCreditosIniciales() ;
+	this->turnos = Configuracion::obtenerCantidadTurnos() ;
 	this->terrenos = TERRENOS_INICIALES ;
 
 }
@@ -68,11 +65,6 @@ void Jugador::pasarProximoTurno(){
 	if(this->quedanTurnos()){
 		this->turnos -- ;
 	}
-
-	else{
-		throw string("No quedan turnos \n") ;  //comentario para el grupo: hay que validar SIEMPRE
-	}										  //que queden turnos antes de invocar este metodo
-											 //usar quedanTurnos()
 }
 
 unsigned int Jugador::cantidadDeTerrenos(){
@@ -81,8 +73,21 @@ unsigned int Jugador::cantidadDeTerrenos(){
 
 }
 
+void Jugador::asignarNombre(string nombre) {
+
+	this->nombre = nombre ;
+
+}
+
+string Jugador::obtenerNombre(){
+
+	return this->nombre ;
+
+}
+
 void Jugador::imprimirJugador(){
 
+	cout<<"Nombre del jugador: "<<obtenerNombre() ;
 	cout<<"Cantidad de monedas: "<< monedasDisponibles() ;
 	cout<<"Turnos Restantes: "<<turnosRestantes() ;
 	cout<<"Cantidad de terrenos"<<cantidadDeTerrenos() ;
@@ -99,3 +104,4 @@ bool Jugador::quedanTurnos(){
 	return turnos;
 
 }
+
