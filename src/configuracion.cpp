@@ -14,10 +14,10 @@
 using namespace std;
 
 Dificultad Configuracion::dificultad = FACIL;
-unsigned int Configuracion::cantidadJugadores = 0;
-unsigned int Configuracion::parametroN = 0;
-unsigned int Configuracion::parametroM = 0;
-unsigned int Configuracion::cantidadTurnos = 0;
+unsigned int Configuracion::cantidadJugadores = 1;
+unsigned int Configuracion::parametroN = 5;
+unsigned int Configuracion::parametroM = 10;
+unsigned int Configuracion::cantidadTurnos = 10;
 Lista<Cultivo*>* Configuracion::cultivos = NULL;
 Lista<Destino*>* Configuracion::destinos = NULL;
 

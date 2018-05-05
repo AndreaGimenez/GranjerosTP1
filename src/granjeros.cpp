@@ -175,7 +175,8 @@ void Granjeros::comenzarPartida(){
 bool Granjeros::avanzarTurno(){
 
 	bool finPartida = false;
-	//TODO: //partida.avanzarTurno(); avanzarTurno deberia avanzar el jugador y si es necesario cambiar la ronda. Debería devolver true si la partida se finalizo.
+	//TODO: //partida.avanzarTurno(); avanzarTurno deberia avanzar el jugador y si es necesario cambiar la ronda. Tambien tiene que actualizar el estado del jugador, sus recursos (cambia de estado tambien las parcelas).
+	//		Debería devolver true si la partida se finalizo.
 	//finPartida = partida.avanzarTurno();
 
 	//TODO: Este metodo generaria el bmp y mostraria el jugador y el estado actual de ese jugador.
