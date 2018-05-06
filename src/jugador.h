@@ -9,24 +9,30 @@
 #define JUGADOR_H_
 
 #include<string>
+#include "terreno.h"
+#include "tanque.h"
+#include "lista.h"
+#include "almacen.h"
 
 using namespace std ;
 
 class Jugador{
 
 	private:
+
+		string nombre;
 		unsigned int monedas;
 		unsigned int turnos;
-		unsigned int terrenos;
-		string nombre ;
+		Lista<Terreno*> terrenos;
+		Tanque* tanque;
+		Almacen* almacen;
 
 	public:
 		//Constructor
 	    //Pre: -
-		//Post: Inicializa un jugador con su cantidad de monedas y turnos. 
+		//Post: Inicializa un jugador con su cantidad de monedas, turnos y el nombre pasado por parametro.
 		//		Por default la cantidad de terrenos inicial es uno (1).
-		//		La referencia al siguiente jugador es NULL.
-		Jugador ();
+		Jugador(std::string nombreJugador);
 
 		//Post: devuelve la cantidad de monedas que posee el jugador.
 		unsigned int monedasDisponibles();
@@ -44,7 +50,7 @@ class Jugador{
 		unsigned int turnosRestantes();
 
 		//Pre: quedan turnos disponibles
-		//Post: se utilizó un turno.
+		//Post: se utiliza un turno.
 		void pasarProximoTurno();
 
 		//Post: devuelve la cantidad de terrenos que posee el jugador.
@@ -60,6 +66,43 @@ class Jugador{
 
 		//Post: imprime el estado actual del jugador
 		void imprimirJugador();
+
+		Terreno* obtenerTerreno(unsigned int numeroTerreno);
+
+		bool puedeSembrar(unsigned int numeroTerreno, std::string coordenadasParcela, Cultivo* cultivo);
+
+		bool sembrar(unsigned int numeroTerreno, std::string coordenadasParcela, Cultivo* cultivo);
+
+		bool puedeCosechar(unsigned int numeroTerreno, std::string coordenadasParcela);
+
+		bool cosechar(unsigned int numeroTerreno, std::string coordenadasParcela);
+
+		bool puedeRegar(unsigned int numeroTerreno, std::string coordenadasParcela);
+
+		bool regar(unsigned int numeroTerreno, std::string coordenadasParcela);
+
+		bool puedeEnviar(Cultivo* cultivo);
+
+		bool enviar(Cultivo* cultivo);
+
+		bool puedeComprarTerreno();
+
+		bool comprarTerreno();
+
+		bool puedeVenderTerreno(unsigned int numeroTerreno);
+
+		bool venderTerreno(unsigned int numeroTerreno);
+
+		bool puedeComprarCapacidadTanque();
+
+		bool comprarCapacidadTanque();
+
+		bool puedeComprarCapacidadAlmacen();
+
+		bool comprarCapacidadAlmacen();
+
+		~Jugador();
+
 
 	private:
 		//Post: devuelve "true" si el jugador tiene turnos disponibles,"false" caso contrario.

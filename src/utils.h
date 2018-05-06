@@ -13,9 +13,15 @@
 class Utils {
 public:
 
+	static bool esUnsignedInt(std::string cadena);
 	static int stringToInt(std::string);
 	static unsigned int stringToUnsignedInt(std::string valor);
 	static char stringToChar(std::string valor);
+	static unsigned int contarRepeticiones(std::string cadena, std::string subcadena);
+	static unsigned int splitString(std::string cadena, std::string subcadena, std::string* cadenaSeparada);
+
+	static const char CHAR_0 = '0';
+	static const char CHAR_9 = '9';
 };
 
 #endif /* UTILS_H_ */

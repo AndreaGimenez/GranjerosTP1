@@ -9,6 +9,7 @@
 #include "configuracion.h"
 #include "almacen.h"
 #include "parcela.h"
+#include "utils.h"
 #include <iostream>
 
 using namespace std;
@@ -18,6 +19,44 @@ void Test::correrTests(){
 	testParametros();
 	testAlmacen();
 	testParcela();
+}
+
+void Test::testSplit(){
+
+	string* cadenaSeparada = new string[1];
+	Utils::splitString("", ",", cadenaSeparada);
+	cout << cadenaSeparada[0] << endl;
+	delete[] cadenaSeparada;
+
+	cadenaSeparada = new string[2];
+	Utils::splitString(",", ",", cadenaSeparada);
+	cout << cadenaSeparada[0] << "-" << cadenaSeparada[1] << endl;
+	delete[] cadenaSeparada;
+
+	cadenaSeparada = new string[2];
+	Utils::splitString("a,", ",", cadenaSeparada);
+	cout << cadenaSeparada[0] << "-" << cadenaSeparada[1] << endl;
+	delete[] cadenaSeparada;
+
+	cadenaSeparada = new string[2];
+	Utils::splitString(",a", ",", cadenaSeparada);
+	cout << cadenaSeparada[0] << "-" << cadenaSeparada[1] << endl;
+	delete[] cadenaSeparada;
+
+	cadenaSeparada = new string[2];
+	Utils::splitString("a,a", ",", cadenaSeparada);
+	cout << cadenaSeparada[0] << "-" << cadenaSeparada[1] << endl;
+	delete[] cadenaSeparada;
+
+	cadenaSeparada = new string[3];
+	Utils::splitString("a,a,", ",", cadenaSeparada);
+	cout << cadenaSeparada[0] << "-" << cadenaSeparada[1] << "-" << cadenaSeparada[2] << endl;
+	delete[] cadenaSeparada;
+
+	cadenaSeparada = new string[3];
+	Utils::splitString("a,a,a", ",", cadenaSeparada);
+	cout << cadenaSeparada[0] << "-" << cadenaSeparada[1] << "-" << cadenaSeparada[2] << endl;
+	delete[] cadenaSeparada;
 }
 
 void Test::testParametros(){
@@ -30,7 +69,7 @@ void Test::testParametros(){
 	parametros.cambiarParametroM(5);
 	parametros.cambiarCantidadTurnos(30);
 
-	Configuracion::inicializar(parametros);
+	Configuracion::inicializar(&parametros);
 
 	Lista<Cultivo*>* cultivos = Configuracion::obtenerCultivos();
 	Lista<Destino*>* destinos = Configuracion::obtenerDestinos();
@@ -308,7 +347,7 @@ void Test::testParcela(){
 	parametros.cambiarParametroM(5);
 	parametros.cambiarCantidadTurnos(30);
 
-	Configuracion::inicializar(parametros);
+	Configuracion::inicializar(&parametros);
 
 	cout << "Inicio Test Parcela: " << endl << endl;
 

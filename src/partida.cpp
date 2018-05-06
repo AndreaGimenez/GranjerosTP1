@@ -5,9 +5,6 @@
  *      Author: Usuario
  */
 
-#ifndef PARTIDA_CPP_
-#define PARTIDA_CPP_
-
 #include <iostream>
 #include <string>
 
@@ -20,67 +17,117 @@ using namespace std ;
 
 Partida::Partida(Lista<string>* nombresJugadores){
 
-	this->nivelDeDificultad = Configuracion::obtenerDificultad(); ;
-	this->cantidadDeJugadores =  Configuracion::obtenerCantidadJugadores() ;
-	Lista<Jugador*>* rondaJugadores = new Lista<Jugador*>();
-	cargarJugadoresEnLaRonda(nombresJugadores);
-	
+	this->nivelDeDificultad = Configuracion::obtenerDificultad();
+	this->cantidadTurnos = Configuracion::obtenerCantidadTurnos();
+	this->cantidadTurnosJugados = 0;
+	this->jugadores = NULL;
+	this->cargarJugadores(nombresJugadores);
 }
 
 Dificultad Partida::obtenerDificultad(){
 
 	return this->nivelDeDificultad ;
-
 }
 
 unsigned int Partida::getCantidadDeJugadores(){
 
-	return this->cantidadDeJugadores ;
-
+	return this->jugadores->contarElementos() ;
 }
 
 Jugador* Partida::verJugadorActual(){
 
-	return rondaJugadores->obtenerCursor();
-
+	return jugadores->obtenerCursor();
 }
 
-void Partida::avanzarProximoJugador(){
+bool Partida::avanzarProximoJugador(){
 
-	rondaJugadores->avanzarCursor();	//Si hacemos las modificaciones q propuse en las primitivas del cursor
-									//de la lista, con esta linea de codigo creo q abarcamos todos los casos
-}									//sino habria que contemplar los casos en que se este en el ultimo jugador,etc
+	return jugadores->avanzarCursor();
+}
 
+void Partida::irAPrimerJugador(){
+
+	this->jugadores->iniciarCursor();
+	this->jugadores->avanzarCursor();
+}
+
+bool Partida::ejecutarAccionComprarCapacidadAgua(){
+
+	return this->verJugadorActual()->comprarCapacidadTanque();
+}
+
+bool Partida::ejecutarAccionComprarCapacidadAlmacen(){
+
+	return this->verJugadorActual()->comprarCapacidadAlmacen();
+}
+
+bool Partida::ejecutarAccionComprarTerreno(){
+
+	return this->verJugadorActual()->comprarTerreno();
+}
+
+bool Partida::ejecutarAccionCosechar(unsigned int numeroTerreno, std::string coordenadasParcela){
+
+	return this->verJugadorActual()->cosechar(numeroTerreno, coordenadasParcela);
+}
+
+bool Partida::ejecutarAccionEnviarCosecha(std::string nombreCultivo){
+
+	Cultivo* cultivo = Configuracion::obtenerCultivo(nombreCultivo);
+	return this->verJugadorActual()->enviar(cultivo);
+}
+
+bool Partida::ejecutarAccionRegar(unsigned int numeroTerreno, std::string coordenadasParcela){
+
+	return this->verJugadorActual()->regar(numeroTerreno, coordenadasParcela);
+}
+
+bool Partida::ejecutarAccionSembrar(unsigned int numeroTerreno, std::string coordenadasParcela, std::string nombreCultivo){
+
+	Cultivo* cultivo = Configuracion::obtenerCultivo(nombreCultivo);
+	return this->verJugadorActual()->sembrar(numeroTerreno, coordenadasParcela, cultivo);
+}
+
+bool Partida::ejecutarAccionVenderTerreno(unsigned int numeroTerreno){
+
+	return this->verJugadorActual()->venderTerreno(numeroTerreno);
+}
+
+bool Partida::avanzarTurno(){
+
+	bool partidaFinalizada = false;
+
+	//Si ya jugaron el turno todos los jugadores
+	if(!avanzarProximoJugador()){
+
+		this->cantidadTurnosJugados++;
+		partidaFinalizada = (this->cantidadTurnosJugados++ == this->cantidadTurnos);
+
+		//Si todavia hay turnos por jugar entonces hay que ir al primer jugador nuevamente
+		if(!partidaFinalizada){
+
+			irAPrimerJugador();
+		}
+	}
+
+	return partidaFinalizada;
+}
+
+void Partida::cargarJugadores(Lista<string>* nombresJugadores){
+
+	nombresJugadores->iniciarCursor() ;
+	while(nombresJugadores->avanzarCursor()){
+
+		this->jugadores->agregar(new Jugador(nombresJugadores->obtenerCursor()));
+	}
+}
 
 Partida::~Partida(){
 
-	rondaJugadores->iniciarCursor() ;
-	for(unsigned int i = 0 ; i < this->cantidadDeJugadores ; i++ ){
+	jugadores->iniciarCursor() ;
 
-		Jugador* jugadorObtenido = rondaJugadores->obtenerCursor() ;
+	while(jugadores->avanzarCursor()){
+
+		Jugador* jugadorObtenido = jugadores->obtenerCursor() ;
 		delete jugadorObtenido ;
-		rondaJugadores->avanzarCursor() ;
-
 	}
-
 }
-
-void Partida::cargarJugadoresEnLaRonda(Lista<string>* nombresJugadores){
-
-	nombresJugadores->iniciarCursor() ;
-
-	for(unsigned int i = 0 ; i < this->cantidadDeJugadores ; i++){
-
-		Jugador* nuevoJugador = new Jugador();
-		nuevoJugador->asignarNombre(nombresJugadores->obtenerCursor());
-		this->rondaJugadores->agregar(nuevoJugador);
-		nombresJugadores->avanzarCursor();
-
-	}
-
-}
-
-
-
-
-#endif /* PARTIDA_CPP_ */

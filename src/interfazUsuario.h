@@ -11,6 +11,7 @@
 #include <string>
 #include "menu.h"
 #include "pila.h"
+#include "partida.h"
 
 /*
  * 'InterfazUsuario' permite la interaccion con el usuario, tanto la salida como la entrada.
@@ -93,6 +94,8 @@ public:
 	 * Pos: Muestra por pantalla un mensaje de despedida.
 	 */
 	void mostrarDespedida();
+
+	void mostrarEstadoPartida(Partida* partida);
 
 	/*
 	 * Pos: Libera los recursos reservados.

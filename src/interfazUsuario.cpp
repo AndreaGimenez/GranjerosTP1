@@ -167,6 +167,10 @@ Menu* InterfazUsuario::crearMenuPartida() {
 	return menu;
 }
 
+void InterfazUsuario::mostrarEstadoPartida(Partida* partida){
+	//TODO: con EasyBMP hay que mostrar el estado de la partida (solo del jugador actual).
+}
+
 InterfazUsuario::~InterfazUsuario(){
 
 	if(this->menuPartida != NULL){

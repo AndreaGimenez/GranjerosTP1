@@ -16,11 +16,15 @@
 using namespace std ;
 
 class Partida{
+
 	private:
 
-		Dificultad nivelDeDificultad ;
-		unsigned int cantidadDeJugadores;
-		Lista<Jugador*>* rondaJugadores;
+		Dificultad nivelDeDificultad;
+		unsigned int cantidadTurnos;
+		unsigned int cantidadTurnosJugados;
+		Lista<Jugador*>* jugadores;
+
+		void cargarJugadores(Lista<string>* nombresJugadores);
 
 	public:
 		//Constructor
@@ -41,18 +45,36 @@ class Partida{
 		Jugador* verJugadorActual();
 
 		//Pre:
-		//Post: se avanz� un posicion en la ronda
-		void avanzarProximoJugador();
+		//Post: se avanza un posicion en la ronda. Devuelve false si el jugador actual es el ultimo jugador.
+		bool avanzarProximoJugador();
+
+		//Pre:
+		//Post: Posiciona el jugador actual en el primer jugador.
+		void irAPrimerJugador();
+
+		//Pre:
+		//Post:
+		bool ejecutarAccionComprarCapacidadAgua();
+
+		bool ejecutarAccionComprarCapacidadAlmacen();
+
+		bool ejecutarAccionComprarTerreno();
+
+		bool ejecutarAccionCosechar(unsigned int numeroTerreno, std::string coordenadasParcela);
+
+		bool ejecutarAccionEnviarCosecha(std::string nombreCultivo);
+
+		bool ejecutarAccionRegar(unsigned int numeroTerreno, std::string coordenadasParcela);
+
+		bool ejecutarAccionSembrar(unsigned int numeroTerreno, std::string coordenadasParcela, std::string nombreCultivo);
+
+		bool ejecutarAccionVenderTerreno(unsigned int numeroTerreno);
+
+		bool avanzarTurno();
 
 		//Pre:
 		//Post:
 		~Partida();
-
-	private:
-		//Pre:
-		//Post:
-		void cargarJugadoresEnLaRonda(Lista<string>* nombresJugadores);
-
 };
 
 

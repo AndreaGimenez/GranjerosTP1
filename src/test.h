@@ -17,6 +17,7 @@ public:
 	static void testParametros();
 	static void testAlmacen();
 	static void testParcela();
+	static void testSplit();
 
 private:
 	static void testParcela1();

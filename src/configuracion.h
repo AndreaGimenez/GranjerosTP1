@@ -26,6 +26,7 @@ class Configuracion {
 private:
 
 	static Dificultad dificultad;
+	static unsigned int cantidadTerrenosIniciales;
 	static unsigned int cantidadJugadores;
 	static unsigned int parametroN;
 	static unsigned int parametroM;
@@ -60,11 +61,15 @@ private:
 public:
 
 	//Pos: Inicializa la configuracion de acuerdo a los parametros del juego y archivos de configuracion.
-	static void inicializar(ParametroConfiguracion parametros);
+	static void inicializar(ParametroConfiguracion* parametros);
 
 	//Pre: Se debe haber inicializado la configuracion con 'inicializar'.
 	//Pos: Devuelve la dificultad configurada.
 	static Dificultad obtenerDificultad();
+
+	//Pre: Se debe haber inicializado la configuracion con 'inicializar'.
+	//Pos: Devuelve la cantidad de terrenos iniciales para un jugador.
+	static unsigned int obtenerCantidadTerrenosIniciales();
 
 	//Pre: Se debe haber inicializado la configuracion con 'inicializar'.
 	//Pos: Devuelve la cantidad de jugadores de la partida

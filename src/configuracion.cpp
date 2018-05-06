@@ -14,6 +14,7 @@
 using namespace std;
 
 Dificultad Configuracion::dificultad = FACIL;
+unsigned int Configuracion::cantidadTerrenosIniciales = 1;
 unsigned int Configuracion::cantidadJugadores = 1;
 unsigned int Configuracion::parametroN = 5;
 unsigned int Configuracion::parametroM = 10;
@@ -26,13 +27,13 @@ Configuracion::Configuracion(){
 
 }
 
-void Configuracion::inicializar(ParametroConfiguracion parametros){
+void Configuracion::inicializar(ParametroConfiguracion* parametros){
 
-	dificultad = parametros.obtenerDificultad();
-	cantidadJugadores = parametros.obtenerCantidadJugadores();
-	parametroN = parametros.obtenerParametroN();
-	parametroM = parametros.obtenerParametroM();
-	cantidadTurnos = parametros.obtenerCantidadTurnos();
+	dificultad = parametros->obtenerDificultad();
+	cantidadJugadores = parametros->obtenerCantidadJugadores();
+	parametroN = parametros->obtenerParametroN();
+	parametroM = parametros->obtenerParametroM();
+	cantidadTurnos = parametros->obtenerCantidadTurnos();
 
 	cargarCultivos();
 	cargarDestinos();
@@ -99,6 +100,10 @@ unsigned int Configuracion::obtenerCoeficienteDificultad(){
 
 Dificultad Configuracion::obtenerDificultad(){
 	return dificultad;
+}
+
+unsigned int Configuracion::obtenerCantidadTerrenosIniciales(){
+	return cantidadTerrenosIniciales;
 }
 
 unsigned int Configuracion::obtenerCantidadJugadores(){

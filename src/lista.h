@@ -98,7 +98,6 @@ template<class T> class Lista {
          *       El valor de retorno indica si el cursor quedo posicionado
          *       sobre un elemento o no (en caso de que la Lista esta vacia o
          *       no existan mas elementos por recorrer.)
-         *       Si el cursor se encontraba al final de la lista, vuelve al primero elemento
          */
         bool avanzarCursor();
 
@@ -240,13 +239,6 @@ template<class T> void Lista<T>::iniciarCursor() {
 
     this->cursor = NULL;
 }
-/*ME PARECE MEJOR INICIAR EL CURSOR EN EL PRIMERO DE LA LISTA, ASI CUANDO RECORREMOS LA RONDA ESTA EN EL PRIMERO Y NO EN NULL*/
-/*
-template<class T> void Lista<T>::iniciarCursor() {
-
-    this->cursor = this->primero;;
-}
-}*/
 
 template<class T> bool Lista<T>::avanzarCursor() {
 
@@ -262,28 +254,6 @@ template<class T> bool Lista<T>::avanzarCursor() {
     /* pudo avanzar si el cursor ahora apunta a un nodo */
     return (this->cursor != NULL);
 }
-/*ME PARECE QUE SERIA MEJOR MODIFICAR ESTE METODO Y QUE QUEDE ASI (VER ABAJO)
- * ASI CADA VEZ QUE SE AVANZA DESDE EL ULTIMO NODO DE LA LISTA DIRECTAMENTE VA AL PRIMERO
- * Y NO CAE NUNCA EN NULL, LO CUAL NOS HARIA TENER QU AVANZAR EL CURSOR UNA VEZ ADICIONAL*/
-
-/*
- *
-template<class T> bool Lista<T>::avanzarCursor() {
-
-    if (this->cursor->obtenerSiguiente() == NULL) {
-
-        this->cursor = this->primero;
-
-    } else {
-
-        this->cursor = this->cursor->obtenerSiguiente();
-    }
-
-    pudo avanzar si el cursor ahora apunta a un nodo *
-    return (this->cursor != NULL);
-}
-
-*/
 
 template<class T> T Lista<T>::obtenerCursor() {
 

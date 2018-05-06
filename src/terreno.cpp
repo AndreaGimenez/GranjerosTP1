@@ -6,29 +6,29 @@
  */
 
 #include "terreno.h"
-#include "utilidades.h"
 #include "cultivo.h"
 #include "configuracion.h"
+#include "utils.h"
 
 using namespace std;
 
 Terreno::Terreno(){
 
-	this->cantidadColumnas = Configuracion::obtenerAnchoTerreno();
-	this->cantidadFilas = Configuracion::obtenerLargoTerreno();
+	this->anchoTerreno = Configuracion::obtenerAnchoTerreno();
+	this->largoTerreno = Configuracion::obtenerLargoTerreno();
 	//this->precio = PRECIO_INICIAL*cantidadColumnas*cantidadFilas;
 	//this->parcelas = new Parcela[cantidadFilas][cantidadColumnas];
-	this->parcelas = new Parcela*[this->cantidadFilas * this->cantidadColumnas];
+	this->parcelas = new Parcela*[this->largoTerreno * this->anchoTerreno];
 }
 
-unsigned int Terreno::obtenerCantidadColumnas(){
+unsigned int Terreno::obtenerAnchoTerreno(){
 
-	return this->cantidadColumnas;
+	return this->anchoTerreno;
 }
 
-unsigned int Terreno::obtenerCantidadFilas(){
+unsigned int Terreno::obtenerLargoTerreno(){
 
-	return this->cantidadFilas;
+	return this->largoTerreno;
 }
 
 unsigned int Terreno::obtenerPrecio(){
@@ -46,7 +46,7 @@ unsigned int Terreno::obtenerPrecio(){
 
 unsigned int Terreno::obtenerCantidadParcelas(){
 
-	return this->cantidadFilas * this->cantidadColumnas;
+	return this->largoTerreno * this->anchoTerreno;
 }
 
 //bool parcelaCultivada(char)
@@ -64,11 +64,50 @@ unsigned int Terreno::obtenerCantidadCultivos(){
 	return 0;
 }
 
-Parcela* Terreno::buscarParcela(std::string strCoordenadas){
+Parcela* Terreno::buscarParcela(string strCoordenadas){
 
-	//TODO: obtener las coordendas de strCoordenadas
-	unsigned int coordenadas[2] = {0,0};
-	return this->parcelas[coordenadas[0] * this->cantidadColumnas + coordenadas[1]];
+	Parcela* parcela = NULL;
+
+	if(Utils::contarRepeticiones(strCoordenadas, ",") == 1){
+
+		string coordenadas[2];
+		Utils::splitString(strCoordenadas, ",", coordenadas);
+
+		if(validarCoordenadas(coordenadas)){
+
+			unsigned int coordenadasConvertidas[2] = {Utils::stringToUnsignedInt(coordenadas[0]), Utils::stringToUnsignedInt(coordenadas[1])};
+			parcela = this->parcelas[obtenerIndiceParcela(coordenadasConvertidas)];
+		}
+	}
+
+	return parcela;
+}
+
+bool Terreno::validarCoordenadas(string coordenadas[]){
+
+	//Ambas tienen que ser int
+	bool validarCoordenadas = (Utils::esUnsignedInt(coordenadas[0]) && Utils::esUnsignedInt(coordenadas[1]));
+	//Ademas tienen que ser posiciones validas en el terreno
+	return (validarCoordenadas
+			&& (Utils::stringToUnsignedInt(coordenadas[0]) < this->largoTerreno)
+			&& (Utils::stringToUnsignedInt(coordenadas[1]) < this->anchoTerreno));
+}
+
+unsigned int Terreno::obtenerIndiceParcela(unsigned int coordenadas[]){
+
+	return coordenadas[0] * this->anchoTerreno + coordenadas[1];
+}
+
+bool Terreno::puedeSembrar(std::string coordenadasParcela){
+
+	Parcela* parcela = buscarParcela(coordenadasParcela);
+	return parcela->puedeSembrar();
+}
+
+void Terreno::sembrar(std::string coordenadasParcela, Cultivo* cultivo){
+
+	Parcela* parcela = buscarParcela(coordenadasParcela);
+	parcela->sembrar(cultivo);
 }
 
 Terreno::~Terreno(){

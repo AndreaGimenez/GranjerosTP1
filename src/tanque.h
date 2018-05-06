@@ -8,25 +8,25 @@
 #ifndef TANQUE_H_
 #define TANQUE_H_
 
-#include "partida.h"
-
 class Tanque{
+
 	private:
+
 		unsigned int capacidad;
 		unsigned int volumenOcupado;
 
 	public:
 		//constructor
 		//Pre: -
-		//Post: el tanque fue creado. Puede almacenar "capacidad" unidades de riego y está vacío.
+		//Post: el tanque fue creado. Puede almacenar "capacidad" unidades de riego y esta vacio.
 		Tanque(unsigned int capacidad);
 
 		//Pre: -
-		//Post: devuelve si el tanque está o no lleno
+		//Post: devuelve si el tanque esta o no lleno
 		bool estaLLeno();
 
 		//Pre:
-		//Post: devuelve si el tanque está o no vacio
+		//Post: devuelve si el tanque esta o no vacio
 		bool estaVacio();
 
 		//Pre:
@@ -60,7 +60,7 @@ class Tanque{
 
 		//Pre: La dificultad del juego es un entero que pertenece al intervalo [1;3]
 		//Post: Se calcula la capacidad inicial del tanque
-		unsigned int capacidadInicial(Partida partidaActual) ;
+		unsigned int capacidadInicial() ;
 };
 
 

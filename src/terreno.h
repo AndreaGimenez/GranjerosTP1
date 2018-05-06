@@ -14,10 +14,12 @@ class Terreno{
 
 	private:
 
-		unsigned int cantidadColumnas;
-		unsigned int cantidadFilas;
+		unsigned int anchoTerreno;
+		unsigned int largoTerreno;
 		//unsigned int precio;
 		Parcela** parcelas;
+
+		unsigned int obtenerIndiceParcela(unsigned int coordenadas[]);
 
 	public:
 
@@ -27,10 +29,10 @@ class Terreno{
 		Terreno();
 
 		// Post: Devuelve la cantidad de columnas
-		unsigned int obtenerCantidadColumnas();
+		unsigned int obtenerAnchoTerreno();
 
 		// Post: Devuelve la cantidad de filas
-		unsigned int obtenerCantidadFilas();
+		unsigned int obtenerLargoTerreno();
 
 		// Post: Devuelve el precio actual del terreno
 		unsigned int obtenerPrecio();
@@ -45,6 +47,12 @@ class Terreno{
 		//		x no puede ser mayor que 'obtenerCantidadFilas' e 'y' no puede ser mayor que 'obtenerCantidadColumnas'
 		// Post: Devuelve la parcela con coordenadas 'coordenadas'. Si la parcela no existe devuelve NULL.
 		Parcela* buscarParcela(std::string coordenadas);
+
+		bool validarCoordenadas(std::string coordenadas[]);
+
+		bool puedeSembrar(std::string coordenadasParcela);
+
+		void sembrar(std::string coordenadasParcela, Cultivo* cultivo);
 
 		// Destructor
 		// Libera la memoria solicitada

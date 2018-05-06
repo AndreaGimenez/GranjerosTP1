@@ -22,9 +22,9 @@ class Granjeros {
 
 private:
 
-	ParametroConfiguracion parametrosConfiguracion;
-	InterfazUsuario interfaz;
-	//Partida partida;
+	ParametroConfiguracion* parametrosConfiguracion;
+	InterfazUsuario* interfaz;
+	Partida* partida;
 
 	void ejecutarAccion(Accion* accion);
 	void ejecutarAccionConfiguracion(Accion* accion);
