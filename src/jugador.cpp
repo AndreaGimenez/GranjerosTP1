@@ -58,6 +58,11 @@ bool Jugador::gastarMonedas(unsigned int monedasAGastar){
 	return exito ;
 }
 
+bool Jugador::puedeGastarMonedas(unsigned int cantidadMonedas){
+
+	return (cantidadMonedas <= this->monedas);
+}
+
 unsigned int Jugador::turnosRestantes(){
 
 	return (this-> turnos)-1 ; //para no contemplar el turno actual, solo los restantes
@@ -96,7 +101,7 @@ void Jugador::imprimirJugador(){
 
 }
 
-Terreno* Jugador::obtenerTerreno(unsigned int numeroTerreno){
+Terreno* Jugador::buscarTerreno(unsigned int numeroTerreno){
 
 	if(numeroTerreno < 1 && numeroTerreno > this->terrenos.contarElementos() ){
 		throw string("El numero de terreno no existe");
@@ -116,10 +121,44 @@ bool Jugador::quedanTurnos(){
 	return turnos;
 }
 
+bool Jugador::puedeAlmacenar(Cultivo* cultivo){
+
+	return (this->puedeAlmacenar(cultivo, 1));
+}
+
+bool Jugador::puedeAlmacenar(Cultivo* cultivo, unsigned int cantidadAAlmacenar){
+
+	return (this->almacen->puedeAlmacenarCosecha(cultivo, cantidadAAlmacenar));
+}
+
+bool Jugador::almacenar(Cultivo* cultivo){
+
+	return this->almacenar(cultivo, 1);
+}
+
+bool Jugador::almacenar(Cultivo* cultivo, unsigned int cantidadAAlmacenar){
+
+	bool almacenar = puedeAlmacenar(cultivo, cantidadAAlmacenar);
+
+	if(almacenar){
+		this->almacen->almacenarCosecha(cultivo, cantidadAAlmacenar);
+	}
+
+	return almacenar;
+}
+
 bool Jugador::puedeSembrar(unsigned int numeroTerreno, std::string coordenadasParcela, Cultivo* cultivo){
 
-	return (cultivo->obtenerCosto() <= this->monedas
-			&& this->obtenerTerreno(numeroTerreno)->puedeSembrar(coordenadasParcela));
+	bool puedeCosechar = false;
+
+	Terreno* terreno = buscarTerreno(numeroTerreno);
+	if(terreno != NULL){
+
+		return (puedeGastarMonedas(cultivo->obtenerCosto())
+				&& terreno->puedeSembrar(coordenadasParcela));
+	}
+
+	return puedeCosechar;
 }
 
 bool Jugador::sembrar(unsigned int numeroTerreno, std::string coordenadasParcela, Cultivo* cultivo){
@@ -128,19 +167,98 @@ bool Jugador::sembrar(unsigned int numeroTerreno, std::string coordenadasParcela
 
 	if(puedeSembrar){
 
-		this->obtenerTerreno(numeroTerreno)->sembrar(coordenadasParcela, cultivo);
+		this->buscarTerreno(numeroTerreno)->sembrar(coordenadasParcela, cultivo);
 		this->gastarMonedas(cultivo->obtenerCosto());
 	}
 
 	return puedeSembrar;
 }
 
+bool Jugador::puedeCosechar(unsigned int numeroTerreno, string coordenadasParcela){
+
+	bool puedeCosechar = false;
+
+	Terreno* terreno = buscarTerreno(numeroTerreno);
+	if(terreno != NULL){
+		terreno->puedeCosechar(coordenadasParcela);
+	}
+
+	return puedeCosechar;
+}
+
 bool Jugador::cosechar(unsigned int numeroTerreno, std::string coordenadasParcela){
-	return false;
+
+	bool puedeCosechar = this->puedeCosechar(numeroTerreno, coordenadasParcela);
+
+	if(puedeCosechar){
+
+		Cultivo* cultivoCosechado = this->buscarTerreno(numeroTerreno)->cosechar(coordenadasParcela);
+		almacenar(cultivoCosechado);
+	}
+
+	return puedeCosechar;
+}
+
+bool Jugador::puedeRegar(unsigned int numeroTerreno, std::string coordenadasParcela){
+
+	bool puedeRegar = false;
+
+	Terreno* terreno = this->buscarTerreno(numeroTerreno);
+	if(terreno != NULL){
+
+		Cultivo* cultivo = terreno->obtenerCultivo(coordenadasParcela);
+		puedeRegar = (puedeConsumirUnidadesRiego(cultivo->obtenerConsumoAgua())
+					  && terreno->puedeRegar(coordenadasParcela));
+	}
+
+	return puedeRegar;
 }
 
 bool Jugador::regar(unsigned int numeroTerreno, std::string coordenadasParcela){
-	return false;
+
+	bool regar = puedeRegar(numeroTerreno, coordenadasParcela);
+
+	if(regar){
+
+		 int unidadesRiegoConsumidas = this->buscarTerreno(numeroTerreno)->regar(coordenadasParcela);
+		 this->consumirUnidadesRiego(unidadesRiegoConsumidas);
+	}
+
+	return regar;
+}
+
+unsigned int Jugador::obtenerUnidadesRiego(){
+
+	return this->unidadesRiego;
+}
+
+unsigned int Jugador::obtenerUnidadesRiegoTotales(){
+
+	return this->unidadesRiego + this->tanque->volumenUtilizado();
+}
+
+bool Jugador::puedeConsumirUnidadesRiego(unsigned int unidadesRiego){
+
+	return (unidadesRiego <= this->obtenerUnidadesRiegoTotales());
+}
+
+bool Jugador::consumirUnidadesRiego(unsigned int unidadesRiego){
+
+	bool consumirUnidadesRiego = puedeConsumirUnidadesRiego(unidadesRiego);
+
+	if(consumirUnidadesRiego){
+
+		if(this->unidadesRiego < unidadesRiego){
+
+			unsigned int unidadesAConsumirTanque = unidadesRiego - this->unidadesRiego;
+			this->unidadesRiego = 0;
+			this->tanque->usarAguaAlmacenada(unidadesAConsumirTanque);
+		}else{
+			this->unidadesRiego -= unidadesRiego;
+		}
+	}
+
+	return consumirUnidadesRiego;
 }
 
 bool Jugador::enviar(Cultivo* cultivo){

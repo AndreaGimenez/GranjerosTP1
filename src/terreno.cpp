@@ -93,6 +93,18 @@ bool Terreno::validarCoordenadas(string coordenadas[]){
 			&& (Utils::stringToUnsignedInt(coordenadas[1]) < this->anchoTerreno));
 }
 
+Cultivo* Terreno::obtenerCultivo(string coordenadasParcela){
+
+	Cultivo* cultivo = NULL;
+
+	Parcela* parcela = buscarParcela(coordenadasParcela);
+	if(parcela != NULL){
+		cultivo = parcela->obtenerCultivo();
+	}
+
+	return cultivo;
+}
+
 unsigned int Terreno::obtenerIndiceParcela(unsigned int coordenadas[]){
 
 	return coordenadas[0] * this->anchoTerreno + coordenadas[1];
@@ -100,14 +112,79 @@ unsigned int Terreno::obtenerIndiceParcela(unsigned int coordenadas[]){
 
 bool Terreno::puedeSembrar(std::string coordenadasParcela){
 
+	bool puedeSembrar = false;
+
 	Parcela* parcela = buscarParcela(coordenadasParcela);
-	return parcela->puedeSembrar();
+
+	if(parcela != NULL){
+		puedeSembrar = parcela->puedeSembrar();
+	}
+
+	return puedeSembrar;
 }
 
-void Terreno::sembrar(std::string coordenadasParcela, Cultivo* cultivo){
+bool Terreno::sembrar(std::string coordenadasParcela, Cultivo* cultivo){
+
+	bool puedeSembrar = this->puedeSembrar(coordenadasParcela);
+
+	if(puedeSembrar){
+
+		Parcela* parcela = buscarParcela(coordenadasParcela);
+		parcela->sembrar(cultivo);
+	}
+
+	return puedeSembrar;
+}
+
+bool Terreno::puedeCosechar(std::string coordenadasParcela){
+
+	bool puedeCosechar = false;
+
+	Parcela* parcela = this->buscarParcela(coordenadasParcela);
+
+	if(parcela != NULL){
+		puedeCosechar = parcela->puedeCosechar();
+	}
+
+	return puedeCosechar;
+}
+
+Cultivo* Terreno::cosechar(std::string coordenadasParcela){
+
+	Cultivo* cultivo = NULL;
+
+	if(puedeCosechar(coordenadasParcela)){
+
+		Parcela* parcela = this->buscarParcela(coordenadasParcela);
+		cultivo = parcela->cosechar();
+	}
+
+	return cultivo;
+}
+
+bool Terreno::puedeRegar(string coordenadasParcela){
+
+	bool puedeRegar = false;
 
 	Parcela* parcela = buscarParcela(coordenadasParcela);
-	parcela->sembrar(cultivo);
+	if(puedeRegar){
+		puedeRegar = parcela->puedeRegar();
+	}
+
+	return puedeRegar;
+}
+
+int Terreno::regar(string coordenadasParcela){
+
+	int unidadesRiegoConsumidas = -1;
+
+	if(puedeRegar(coordenadasParcela)){
+
+		Parcela* parcela = buscarParcela(coordenadasParcela);
+		unidadesRiegoConsumidas = parcela->regar();
+	}
+
+	return unidadesRiegoConsumidas;
 }
 
 Terreno::~Terreno(){

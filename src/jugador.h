@@ -22,10 +22,14 @@ class Jugador{
 
 		string nombre;
 		unsigned int monedas;
+		unsigned int unidadesRiego;
 		unsigned int turnos;
 		Lista<Terreno*> terrenos;
 		Tanque* tanque;
 		Almacen* almacen;
+
+		//Post: devuelve "true" si el jugador tiene turnos disponibles,"false" caso contrario.
+		bool quedanTurnos();
 
 	public:
 		//Constructor
@@ -45,6 +49,8 @@ class Jugador{
 		//Post: disminuye la cantidad de monedas del jugador segun el monto de monedasARestar.
 		//		Si tuvo exito devuelve "true", sino "false".
 		bool gastarMonedas(unsigned int monedasAGastar);
+
+		bool puedeGastarMonedas(unsigned int cantidadMonedas);
 
 		//Post: devuelve la cantidad de turnos que le quedan al jugador
 		unsigned int turnosRestantes();
@@ -67,7 +73,15 @@ class Jugador{
 		//Post: imprime el estado actual del jugador
 		void imprimirJugador();
 
-		Terreno* obtenerTerreno(unsigned int numeroTerreno);
+		Terreno* buscarTerreno(unsigned int numeroTerreno);
+
+		bool puedeAlmacenar(Cultivo* cultivo);
+
+		bool puedeAlmacenar(Cultivo* cultivo, unsigned int cantidadAAlmacenar);
+
+		bool almacenar(Cultivo* cultivo);
+
+		bool almacenar(Cultivo* cultivo, unsigned int cantidadAAlmacenar);
 
 		bool puedeSembrar(unsigned int numeroTerreno, std::string coordenadasParcela, Cultivo* cultivo);
 
@@ -80,6 +94,18 @@ class Jugador{
 		bool puedeRegar(unsigned int numeroTerreno, std::string coordenadasParcela);
 
 		bool regar(unsigned int numeroTerreno, std::string coordenadasParcela);
+
+		//Post: Devuelve la cantidad de unidades de riego que tiene el jugador sin tener en cuenta las unidades del tanque.
+		unsigned int obtenerUnidadesRiego();
+
+		//Post: Devuelve la cantidad de unidades de riego que tiene el jugador teniendo en cuenta las unidades del tanque.
+		unsigned int obtenerUnidadesRiegoTotales();
+
+		//Post: Indica si el jugador puede consumir 'unidadesRiego'.
+		//		Este metodo tiene en cuenta las unidades de riega almacenadas en el tanque.
+		bool puedeConsumirUnidadesRiego(unsigned int unidadesRiego);
+
+		bool consumirUnidadesRiego(unsigned int unidadesRiego);
 
 		bool puedeEnviar(Cultivo* cultivo);
 
@@ -102,11 +128,6 @@ class Jugador{
 		bool comprarCapacidadAlmacen();
 
 		~Jugador();
-
-
-	private:
-		//Post: devuelve "true" si el jugador tiene turnos disponibles,"false" caso contrario.
-		bool quedanTurnos();
 };
 
 

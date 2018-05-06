@@ -40,15 +40,19 @@ bool Parcela::puedeSembrar(){
 	return (this->estado == parcela::LIMPIA);
 }
 
-void Parcela::sembrar(Cultivo* cultivo){
+bool Parcela::sembrar(Cultivo* cultivo){
 
-	if(this->puedeSembrar()){
+	bool puedeSembrar = this->puedeSembrar();
+
+	if(puedeSembrar){
 
 		this->cultivo = cultivo;
 		this->estado = parcela::SEMBRADA;
 		this->tiempoSembrada = 0;
 		this->actualizarEstado = false;
 	}
+
+	return puedeSembrar;
 }
 
 bool Parcela::puedeRegar(){
@@ -56,9 +60,16 @@ bool Parcela::puedeRegar(){
 	return (this->estado == parcela::SEMBRADA);
 }
 
-void Parcela::regar(){
+int Parcela::regar(){
 
-	this->regada = true;
+	int unidadesRiegoConsumidas = -1;
+
+	if(puedeRegar()){
+		this->regada = true;
+		unidadesRiegoConsumidas = this->obtenerCultivo()->obtenerConsumoAgua();
+	}
+
+	return unidadesRiegoConsumidas;
 }
 
 bool Parcela::puedeCosechar(){

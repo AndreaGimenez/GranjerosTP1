@@ -61,6 +61,16 @@ unsigned int Almacen::obtenerCantidadAlmacenada(Cultivo* cultivo){
 	return cantidadAlmacenada;
 }
 
+bool Almacen::puedeAlmacenarCosecha(Cultivo* cultivoAAlmacenar){
+
+	return this->puedeAlmacenarCosecha(cultivoAAlmacenar, 1);
+}
+
+bool Almacen::puedeAlmacenarCosecha(Cultivo* cultivoAAlmacenar, unsigned int cantidadAAlmacenar){
+
+	return (cantidadAAlmacenar <= this->obtenerCapacidad());
+}
+
 bool Almacen::almacenarCosecha(Cultivo* cultivoAAlmacenar){
 
 	return this->almacenarCosecha(cultivoAAlmacenar, 1);
@@ -68,7 +78,7 @@ bool Almacen::almacenarCosecha(Cultivo* cultivoAAlmacenar){
 
 bool Almacen::almacenarCosecha(Cultivo* cultivoAAlmacenar, unsigned int cantidadAAlmacenar){
 
-	bool almacenar = (cantidadAAlmacenar <= this->obtenerCapacidad());
+	bool almacenar = puedeAlmacenarCosecha(cultivoAAlmacenar, cantidadAAlmacenar);
 
 	if(almacenar){
 

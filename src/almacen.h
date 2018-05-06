@@ -61,6 +61,10 @@ public:
 	//Pos: Devuelve la cantidad almacenada de 'cultivo'.
 	unsigned int obtenerCantidadAlmacenada(Cultivo* cultivo);
 
+	bool puedeAlmacenarCosecha(Cultivo* cultivoAAlmacenar);
+
+	bool puedeAlmacenarCosecha(Cultivo* cultivoAAlmacenar, unsigned int cantidadAAlmacenar);
+
 	//Pos: Incrementa en 1 la cantidad almacenada de 'cultivoAAlmacenar'.
 	bool almacenarCosecha(Cultivo* cultivoAAlmacenar);
 

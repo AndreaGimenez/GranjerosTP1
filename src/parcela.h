@@ -84,7 +84,7 @@ public:
 	 * 		En caso que el sembrado no se pueda realizar la parcela no se modifica.
 	 *
 	 */
-	void sembrar(Cultivo* cultivo);
+	bool sembrar(Cultivo* cultivo);
 
 	/*
 	 * Pos: Indica si la parcela esta en condiciones de ser regada.
@@ -97,7 +97,7 @@ public:
 	 * 		En caso que no se pueda realizar el riego no se modifica la parcela.
 	 *
 	 */
-	void regar();
+	int regar();
 
 	/*
 	 * Pos: Indica si la parcela esta en condiciones de ser cosechada.

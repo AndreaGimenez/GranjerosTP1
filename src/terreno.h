@@ -50,9 +50,19 @@ class Terreno{
 
 		bool validarCoordenadas(std::string coordenadas[]);
 
+		Cultivo* obtenerCultivo(std::string coordenadasParcela);
+
 		bool puedeSembrar(std::string coordenadasParcela);
 
-		void sembrar(std::string coordenadasParcela, Cultivo* cultivo);
+		bool sembrar(std::string coordenadasParcela, Cultivo* cultivo);
+
+		bool puedeCosechar(std::string coordenadasParcela);
+
+		Cultivo* cosechar(std::string coordenadasParcela);
+
+		bool puedeRegar(std::string coordenadasParcela);
+
+		int regar(std::string coordenadasParcela);
 
 		// Destructor
 		// Libera la memoria solicitada
