@@ -23,68 +23,97 @@ class Jugador{
 		string nombre;
 		unsigned int monedas;
 		unsigned int unidadesRiego;
-		unsigned int turnos;
 		Lista<Terreno*> terrenos;
 		Tanque* tanque;
 		Almacen* almacen;
 
-		//Post: devuelve "true" si el jugador tiene turnos disponibles,"false" caso contrario.
-		bool quedanTurnos();
-
 	public:
-		//Constructor
-	    //Pre: -
-		//Post: Inicializa un jugador con su cantidad de monedas, turnos y el nombre pasado por parametro.
-		//		Por default la cantidad de terrenos inicial es uno (1).
+
+		/*
+		 * Post: Inicializa un jugador con su cantidad de monedas, turnos y el nombre pasado por parametro.
+		 *		 Por default la cantidad de terrenos inicial es uno (1).
+		 */
 		Jugador(std::string nombreJugador);
 
-		//Post: devuelve la cantidad de monedas que posee el jugador.
+		//Post: Devuelve la cantidad de monedas que posee el jugador.
 		unsigned int monedasDisponibles();
 
-		//Pre: la cantidad de monedas recibida es mayor a cero.
-		//Post: incrementa la cantidad de monedas del jugador segun el monto de monedasASumar.
+		//Pre: La cantidad de monedas recibida es mayor a cero.
+		//Post: Incrementa la cantidad de monedas del jugador segun el monto de monedasASumar.
 		void agregarMonedas(unsigned int monedasASumar);
 
 		//Pre: la cantidad de monedas recibida es mayor a cero.
-		//Post: disminuye la cantidad de monedas del jugador segun el monto de monedasARestar.
+		//Post: Disminuye la cantidad de monedas del jugador segun el monto de monedasARestar.
 		//		Si tuvo exito devuelve "true", sino "false".
 		bool gastarMonedas(unsigned int monedasAGastar);
 
+		//Post: Indica si el jugador puede gastar 'cantidadMonedas'.
 		bool puedeGastarMonedas(unsigned int cantidadMonedas);
 
-		//Post: devuelve la cantidad de turnos que le quedan al jugador
-		unsigned int turnosRestantes();
-
-		//Pre: quedan turnos disponibles
-		//Post: se utiliza un turno.
-		void pasarProximoTurno();
-
 		//Post: devuelve la cantidad de terrenos que posee el jugador.
-		unsigned int cantidadDeTerrenos();
+		unsigned int obtenerCantidadTerrenos();
 
-		//Pre:
 		//Post: Asigna el nombre del jugador
 		void asignarNombre(string nombre) ;
 
-		//Pre:
 		//Post: Devuelve el nombre del jugador
 		string obtenerNombre();
 
-		//Post: imprime el estado actual del jugador
+		//Post: Imprime el estado actual del jugador
 		void imprimirJugador();
 
+		/*
+		 * Pre: 'numeroTerreno' indica el numero de terreno que se quiere cosechar. Debe tener un valor mayor a 0 y menor que
+		 * 		'obtenerCantidadTerrenos' del jugador actual.
+		 * Post: Devuelve el terreno asociado a 'numeroTerreno'. Los terrenos se numeran de 1 a 'cantidadDeTerrenos'.
+		 * 		 En caso de no encontrarse el terreno indicado devuelve NULL.
+		 */
 		Terreno* buscarTerreno(unsigned int numeroTerreno);
 
+		/*
+		 * Post: Indica si hay espacio suficiente para almacenar 1 unidad de 'cultivo'.
+		 */
 		bool puedeAlmacenar(Cultivo* cultivo);
 
+		/*
+		 * Post: Indica si hay espacio suficiente para almacenar 'cantidadAAlmacenar' unidades de 'cultivo'.
+		 */
 		bool puedeAlmacenar(Cultivo* cultivo, unsigned int cantidadAAlmacenar);
 
+		/*
+		 * Pre: 'puedeAlmacenar' debe ser true.
+		 * Post: Almacena 1 unidad de cosecha de 'cultivo'.
+		 * 		 En caso de no poder almacenarse devuelve false.
+		 */
 		bool almacenar(Cultivo* cultivo);
 
+		/*
+		 * Pre: 'puedeAlmacenar' debe ser true.
+		 * Post: Almacena 'cantidadAAlmacenar' unidades de cosecha de 'cultivo'.
+		 * 		 En caso de no poder almacenarse devuelve false.
+		 */
 		bool almacenar(Cultivo* cultivo, unsigned int cantidadAAlmacenar);
 
+		/*
+		 * Pre: 'coordenadasParcela' debe tener el formato "x,y" donde 'x' indica el numero de fila e 'y' el numero de columna.
+		 * 		'numeroTerreno' indica el numero de terreno que se quiere cosechar. Debe tener un valor mayor a 0 y menor que
+		 * 		'obtenerCantidadTerrenos' del jugador actual.
+		 * Post: Indica si se puede realizar la siembra de 'cultivo' en la parcela indicada.
+		 * 		 La siembra puede realizarse si:
+		 * 		 		-El jugador cuenta con las monedas necesarias para comprar la semilla.
+		 * 		 		-El terreno es apto para ser sembrado.
+		 */
 		bool puedeSembrar(unsigned int numeroTerreno, std::string coordenadasParcela, Cultivo* cultivo);
 
+		/*
+		 * Pre: 'coordenadasParcela' debe tener el formato "x,y" donde 'x' indica el numero de fila e 'y' el numero de columna.
+		 * 		'numeroTerreno' indica el numero de terreno que se quiere cosechar. Debe tener un valor mayor a 0 y menor que
+		 * 		'obtenerCantidadTerrenos' del jugador actual.
+		 * 		'puedeSembrar' debe ser true.
+		 * Post: Siembra la parcela indicada con 'cultivo'.
+		 * 		 Consume la cantidad de monedas correspondientes al costo de la semilla del cultivo indicada en 'cultivos.txt'.
+		 * 		 En caso de no poder realizar la accion devuelve false.
+		 */
 		bool sembrar(unsigned int numeroTerreno, std::string coordenadasParcela, Cultivo* cultivo);
 
 		bool puedeCosechar(unsigned int numeroTerreno, std::string coordenadasParcela);
@@ -126,6 +155,12 @@ class Jugador{
 		bool puedeComprarCapacidadAlmacen();
 
 		bool comprarCapacidadAlmacen();
+
+		void actualizar();
+
+		void actualizarUnidadesRiego();
+
+		void actualizarTerrenos();
 
 		~Jugador();
 };

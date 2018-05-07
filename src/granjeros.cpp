@@ -178,15 +178,12 @@ void Granjeros::comenzarPartida(){
 
 bool Granjeros::avanzarTurno(){
 
-	//avanzarTurno deberia avanzar el jugador y si es necesario cambiar la ronda. Tambien tiene que actualizar el estado del jugador, sus recursos (cambia de estado tambien las parcelas).
-	//Debería devolver true si la partida se finalizo.
 	bool finPartida = partida->avanzarTurno();
-
-	//TODO: Este metodo generaria el bmp y mostraria el jugador y el estado actual de ese jugador.
-	//		Como primero se llama a avanzarTurno el jugadorActual deberia ser el jugador que le toca jugar esta ronda
 
 	if(!finPartida){
 
+		//TODO: Este metodo generaria el bmp y mostraria el jugador y el estado actual de ese jugador.
+		//		Como primero se llama a avanzarTurno el jugadorActual deberia ser el jugador que le toca jugar esta ronda
 		interfaz->mostrarEstadoPartida(partida);
 	}
 

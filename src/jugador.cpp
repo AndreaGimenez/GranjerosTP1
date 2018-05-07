@@ -17,7 +17,7 @@ Jugador::Jugador(string nombre){
 
 	this->nombre = nombre;
 	this->monedas = Configuracion::obtenerCreditosIniciales();
-	this->turnos = Configuracion::obtenerCantidadTurnos();
+	this->unidadesRiego = 0;
 	this->tanque = new Tanque(Configuracion::obtenerCapacidadInicialTanque());
 	this->almacen = new Almacen(Configuracion::obtenerCapacidadInicialAlmacen());
 
@@ -63,20 +63,7 @@ bool Jugador::puedeGastarMonedas(unsigned int cantidadMonedas){
 	return (cantidadMonedas <= this->monedas);
 }
 
-unsigned int Jugador::turnosRestantes(){
-
-	return (this-> turnos)-1 ; //para no contemplar el turno actual, solo los restantes
-
-}
-
-void Jugador::pasarProximoTurno(){
-
-	if(this->quedanTurnos()){
-		this->turnos -- ;
-	}
-}
-
-unsigned int Jugador::cantidadDeTerrenos(){
+unsigned int Jugador::obtenerCantidadTerrenos(){
 
 	return this->terrenos.contarElementos();
 }
@@ -96,8 +83,7 @@ void Jugador::imprimirJugador(){
 
 	cout<<"Nombre del jugador: "<<obtenerNombre() ;
 	cout<<"Cantidad de monedas: "<< monedasDisponibles() ;
-	cout<<"Turnos Restantes: "<<turnosRestantes() ;
-	cout<<"Cantidad de terrenos"<<cantidadDeTerrenos() ;
+	cout<<"Cantidad de terrenos"<<obtenerCantidadTerrenos() ;
 
 }
 
@@ -108,17 +94,6 @@ Terreno* Jugador::buscarTerreno(unsigned int numeroTerreno){
 	}
 
 	return this->terrenos.obtener(numeroTerreno);
-}
-
-bool Jugador::quedanTurnos(){
-
-	bool turnos = false ;
-
-	if (this->turnos > 1){
-		turnos = true ;
-	}
-
-	return turnos;
 }
 
 bool Jugador::puedeAlmacenar(Cultivo* cultivo){
@@ -261,8 +236,23 @@ bool Jugador::consumirUnidadesRiego(unsigned int unidadesRiego){
 	return consumirUnidadesRiego;
 }
 
+bool Jugador::puedeEnviar(Cultivo* cultivo){
+
+	return (this->puedeGastarMonedas(almacen->obtenerCostoEnvio(cultivo)));
+}
+
 bool Jugador::enviar(Cultivo* cultivo){
-	return false;
+
+	bool enviar = puedeEnviar(cultivo);
+
+	if(enviar){
+
+		unsigned int costoEnvio = almacen->obtenerCostoEnvio(cultivo);
+		this->agregarMonedas(almacen->enviarCosecha(cultivo));
+		this->consumirUnidadesRiego(costoEnvio);
+	}
+
+	return enviar;
 }
 
 bool Jugador::comprarTerreno(){
@@ -279,6 +269,26 @@ bool Jugador::comprarCapacidadTanque(){
 
 bool Jugador::comprarCapacidadAlmacen(){
 	return false;
+}
+
+void Jugador::actualizar(){
+
+	actualizarUnidadesRiego();
+	actualizarTerrenos();
+}
+
+void Jugador::actualizarUnidadesRiego(){
+
+	this->tanque->almacenarAgua(this->unidadesRiego);
+	this->unidadesRiego = 0;
+}
+
+void Jugador::actualizarTerrenos(){
+
+	this->terrenos.iniciarCursor();
+	while(this->terrenos.avanzarCursor()){
+		terrenos.obtenerCursor()->actualizar();
+	}
 }
 
 Jugador::~Jugador(){

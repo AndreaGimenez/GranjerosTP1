@@ -37,12 +37,12 @@ public:
 	Granjeros();
 
 	/*
-	 * Pos: Comienza la ejecucion del juego.
+	 * Post: Comienza la ejecucion del juego.
 	 */
 	bool iniciarJuego();
 
 	/*
-	 * Pos: Libera los recursos reservados.
+	 * Post: Libera los recursos reservados.
 	 */
 	~Granjeros();
 };

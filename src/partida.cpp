@@ -29,7 +29,7 @@ Dificultad Partida::obtenerDificultad(){
 	return this->nivelDeDificultad ;
 }
 
-unsigned int Partida::getCantidadDeJugadores(){
+unsigned int Partida::obtenerCantidadDeJugadores(){
 
 	return this->jugadores->contarElementos() ;
 }
@@ -96,11 +96,13 @@ bool Partida::avanzarTurno(){
 
 	bool partidaFinalizada = false;
 
+	this->actualizar();
+
 	//Si ya jugaron el turno todos los jugadores
 	if(!avanzarProximoJugador()){
 
 		this->cantidadTurnosJugados++;
-		partidaFinalizada = (this->cantidadTurnosJugados++ == this->cantidadTurnos);
+		partidaFinalizada = this->partidaFinalizada();
 
 		//Si todavia hay turnos por jugar entonces hay que ir al primer jugador nuevamente
 		if(!partidaFinalizada){
@@ -119,6 +121,16 @@ void Partida::cargarJugadores(Lista<string>* nombresJugadores){
 
 		this->jugadores->agregar(new Jugador(nombresJugadores->obtenerCursor()));
 	}
+}
+
+void Partida::actualizar(){
+
+	this->verJugadorActual()->actualizar();
+}
+
+bool Partida::partidaFinalizada(){
+
+	return (this->cantidadTurnosJugados == this->cantidadTurnos);
 }
 
 Partida::~Partida(){

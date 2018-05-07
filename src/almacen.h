@@ -74,12 +74,18 @@ public:
 	//Pre: 'obtenerCantidadAlmacenada' de 'cultivoAEnviar' debe ser mayor o igual que 1.
 	//Post: Envia toda la cantidad almacenada de 'cultivoAEnviar'. Si 'cultivoAEnviar' no se encuentra almacenado
 	//		o la cantidad almacenada es 0 devuelve 'false'.
-	bool enviarCosecha(Cultivo* cultivoAEnviar);
+	unsigned int enviarCosecha(Cultivo* cultivoAEnviar);
 
 	//Pre: 'cantidadAEnviar' debe ser menor o igual que 'obtenerCantidadAlmacenada' de 'cultivoAEnviar'
 	//Pos: Envia la cantidad almacenada el cultivo indicado. Si 'cultivoAEnviar' no se encuentra almacenado
 	//	   o la cantidad almacenada es menor a 'cantidadAEnviar' devuelve 'false'.
-	bool enviarCosecha(Cultivo* cultivoAEnviar, unsigned int cantidadAEnviar);
+	unsigned int enviarCosecha(Cultivo* cultivoAEnviar, unsigned int cantidadAEnviar);
+
+	unsigned int enviarCosecha(UnidadAlmacenamiento* unidadAlmacenamientoCosechaAEnviar);
+
+	unsigned int enviarCosecha(UnidadAlmacenamiento* unidadAlmacenamientoCosechaAEnviar, unsigned int cantidadAEnviar);
+
+	unsigned int enviarCosechas();
 
 	//Pre: 'cultivoAEnviar' debe encontrarse almacenado.
 	//Pos: Obtiene el costo de enviar 'obtenerCantidadAlmacenada' de 'cultivoAEnviar' de acuerdo a los precios de los destinos definidos en 'destinos.txt'.

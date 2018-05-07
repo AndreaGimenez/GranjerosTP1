@@ -124,6 +124,8 @@ public:
 	//	   En caso que no haya ningun destino para el cultivo devuelve NULL.
 	static Destino* obtenerDestino(Cultivo* cultivo);
 
+	static unsigned int calcularRentabilidad(Cultivo* cultivo, unsigned int cantidad);
+
 	//Pos: Libera la memoria reservada para los cultivos y destinos.
 	~Configuracion();
 };

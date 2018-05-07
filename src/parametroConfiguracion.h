@@ -33,8 +33,14 @@ private:
 
 public:
 
-	//Pos: Crea un nuevo ParametroConfiguracion con valores default en 0.
-	//	   La dificultad default es FACIL.
+	/*
+	 * Pos: Crea un nuevo ParametroConfiguracion con valores default.
+	 *	    La dificultad default es FACIL.
+	 *	    La cantidad de jugadores default es 1.
+	 *	    El parametro N default es 5.
+	 *	    El parametro M default es 10.
+	 *	    La cantidad de turnos default es 10.
+	 */
 	ParametroConfiguracion();
 
 	//Pos: Cambia la dificultad a la indicada en el parametro.

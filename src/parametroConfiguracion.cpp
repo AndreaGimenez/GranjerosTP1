@@ -11,10 +11,10 @@
 ParametroConfiguracion::ParametroConfiguracion(){
 
 	this->dificultad = FACIL;
-	this->cantidadJugadores = 0;
-	this->parametroN = 0;
-	this->parametroM = 0;
-	this->cantidadTurnos = 0;
+	this->cantidadJugadores = 1;
+	this->parametroN = 5;
+	this->parametroM = 10;
+	this->cantidadTurnos = 10;
 }
 
 void ParametroConfiguracion::cambiarDificultad(Dificultad dificultad){

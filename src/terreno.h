@@ -64,6 +64,8 @@ class Terreno{
 
 		int regar(std::string coordenadasParcela);
 
+		void actualizar();
+
 		// Destructor
 		// Libera la memoria solicitada
 		~Terreno();

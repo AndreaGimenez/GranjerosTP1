@@ -187,6 +187,13 @@ int Terreno::regar(string coordenadasParcela){
 	return unidadesRiegoConsumidas;
 }
 
+void Terreno::actualizar(){
+
+	for(unsigned int i = 0; i < this->obtenerCantidadParcelas(); i++){
+		this->parcelas[i]->actualizar();
+	}
+}
+
 Terreno::~Terreno(){
 
 	delete parcelas;

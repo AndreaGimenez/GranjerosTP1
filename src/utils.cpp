@@ -18,7 +18,7 @@ bool Utils::esUnsignedInt(string cadena){
 		esInt = false;
 	}else{
 		const char* caracteres = cadena.c_str();
-		for(unsigned int i = 0; i < cadena.size(); i++ && esInt){
+		for(unsigned int i = 0; i < cadena.size() && esInt; i++){
 			esInt = (caracteres[i] >= Utils::CHAR_0 && caracteres[i] <= Utils::CHAR_9);
 		}
 	}
