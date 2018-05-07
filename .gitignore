@@ -1,0 +1,13 @@
+
+
+*.xml
+
+*.d
+
+*.o
+
+*.exe
+
+Debug/makefile
+
+*.mk
