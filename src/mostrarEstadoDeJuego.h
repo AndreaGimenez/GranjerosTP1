@@ -14,7 +14,7 @@ class BmpCultivos {
 		RGBApixel lapizVerdeClaro;
 		RGBApixel lapizVerdeOscuro;
 		RGBApixel lapizMarron;
-		Configuracion dimensiones;
+		//Configuracion dimensiones;
 		unsigned int perimetroCultivo;
 		unsigned int espacioEntreCultivos;
 		unsigned int espacioLateral;

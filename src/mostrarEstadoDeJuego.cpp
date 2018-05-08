@@ -8,8 +8,8 @@ BmpCultivos::BmpCultivos(){
 	perimetroCultivo=10;
 	espacioEntreCultivos=10;
 	espacioLateral=20;
-	ancho=asignarDimension(dimensiones.obtenerAnchoTerreno(), perimetroCultivo, espacioEntreCultivos, espacioLateral);
-	largo=asignarDimension(dimensiones.obtenerLargoTerreno(), perimetroCultivo, espacioEntreCultivos, espacioLateral);
+	ancho=asignarDimension(Configuracion::obtenerAnchoTerreno(), perimetroCultivo, espacioEntreCultivos, espacioLateral);
+	largo=asignarDimension(Configuracion::obtenerLargoTerreno(), perimetroCultivo, espacioEntreCultivos, espacioLateral);
 				   /*x, y*/
 	imagen.SetSize(ancho,largo);
 	imagen.SetBitDepth(24);
