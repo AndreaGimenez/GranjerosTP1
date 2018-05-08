@@ -36,41 +36,43 @@ private:
 
 public:
 
-	//Post: Crea el almacen con capacidad inicial determinada por la configuracion default del juego
+	// Post: Crea el almacen con capacidad inicial determinada por la configuracion default del juego
 	Almacen();
 
-	//Pre: 'capacidad' es la capacidad maxima del almacen.
-	//Post: Crea el almacen con capacidad inicial igual a 'capacidad'. Inicialmente esta vacio, a plena capacidad de almacenamiento.
+	/*
+	 * Pre: 'capacidad' es la capacidad maxima del almacen.
+	 * Post: Crea el almacen con capacidad inicial igual a 'capacidad'. Inicialmente esta vacio, a plena capacidad de almacenamiento.
+	 */
 	Almacen(unsigned int capacidad);
 
-	//Post: Devuelve la capacidad maxima del almacen.
+	// Post: Devuelve la capacidad maxima del almacen.
 	unsigned int obtenerCapacidad();
 
-	//Post: Devuelve el volumen que se encuentra en uso de todas las cosechas. Es la sumatoria de todas las cantidades de las cosechas almacenadas.
+	// Post: Devuelve el volumen que se encuentra en uso de todas las cosechas. Es la sumatoria de todas las cantidades de las cosechas almacenadas.
 	unsigned int obtenerVolumenUtilizado();
 
-	//Post: Devuelve el volumen que queda disponible para almacenaje de cualquier cosecha.
+	// Post: Devuelve el volumen que queda disponible para almacenaje de cualquier cosecha.
 	unsigned int obtenerVolumenDisponible();
 
-	//Post: Indica si el almacen esta completamente ocupado.
+	// Post: Indica si el almacen esta completamente ocupado.
 	bool estaLleno();
 
-	//Post: Indica si el almacen esta completamente vacio.
+	// Post: Indica si el almacen esta completamente vacio.
 	bool estaVacio();
 
-	//Post: Devuelve la cantidad almacenada de 'cultivo'.
+	// Post: Devuelve la cantidad almacenada de 'cultivo'.
 	unsigned int obtenerCantidadAlmacenada(Cultivo* cultivo);
 
-	//Post: Indica si hay capacidad suficiente para almacenar 1 unidad de la cosecha.
+	// Post: Indica si hay capacidad suficiente para almacenar 1 unidad de la cosecha.
 	bool puedeAlmacenarCosecha(Cultivo* cultivoAAlmacenar);
 
-	//Post: Indica si hay capacidad suficiente para almacenar 'cantidadAAlmacenar' unidades de cosecha.
+	// Post: Indica si hay capacidad suficiente para almacenar 'cantidadAAlmacenar' unidades de cosecha.
 	bool puedeAlmacenarCosecha(Cultivo* cultivoAAlmacenar, unsigned int cantidadAAlmacenar);
 
-	//Post: Incrementa en 1 la cantidad almacenada de 'cultivoAAlmacenar'.
+	// Post: Incrementa en 1 la cantidad almacenada de 'cultivoAAlmacenar'.
 	bool almacenarCosecha(Cultivo* cultivoAAlmacenar);
 
-	//Post: Incrementa en 'cantidadAAlmacenar' la cantidad almacenada de 'cultivoAAlmacenar'.
+	// Post: Incrementa en 'cantidadAAlmacenar' la cantidad almacenada de 'cultivoAAlmacenar'.
 	bool almacenarCosecha(Cultivo* cultivoAAlmacenar, unsigned int cantidadAAlmacenar);
 
 	/*
@@ -112,14 +114,15 @@ public:
 
 	/*
 	 * Pre: 'cultivoAEnviar' debe encontrarse almacenado.
-	 * Pos: Obtiene el costo de enviar 'cantidadAEnviar' de 'cultivoAEnviar' de acuerdo a los precios de los destinos definidos en 'destinos.txt'.
+	 * Post: Obtiene el costo de enviar 'cantidadAEnviar' de 'cultivoAEnviar' de acuerdo a los precios de los destinos definidos en 'destinos.txt'.
 	 * 		En caso que el cultivo no esté almacenado devuelve 0.
 	 */
 	unsigned int obtenerCostoEnvio(Cultivo* cultivoAEnviar, unsigned int cantidadAEnviar);
 
-	//Pos: Aumenta la capacidad maxima de almacenamiento en 'unidadesAmpliacion'. La nueva capacidad maxima va a ser 'obtenerCapacidad' + 'unidadesAmpliacion'.
+	// Post: Aumenta la capacidad maxima de almacenamiento en 'unidadesAmpliacion'. La nueva capacidad maxima va a ser 'obtenerCapacidad' + 'unidadesAmpliacion'.
 	void ampliarAlmacen(unsigned int unidadesAmpliacion);
 
+	// Post: Libera los recursos reservados.
 	~Almacen();
 };
 

@@ -11,7 +11,10 @@
 #include "parcela.h"
 
 /*
- *
+ * 'Terreno' es un conjunto de Parcelas.
+ * Las dimensiones de un terreno son definidas por los parametros de configuracion definidos
+ * previo a comenzar el juego.
+ * Cada Parcela del terreno puede ser accedida para ser sembrada, cosechada y regada.
  */
 class Terreno{
 
@@ -122,10 +125,9 @@ class Terreno{
 		// Post: Actualiza el estado de todas las parcelas del terreno de acuerdo a las acciones que realizo el jugador.
 		void actualizar();
 
-		// Libera la memoria solicitada
+		// Post: Libera la memoria solicitada
 		~Terreno();
 };
-
 
 
 
