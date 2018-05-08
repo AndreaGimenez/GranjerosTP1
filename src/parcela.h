@@ -44,7 +44,7 @@ private:
 
 	//Este flag indica si se debe actualizar la parcela al final del turno al invocar el metodo 'actualizar'
 	//Se setea en false cuando se realiza una accion sobre una parcela en un turno. De esa manera se evita que se actualicen los tiempos al finalizar ese turno.
-	//Siempre que se cambia el estado desde la accion de un jugador este flag se setea en true para no modificar los tiempos de siembra y recuperacion.
+	//Siempre que se cambia el estado desde la accion de un jugador, por ejemplo sembrar, cosecha, etc. este flag se setea en true para no modificar los tiempos de siembra y recuperacion.
 	//Se setea en true en 'sembrar' y 'cosechar'
 	bool actualizarEstado;
 

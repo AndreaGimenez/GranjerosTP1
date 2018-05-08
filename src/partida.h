@@ -15,6 +15,28 @@
 
 using namespace std ;
 
+
+/*
+ * Clase que representa una partida determinada.
+ * Una partida esta determinada por una cantidad de jugadores que realizan acciones a lo largo de una
+ * cantidad especifica de turnos. Una vez que todos los jugadores realizaron una accion durante un turno
+ * se avanza de turno y comienza nuevamente el primer jugador.
+ * La cantidad de jugadores y la cantidad de turnos vienen dados por la configuracion realizada previo
+ * al juego.
+ * Maneja las acciones que realizan los jugadores durante un turno y mantiene el estado de cada jugador a lo largo del juego.
+ * Las acciones que puede realizar un jugador son fijas y siempre las mismas:
+ * 	-Sembrar
+ * 	-Cosechar
+ * 	-Regar
+ * 	-Comprar:
+ * 		-Capacidad de tanque
+ * 		-Capacidad de almacen
+ * 		-Terreno
+ * 	-Vender:
+ * 		-Terreno
+ *
+ * 	La partida finaliza cuando la cantidad de turnos jugados es igual a la cantidad de turnos de la partida.
+ */
 class Partida{
 
 	private:
@@ -36,20 +58,22 @@ class Partida{
 		 */
 		Partida(Lista<string>* nombresJugadores);
 
-		//Post: Devuelve la dificultad del juego.
+		// Post: Devuelve la dificultad del juego.
 		Dificultad obtenerDificultad();
 
-		//Post: Devuelve la cantidad de jugadores que hay en la partida.
+		// Post: Devuelve la cantidad de jugadores que hay en la partida.
 		unsigned int obtenerCantidadDeJugadores();
 
-		//Post: Devuelve el jugador actual de la partida.
-		//		El mismo va variando a medida que avanzan los turnos de la partida con el mvetodo 'avanzarTurno'.
+		/*
+		 * Post: Devuelve el jugador actual de la partida.
+		 * 		 El mismo va variando a medida que avanzan los turnos de la partida con el metodo 'avanzarTurno'.
+		 */
 		Jugador* verJugadorActual();
 
-		//Post: Avanza al jugador siguiente. Devuelve false si el jugador actual es el ultimo jugador.
+		// Post: Avanza al jugador siguiente. Devuelve false si el jugador actual es el ultimo jugador.
 		bool avanzarProximoJugador();
 
-		//Post: Posiciona el jugador actual en el primer jugador.
+		// Post: Posiciona el jugador actual en el primer jugador.
 		void irAPrimerJugador();
 
 		/*
@@ -141,12 +165,10 @@ class Partida{
 		 */
 		bool avanzarTurno();
 
-		/*
-		 * Post: Indica si la partida se encuentra finalizada, es decir que se jugaron todos los turnos.
-		 */
+		// Post: Indica si la partida se encuentra finalizada, es decir que se jugaron todos los turnos.
 		bool partidaFinalizada();
 
-		//Post: Libera los recursos reservados.
+		// Post: Libera los recursos reservados.
 		~Partida();
 };
 

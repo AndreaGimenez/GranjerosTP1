@@ -21,7 +21,7 @@ Granjeros::Granjeros() {
 	this->partida = NULL;
 }
 
-bool Granjeros::iniciarJuego(){
+void Granjeros::iniciarJuego(){
 
 	interfaz->mostrarBienvenida();
 	CreadorAcciones::inicializar();
@@ -42,8 +42,6 @@ bool Granjeros::iniciarJuego(){
 	}
 
 	interfaz->mostrarDespedida();
-
-	return true;
 }
 
 void Granjeros::ejecutarAccion(Accion* accion){

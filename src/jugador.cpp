@@ -155,7 +155,8 @@ bool Jugador::puedeCosechar(unsigned int numeroTerreno, string coordenadasParcel
 
 	Terreno* terreno = buscarTerreno(numeroTerreno);
 	if(terreno != NULL){
-		terreno->puedeCosechar(coordenadasParcela);
+		puedeCosechar = (this->puedeAlmacenar(terreno->obtenerCultivo(coordenadasParcela))
+						 && terreno->puedeCosechar(coordenadasParcela));
 	}
 
 	return puedeCosechar;
