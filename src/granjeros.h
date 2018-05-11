@@ -28,9 +28,10 @@ private:
 
 	void ejecutarAccion(Accion* accion);
 	void ejecutarAccionConfiguracion(Accion* accion);
-	bool ejecutarAccionPartida(Accion* accion);
+	void ejecutarAccionPartida(Accion* accion);
 	void comenzarPartida();
 	bool avanzarTurno();
+	void finalizarPartida();
 
 public:
 

@@ -7,6 +7,7 @@
 
 #include "utils.h"
 #include <cstdlib>
+#include <sstream>
 
 using namespace std;
 
@@ -39,6 +40,13 @@ unsigned int Utils::stringToUnsignedInt(string valor){
 char Utils::stringToChar(std::string valor){
 
 	return valor.c_str()[0];
+}
+
+string Utils::unsignedIntToString(unsigned int valor){
+
+	ostringstream ss;
+	ss << valor;
+	return ss.str();
 }
 
 unsigned int Utils::contarRepeticiones(string cadena, string subcadena){

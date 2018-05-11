@@ -44,6 +44,14 @@ public:
 	Menu(std::string titulo, unsigned int cantidadOpciones);
 
 	/*
+	 * Pos: Inicializa un menu con 'cantidadOpciones' y un 'titulo'. El titulo se imprimirá al mostrarse el menu (mostrar()).
+	 * 		Inicialmente las opciones de menu se crean con tipo SUBMENU pero sin ningun dato dentro (sin submenu, ni accion, ni descripcion).
+	 * 		Las opciones de menu deben cambiarse por opciones validas con el metodo 'cambiarOpcion'.
+	 * 		'agregarOpcionSalir' indica si se debe agregar en la opcion 0 la opcion salir.
+	 */
+	Menu(std::string titulo, unsigned int cantidadOpciones, bool agregarOpcionSalir);
+
+	/*
 	 * Pos: Devuelve el titulo del menu.
 	 */
 	std::string obtenerTitulo();

@@ -17,6 +17,7 @@ public:
 	static int stringToInt(std::string);
 	static unsigned int stringToUnsignedInt(std::string valor);
 	static char stringToChar(std::string valor);
+	static std::string unsignedIntToString(unsigned int valor);
 	static unsigned int contarRepeticiones(std::string cadena, std::string subcadena);
 	static unsigned int splitString(std::string cadena, std::string subcadena, std::string* cadenaSeparada);
 

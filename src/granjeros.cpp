@@ -46,14 +46,10 @@ void Granjeros::iniciarJuego(){
 
 void Granjeros::ejecutarAccion(Accion* accion){
 
-	bool partidaFinalizada = false;
-
 	ejecutarAccionConfiguracion(accion);
-	partidaFinalizada = ejecutarAccionPartida(accion);
+	ejecutarAccionPartida(accion);
 
-	if(!partidaFinalizada){
-		interfaz->mostrarMenuActual();
-	}
+	interfaz->mostrarMenuActual();
 }
 
 void Granjeros::ejecutarAccionConfiguracion(Accion* accion){
@@ -88,7 +84,7 @@ void Granjeros::ejecutarAccionConfiguracion(Accion* accion){
 	}
 }
 
-bool Granjeros::ejecutarAccionPartida(Accion* accion){
+void Granjeros::ejecutarAccionPartida(Accion* accion){
 
 	bool partidaFinalizada = false;
 
@@ -149,6 +145,20 @@ bool Granjeros::ejecutarAccionPartida(Accion* accion){
 		case accion::FINALIZAR_TURNO:
 
 			partidaFinalizada = avanzarTurno();
+
+			if(partidaFinalizada){
+
+				finalizarPartida();
+				interfaz->irAMenuAnterior();
+			}
+
+			break;
+
+		case accion::FINALIZAR_PARTIDA:
+
+			finalizarPartida();
+			interfaz->irAMenuAnterior();
+
 			break;
 
 		case accion::SALIR:
@@ -158,8 +168,6 @@ bool Granjeros::ejecutarAccionPartida(Accion* accion){
 
 		default:;
 	}
-
-	return partidaFinalizada;
 }
 
 void Granjeros::comenzarPartida(){
@@ -186,6 +194,11 @@ bool Granjeros::avanzarTurno(){
 	}
 
 	return finPartida;
+}
+
+void Granjeros::finalizarPartida(){
+
+	delete this->partida;
 }
 
 Granjeros::~Granjeros(){

@@ -19,6 +19,21 @@ Menu::Menu(string titulo, unsigned int cantidadItemsMenu) {
 	this->opciones[0] = OpcionMenu("Salir", accion::SALIR);
 }
 
+Menu::Menu(string titulo, unsigned int cantidadItemsMenu, bool agregarOpcionSalir) {
+
+	this->titulo = titulo;
+	this->leyendaIngresoUsuario = "Ingrese una opcion: ";
+
+	if(agregarOpcionSalir){
+		this->cantidadOpciones = cantidadItemsMenu + 1;
+		this->opciones = new OpcionMenu[cantidadItemsMenu + 1];
+		this->opciones[0] = OpcionMenu("Salir", accion::SALIR);
+	}else{
+		this->cantidadOpciones = cantidadItemsMenu;
+		this->opciones = new OpcionMenu[cantidadItemsMenu];
+	}
+}
+
 void Menu::cambiarOpcion(unsigned int indice, OpcionMenu opcion){
 
 	this->opciones[indice] = opcion;
