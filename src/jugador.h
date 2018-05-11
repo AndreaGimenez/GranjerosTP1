@@ -58,6 +58,8 @@ class Jugador{
 		 */
 		Jugador(std::string nombreJugador);
 
+		void aumentarUnidadesRiego(unsigned int unidadesRiegoASumar);
+
 		//Post: Devuelve la cantidad de monedas que posee el jugador.
 		unsigned int monedasDisponibles();
 
@@ -79,6 +81,9 @@ class Jugador{
 
 		// Post: devuelve la cantidad de terrenos que posee el jugador.
 		unsigned int obtenerCantidadTerrenos();
+
+		// Post: Devuelve la cantidad de cosecha almacenada de 'nombreCultivo'
+		unsigned int obtenerCantidadAlmacenada(std::string nombreCultivo);
 
 		// Post: Asigna el nombre del jugador
 		void asignarNombre(string nombre) ;

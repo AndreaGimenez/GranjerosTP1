@@ -25,6 +25,8 @@ class Terreno{
 		//unsigned int precio;
 		Parcela** parcelas;
 
+		void inicializarParcelas();
+		void destruirParcelas();
 		unsigned int obtenerIndiceParcela(unsigned int coordenadas[]);
 
 	public:

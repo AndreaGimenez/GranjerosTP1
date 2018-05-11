@@ -20,7 +20,7 @@ Partida::Partida(Lista<string>* nombresJugadores){
 	this->nivelDeDificultad = Configuracion::obtenerDificultad();
 	this->cantidadTurnos = Configuracion::obtenerCantidadTurnos();
 	this->cantidadTurnosJugados = 0;
-	this->jugadores = NULL;
+	this->jugadores = new Lista<Jugador*>;
 	this->cargarJugadores(nombresJugadores);
 }
 
@@ -121,6 +121,8 @@ void Partida::cargarJugadores(Lista<string>* nombresJugadores){
 
 		this->jugadores->agregar(new Jugador(nombresJugadores->obtenerCursor()));
 	}
+
+	this->irAPrimerJugador();
 }
 
 void Partida::actualizar(){
@@ -142,4 +144,6 @@ Partida::~Partida(){
 		Jugador* jugadorObtenido = jugadores->obtenerCursor() ;
 		delete jugadorObtenido ;
 	}
+
+	delete this->jugadores;
 }

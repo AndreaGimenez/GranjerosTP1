@@ -18,7 +18,28 @@ Terreno::Terreno(){
 	this->largoTerreno = Configuracion::obtenerLargoTerreno();
 	//this->precio = PRECIO_INICIAL*cantidadColumnas*cantidadFilas;
 	//this->parcelas = new Parcela[cantidadFilas][cantidadColumnas];
+	inicializarParcelas();
+}
+
+void Terreno::inicializarParcelas(){
+
 	this->parcelas = new Parcela*[this->largoTerreno * this->anchoTerreno];
+	unsigned int cantidadParcelas = this->largoTerreno * this->anchoTerreno;
+
+	for(unsigned int i = 0; i < cantidadParcelas; i++){
+		this->parcelas[i] = new Parcela();
+	}
+}
+
+void Terreno::destruirParcelas(){
+
+	unsigned int cantidadParcelas = this->obtenerCantidadParcelas();
+
+	for(unsigned int i = 0; i < cantidadParcelas; i++){
+		delete this->parcelas[i];
+	}
+
+	delete[] parcelas;
 }
 
 unsigned int Terreno::obtenerAnchoTerreno(){
@@ -167,7 +188,7 @@ bool Terreno::puedeRegar(string coordenadasParcela){
 	bool puedeRegar = false;
 
 	Parcela* parcela = buscarParcela(coordenadasParcela);
-	if(puedeRegar){
+	if(parcela != NULL){
 		puedeRegar = parcela->puedeRegar();
 	}
 
@@ -196,5 +217,5 @@ void Terreno::actualizar(){
 
 Terreno::~Terreno(){
 
-	delete parcelas;
+	destruirParcelas();
 }
