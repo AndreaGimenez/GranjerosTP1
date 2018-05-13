@@ -7,6 +7,7 @@
 
 #include "menu.h"
 #include <iostream>
+#include "utils.h"
 
 using namespace std;
 
@@ -15,14 +16,14 @@ Menu::Menu(string titulo, unsigned int cantidadItemsMenu) {
 	this->titulo = titulo;
 	this->cantidadOpciones = cantidadItemsMenu + 1;
 	this->opciones = new OpcionMenu[cantidadItemsMenu + 1];
-	this->leyendaIngresoUsuario = "Ingrese una opcion: ";
+	this->leyendaIngresoUsuario = "Ingrese una opcion";
 	this->opciones[0] = OpcionMenu("Salir", accion::SALIR);
 }
 
 Menu::Menu(string titulo, unsigned int cantidadItemsMenu, bool agregarOpcionSalir) {
 
 	this->titulo = titulo;
-	this->leyendaIngresoUsuario = "Ingrese una opcion: ";
+	this->leyendaIngresoUsuario = "Ingrese una opcion";
 
 	if(agregarOpcionSalir){
 		this->cantidadOpciones = cantidadItemsMenu + 1;
@@ -41,12 +42,30 @@ void Menu::cambiarOpcion(unsigned int indice, OpcionMenu opcion){
 
 unsigned int Menu::solicitarOpcion(){
 
-	cout << this->obtenerLeyendaIngresoUsuario() << ": ";
-	cout.flush();
+	bool opcionValida = false;
+	string opcionElegida = "";
 
-	unsigned int opcionElegida;
-	cin >> opcionElegida;
-	return opcionElegida;
+	while(!opcionValida){
+
+		cout << this->obtenerLeyendaIngresoUsuario() << ": ";
+		cout.flush();
+
+		getline(cin, opcionElegida);
+
+		opcionValida = validarOpcionElegida(opcionElegida);
+		if(!opcionValida){
+			cout << "La opcion ingresada no es valida" << endl;
+		}
+	}
+
+	return Utils::stringToUnsignedInt(opcionElegida);
+}
+
+bool Menu::validarOpcionElegida(std::string opcionElegida){
+
+	return (Utils::esUnsignedInt(opcionElegida)
+			&& Utils::stringToUnsignedInt(opcionElegida) >= 0
+			&& Utils::stringToUnsignedInt(opcionElegida) < this->cantidadOpciones);
 }
 
 ResultadoOpcion* Menu::ejecutarOpcion(unsigned int opcion){

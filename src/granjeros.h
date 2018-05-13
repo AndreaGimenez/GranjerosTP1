@@ -31,6 +31,8 @@ private:
 	void ejecutarAccionPartida(Accion* accion);
 	void comenzarPartida();
 	bool avanzarTurno();
+	void iniciarTurno();
+	void asignarUnidadesRiego();
 	void finalizarPartida();
 
 public:

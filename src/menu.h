@@ -82,6 +82,8 @@ public:
 	 */
 	unsigned int solicitarOpcion();
 
+	//Post: Indica si 'opcionElegida' es una opcion valida para el menu
+	bool validarOpcionElegida(std::string opcionElegida);
 	/*
 	 * Pre: 'numeroOpcion' debe ser mayor a 0 y menor o igual que 'obtenerCantidadOpciones'.
 	 * Pos: Ejecuta la opcion asociada a 'numeroOpcion' y devuelve el resultado de la ejecucion.

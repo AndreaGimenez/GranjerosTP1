@@ -85,6 +85,9 @@ class Jugador{
 		// Post: Devuelve la cantidad de cosecha almacenada de 'nombreCultivo'
 		unsigned int obtenerCantidadAlmacenada(std::string nombreCultivo);
 
+		// Post: Devuelve la cantidad disponible en el almacen
+		unsigned int obtenerCantidadDisponibleAlmacen();
+
 		// Post: Asigna el nombre del jugador
 		void asignarNombre(string nombre) ;
 
@@ -193,6 +196,9 @@ class Jugador{
 
 		// Post: Devuelve la cantidad de unidades de riego que tiene el jugador sin tener en cuenta las unidades del tanque.
 		unsigned int obtenerUnidadesRiego();
+
+		// Post: Devuelve la cantidad de unidades de riego almacenadas en el tanque.
+		unsigned int obtenerUnidadesRiegoAlmacenadas();
 
 		// Post: Devuelve la cantidad de unidades de riego que tiene el jugador teniendo en cuenta las unidades del tanque.
 		unsigned int obtenerUnidadesRiegoTotales();

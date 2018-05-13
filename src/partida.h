@@ -64,6 +64,9 @@ class Partida{
 		// Post: Devuelve la cantidad de jugadores que hay en la partida.
 		unsigned int obtenerCantidadDeJugadores();
 
+		// Post: Devuelve el numero de turno actual
+		unsigned int obtenerTurnoActual();
+
 		/*
 		 * Post: Devuelve el jugador actual de la partida.
 		 * 		 El mismo va variando a medida que avanzan los turnos de la partida con el metodo 'avanzarTurno'.

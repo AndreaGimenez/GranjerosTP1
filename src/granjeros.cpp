@@ -7,6 +7,8 @@
 
 #include "granjeros.h"
 #include <iostream>
+#include <ctime>
+#include <cstdlib>
 #include "utils.h"
 #include "configuracion.h"
 #include "creadorAcciones.h"
@@ -58,25 +60,25 @@ void Granjeros::ejecutarAccionConfiguracion(Accion* accion){
 
 		case accion::CAMBIAR_CANTIDAD_JUGADORES:
 
-			this->parametrosConfiguracion->cambiarCantidadJugadores(Utils::stringToUnsignedInt(accion->obtenerParametros()[0]));
+			this->parametrosConfiguracion->cambiarCantidadJugadores(Utils::stringToUnsignedInt(accion->obtenerParametros()[0].obtenerValor()));
 			cout << "La cantidad de jugadores ahora es: " << this->parametrosConfiguracion->obtenerCantidadJugadores() << endl;
 			break;
 
 		case accion::CAMBIAR_CANTIDAD_TURNOS:
 
-			this->parametrosConfiguracion->cambiarCantidadTurnos(Utils::stringToUnsignedInt(accion->obtenerParametros()[0]));
+			this->parametrosConfiguracion->cambiarCantidadTurnos(Utils::stringToUnsignedInt(accion->obtenerParametros()[0].obtenerValor()));
 			cout << "La cantidad de turnos ahora es: " << this->parametrosConfiguracion->obtenerCantidadTurnos() << endl;
 			break;
 
 		case accion::CAMBIAR_PARAMETRO_M:
 
-			this->parametrosConfiguracion->cambiarParametroM(Utils::stringToUnsignedInt(accion->obtenerParametros()[0]));
+			this->parametrosConfiguracion->cambiarParametroM(Utils::stringToUnsignedInt(accion->obtenerParametros()[0].obtenerValor()));
 			cout << "El parametro M ahora es: " << this->parametrosConfiguracion->obtenerParametroM() << endl;
 			break;
 
 		case accion::CAMBIAR_PARAMETRO_N:
 
-			this->parametrosConfiguracion->cambiarParametroN(Utils::stringToUnsignedInt(accion->obtenerParametros()[0]));
+			this->parametrosConfiguracion->cambiarParametroN(Utils::stringToUnsignedInt(accion->obtenerParametros()[0].obtenerValor()));
 			cout << "El parametro N ahora es: " << this->parametrosConfiguracion->obtenerParametroN() << endl;
 			break;
 
@@ -92,32 +94,49 @@ void Granjeros::ejecutarAccionPartida(Accion* accion){
 
 		case accion::COMPRAR_CAPACIDAD_AGUA:
 
-			partida->ejecutarAccionComprarCapacidadAgua();
-			cout << "AUMENTO LA CAPACIDAD DEL TANQUE!" << endl;
+			if(partida->ejecutarAccionComprarCapacidadAgua()){
+				cout << "AUMENTO LA CAPACIDAD DEL TANQUE!" << endl;
+			}else{
+				cout << "No se pudo realizar la accion" << endl;
+			}
+
 			break;
 
 		case accion::COMPRAR_CAPACIDAD_ALMACEN:
 
-			partida->ejecutarAccionComprarCapacidadAlmacen();
-			cout << "AUMENTO LA CAPACIDAD DEL ALMACEN!" << endl;
+			if(partida->ejecutarAccionComprarCapacidadAlmacen()){
+				cout << "AUMENTO LA CAPACIDAD DEL ALMACEN!" << endl;
+			}else{
+				cout << "No se pudo realizar la accion" << endl;
+			}
 			break;
 
 		case accion::COMPRAR_TERRENO:
 
-			partida->ejecutarAccionComprarTerreno();
-			cout << "COMPRASTE UN TERRENO!" << endl;
+			if(partida->ejecutarAccionComprarTerreno()){
+				cout << "COMPRASTE UN TERRENO!" << endl;
+			}else{
+				cout << "No se pudo realizar la accion" << endl;
+			}
 			break;
 
 		case accion::COSECHAR:
 
-			partida->ejecutarAccionCosechar(Utils::stringToUnsignedInt(accion->obtenerParametros()[0]), accion->obtenerParametros()[1]);
-			cout << "COSECHASTE!" << endl;
+			if(partida->ejecutarAccionCosechar(Utils::stringToUnsignedInt(accion->obtenerParametros()[0].obtenerValor()),
+											   accion->obtenerParametros()[1].obtenerValor())){
+				cout << "COSECHASTE!" << endl;
+			}else{
+				cout << "No se pudo realizar la accion" << endl;
+			}
 			break;
 
 		case accion::ENVIAR_COSECHA:
 
-			partida->ejecutarAccionEnviarCosecha(accion->obtenerParametros()[0]);
-			cout << "ENVIASTE LA COSECHA!" << endl;
+			if(partida->ejecutarAccionEnviarCosecha(accion->obtenerParametros()[0].obtenerValor())){
+				cout << "ENVIASTE LA COSECHA!" << endl;
+			}else{
+				cout << "No se pudo realizar la accion" << endl;
+			}
 			break;
 
 		case accion::JUGAR:
@@ -127,19 +146,31 @@ void Granjeros::ejecutarAccionPartida(Accion* accion){
 
 		case accion::REGAR:
 
-			partida->ejecutarAccionRegar(Utils::stringToUnsignedInt(accion->obtenerParametros()[0]), accion->obtenerParametros()[1]);
-			cout << "REGASTE!" << endl;
+			if(partida->ejecutarAccionRegar(Utils::stringToUnsignedInt(accion->obtenerParametros()[0].obtenerValor()),
+											accion->obtenerParametros()[1].obtenerValor())){
+				cout << "REGASTE!" << endl;
+			}else{
+				cout << "No se pudo realizar la accion" << endl;
+			}
 			break;
 
 		case accion::SEMBRAR:
 
-			partida->ejecutarAccionSembrar(Utils::stringToUnsignedInt(accion->obtenerParametros()[0]), accion->obtenerParametros()[1], accion->obtenerParametros()[2]);
-			cout << "SEMBRASTE!" << endl;
+			if(partida->ejecutarAccionSembrar(Utils::stringToUnsignedInt(accion->obtenerParametros()[0].obtenerValor()),
+											  accion->obtenerParametros()[1].obtenerValor(),
+											  accion->obtenerParametros()[2].obtenerValor())){
+				cout << "SEMBRASTE!" << endl;
+			}else{
+				cout << "No se pudo realizar la accion" << endl;
+			}
 			break;
 		case accion::VENDER_TERRENO:
 
-			partida->ejecutarAccionVenderTerreno(Utils::stringToUnsignedInt(accion->obtenerParametros()[0]));
-			cout << "VENDISTE UN TERRENO!" << endl;
+			if(partida->ejecutarAccionVenderTerreno(Utils::stringToUnsignedInt(accion->obtenerParametros()[0].obtenerValor()))){
+				cout << "VENDISTE UN TERRENO!" << endl;
+			}else{
+				cout << "No se pudo realizar la accion" << endl;
+			}
 			break;
 
 		case accion::FINALIZAR_TURNO:
@@ -149,6 +180,7 @@ void Granjeros::ejecutarAccionPartida(Accion* accion){
 			if(partidaFinalizada){
 
 				finalizarPartida();
+				interfaz->mostrarResumenPartida(partida);
 				interfaz->irAMenuAnterior();
 			}
 
@@ -179,6 +211,10 @@ void Granjeros::comenzarPartida(){
 	interfaz->cargarMenuPartida();
 
 	partida = new Partida(&nombresJugadores);
+
+	cout << endl << endl <<"COMIENZA LA PARTIDA!" << endl << endl << endl;
+
+	iniciarTurno();
 	interfaz->mostrarEstadoPartida(partida);
 }
 
@@ -188,17 +224,32 @@ bool Granjeros::avanzarTurno(){
 
 	if(!finPartida){
 
-		//TODO: Este metodo generaria el bmp y mostraria el jugador y el estado actual de ese jugador.
-		//		Como primero se llama a avanzarTurno el jugadorActual deberia ser el jugador que le toca jugar esta ronda
+		iniciarTurno();
 		interfaz->mostrarEstadoPartida(partida);
 	}
 
 	return finPartida;
 }
 
+void Granjeros::iniciarTurno(){
+
+	asignarUnidadesRiego();
+}
+
+void Granjeros::asignarUnidadesRiego(){
+
+	srand(time(NULL));
+
+	unsigned int potenciadorAgua = (rand() % 6) + 1;
+	unsigned int unidadesRiego = 5 * potenciadorAgua;
+
+	this->partida->verJugadorActual()->aumentarUnidadesRiego(unidadesRiego);
+}
+
 void Granjeros::finalizarPartida(){
 
 	delete this->partida;
+	this->partida = NULL;
 }
 
 Granjeros::~Granjeros(){

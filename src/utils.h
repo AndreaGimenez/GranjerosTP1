@@ -14,6 +14,8 @@ class Utils {
 public:
 
 	static bool esUnsignedInt(std::string cadena);
+	static bool esInt(std::string cadena);
+	static bool esChar(std::string cadena);
 	static int stringToInt(std::string);
 	static unsigned int stringToUnsignedInt(std::string valor);
 	static char stringToChar(std::string valor);

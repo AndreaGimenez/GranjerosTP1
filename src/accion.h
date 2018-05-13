@@ -10,6 +10,7 @@
 
 #include <string>
 #include "lista.h"
+#include "parametro.h"
 
 
 namespace accion{
@@ -62,7 +63,7 @@ private:
 	accion::Tipo tipo;
 	accion::EAccion accion;
 	unsigned int cantidadParametros;
-	std::string* parametros;
+	Parametro* parametros;
 
 public:
 
@@ -86,7 +87,7 @@ public:
 	 * Pos: Inicializa la accion con la cantidad de parametros 'cantidadParametros'.
 	 * 		Si 'cantidadParametros' es 0, se inicializa sin acciones, es igual que llamar a 'Accion(accion::EAccion accion'.
 	 */
-	Accion(accion::EAccion accion, unsigned int cantidadParametros);
+	Accion(accion::EAccion accion, unsigned int cantidadParametros, parametro::Tipo tiposParametros[]);
 
 	/*
 	 * Pos: Devuelve el tipo de accion. Puede ser 'SIN_PARAMETROS_USUARIO' o 'CON_PARAMETROS_USUARIO'.
@@ -96,12 +97,18 @@ public:
 	/*
 	 * Pos: Devuelve los parametros que se encuentran seteados en la accion.
 	 */
-	std::string* obtenerParametros();
+	Parametro* obtenerParametros();
+
+	//Post: Indica si los parametros ingresados por el usuario para la accion son correctos
+	bool validarTipoParametros();
 
 	/*
 	 * Pos: Devuelve la accion asociada.
 	 */
 	accion::EAccion obtenerAccion();
+
+	//Post: Separa 'parametros' por ' ' y carga los valores obtenidos en los parametros de la accion
+	bool cambiarValoresParametros(std::string parametros);
 
 	/*
 	 * Pos: Devuelve la cantidad de parametros que soporta la accion.
@@ -112,14 +119,14 @@ public:
 	 * Pre: La cantidad de parametros en 'parametros' debe ser igual a 'obtenerCantidadParametros'.
 	 * Pos: Actualiza los parametros de la accion a los pasados por parametro.
 	 */
-	void cambiarParametros(std::string* parametros);
+	void cambiarParametros(Parametro* parametros);
 
 	/*
 	 * Pre: 'parametros' representa los parametros separados por espacios. Solo puede haber 1 espacio de separacion.
 	 * 		 La cantidad de parametros obtenidos debe ser igual a 'obtenerCantidadParametros'.
 	 * Pos: Asigna los parametros al resultado de separar 'parametros' por espacios.
 	 */
-	void cambiarParametros(std::string parametros);
+	bool cambiarParametros(std::string parametros);
 
 	/*
 	 * Pos: Libera los recursos reservados.

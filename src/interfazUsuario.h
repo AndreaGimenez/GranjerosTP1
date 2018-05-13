@@ -32,6 +32,10 @@ private:
 	Menu* crearMenuPartida();
 	void agregarMenu(Menu* menu);
 
+	void mostrarDatosPartida(Partida* partida);
+	void mostrarRecursosJugador(Jugador* jugador);
+	void mostrarTerrenosJugador(Jugador* jugador);
+
 public:
 
 	/*
@@ -99,6 +103,9 @@ public:
 	 * Pos: Crea un archivo BMP con el estado del jugador actual de la partida.
 	 */
 	void mostrarEstadoPartida(Partida* partida);
+
+	// Post: Muesta por pantalla el resumen de la partida jugada. Determina el ganador de la partida y los recursos finales de cada jugador.
+	void mostrarResumenPartida(Partida* partida);
 
 	/*
 	 * Pos: Libera los recursos reservados.
