@@ -6,12 +6,25 @@
  */
 
 #include "parametro.h"
+#include "utils.h"
 
 using namespace std;
+
+Parametro::Parametro(){
+
+	this->valor = "";
+	this->tipo = parametro::STRING;
+}
 
 Parametro::Parametro(std::string valor, parametro::Tipo tipo){
 
 	this->valor = valor;
+	this->tipo = tipo;
+}
+
+Parametro::Parametro(parametro::Tipo tipo){
+
+	this->valor = "";
 	this->tipo = tipo;
 }
 
@@ -33,4 +46,29 @@ parametro::Tipo Parametro::obtenerTipo(){
 void Parametro::cambiarTipo(parametro::Tipo tipo){
 
 	this->tipo = tipo;
+}
+
+bool Parametro::validarValor(){
+
+	bool validacionOk = false;
+
+	switch(this->tipo){
+
+		case parametro::CHAR:
+			validacionOk = Utils::esUnsignedInt(this->valor);
+			break;
+
+		case parametro::INT:
+			validacionOk = Utils::esInt(this->valor);
+			break;
+
+		case parametro::UNSIGNED_INT:
+			validacionOk = Utils::esChar(this->valor);
+			break;
+
+		default:
+			validacionOk = true;
+	}
+
+	return validacionOk;
 }

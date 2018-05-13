@@ -27,6 +27,33 @@ bool Utils::esUnsignedInt(string cadena){
 	return esInt;
 }
 
+bool Utils::esInt(std::string cadena){
+
+	bool esInt = true;
+
+	if(cadena == ""){
+		esInt = false;
+	}else{
+
+		unsigned int i = 0;
+
+		if(cadena.at(0) == '-'){
+			i = 1;
+		}
+		const char* caracteres = cadena.c_str();
+		for(; i < cadena.size() && esInt; i++){
+			esInt = (caracteres[i] >= Utils::CHAR_0 && caracteres[i] <= Utils::CHAR_9);
+		}
+	}
+
+	return esInt;
+}
+
+bool Utils::esChar(std::string cadena){
+
+	return (cadena.size() == 1);
+}
+
 int Utils::stringToInt(string valor){
 
 	return atoi(valor.c_str());

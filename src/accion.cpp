@@ -27,7 +27,7 @@ Accion::Accion(Accion* accion){
 	this->cantidadParametros = accion->obtenerCantidadParametros();
 
 	if(accion->obtenerParametros() != NULL){
-		this->parametros = new string[this->cantidadParametros];
+		this->parametros = new Parametro[this->cantidadParametros];
 
 		for(unsigned int iParametro = 0; iParametro < this->cantidadParametros; iParametro++){
 			this->parametros[iParametro] = accion->obtenerParametros()[iParametro];
@@ -45,7 +45,7 @@ Accion::Accion(accion::EAccion accion){
 	this->parametros = NULL;
 }
 
-Accion::Accion(accion::EAccion accion, unsigned int cantidadParametros){
+Accion::Accion(accion::EAccion accion, unsigned int cantidadParametros, parametro::Tipo tiposParametros[]){
 
 	this->accion = accion;
 	this->cantidadParametros = cantidadParametros;
@@ -55,7 +55,11 @@ Accion::Accion(accion::EAccion accion, unsigned int cantidadParametros){
 		this->parametros = NULL;
 	}else{
 		this->tipo = accion::CON_PARAMETROS_USUARIO;
-		this->parametros = new string[this->cantidadParametros];
+		this->parametros = new Parametro;
+
+		for(unsigned int i = 0; i < cantidadParametros; i++){
+			this->parametros[i].cambiarTipo(tiposParametros[i]);
+		}
 	}
 }
 
@@ -63,16 +67,24 @@ accion::Tipo Accion::obtenerTipo(){
 	return this->tipo;
 }
 
-std::string* Accion::obtenerParametros(){
+Parametro* Accion::obtenerParametros(){
 	return this->parametros;
 }
 
-void Accion::cambiarParametros(string* parametros){
+void Accion::cambiarParametros(Parametro* parametros){
 
 	this->parametros = parametros;
 }
 
 bool Accion::cambiarParametros(string parametros){
+
+	bool cambiarCantidadParametros = cambiarValoresParametros(parametros);
+	cambiarCantidadParametros = cambiarCantidadParametros && validarTipoParametros();
+
+	return cambiarCantidadParametros;
+}
+
+bool Accion::cambiarValoresParametros(std::string parametros){
 
 	unsigned int cantidadEspacios = Utils::contarRepeticiones(parametros, " ");
 
@@ -81,8 +93,17 @@ bool Accion::cambiarParametros(string parametros){
 
 	if(cambiarCantidadParametros){
 
-		Utils::splitString(parametros, " ", this->parametros);
-		cambiarCantidadParametros = validarTipoParametros();
+		unsigned int tamanioCadenaSeparada = cantidadEspacios + 1;
+
+		for(unsigned int i = 0; i < tamanioCadenaSeparada; i++){
+
+			unsigned int posicionSubcadena = parametros.find(" ");
+
+			string elemento = parametros.substr(0, posicionSubcadena);
+			this->parametros[i].cambiarValor(elemento);
+
+			parametros = parametros.substr(posicionSubcadena + 1);
+		}
 	}
 
 	return cambiarCantidadParametros;
@@ -90,17 +111,14 @@ bool Accion::cambiarParametros(string parametros){
 
 bool Accion::validarTipoParametros(){
 
-	/*
 	bool parametrosCorrectos = true;
 
 	for(unsigned int i = 0; i < this->obtenerCantidadParametros() && parametrosCorrectos; i++){
 
-		parametrosCorrectos = this->parametros->validarValor();
+		parametrosCorrectos = this->parametros[i].validarValor();
 	}
 
-	return parametrosCorrectos;*/
-
-	return true;
+	return parametrosCorrectos;
 }
 
 accion::EAccion Accion::obtenerAccion(){

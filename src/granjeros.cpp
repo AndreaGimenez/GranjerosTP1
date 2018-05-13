@@ -58,25 +58,25 @@ void Granjeros::ejecutarAccionConfiguracion(Accion* accion){
 
 		case accion::CAMBIAR_CANTIDAD_JUGADORES:
 
-			this->parametrosConfiguracion->cambiarCantidadJugadores(Utils::stringToUnsignedInt(accion->obtenerParametros()[0]));
+			this->parametrosConfiguracion->cambiarCantidadJugadores(Utils::stringToUnsignedInt(accion->obtenerParametros()[0].obtenerValor()));
 			cout << "La cantidad de jugadores ahora es: " << this->parametrosConfiguracion->obtenerCantidadJugadores() << endl;
 			break;
 
 		case accion::CAMBIAR_CANTIDAD_TURNOS:
 
-			this->parametrosConfiguracion->cambiarCantidadTurnos(Utils::stringToUnsignedInt(accion->obtenerParametros()[0]));
+			this->parametrosConfiguracion->cambiarCantidadTurnos(Utils::stringToUnsignedInt(accion->obtenerParametros()[0].obtenerValor()));
 			cout << "La cantidad de turnos ahora es: " << this->parametrosConfiguracion->obtenerCantidadTurnos() << endl;
 			break;
 
 		case accion::CAMBIAR_PARAMETRO_M:
 
-			this->parametrosConfiguracion->cambiarParametroM(Utils::stringToUnsignedInt(accion->obtenerParametros()[0]));
+			this->parametrosConfiguracion->cambiarParametroM(Utils::stringToUnsignedInt(accion->obtenerParametros()[0].obtenerValor()));
 			cout << "El parametro M ahora es: " << this->parametrosConfiguracion->obtenerParametroM() << endl;
 			break;
 
 		case accion::CAMBIAR_PARAMETRO_N:
 
-			this->parametrosConfiguracion->cambiarParametroN(Utils::stringToUnsignedInt(accion->obtenerParametros()[0]));
+			this->parametrosConfiguracion->cambiarParametroN(Utils::stringToUnsignedInt(accion->obtenerParametros()[0].obtenerValor()));
 			cout << "El parametro N ahora es: " << this->parametrosConfiguracion->obtenerParametroN() << endl;
 			break;
 
@@ -110,13 +110,13 @@ void Granjeros::ejecutarAccionPartida(Accion* accion){
 
 		case accion::COSECHAR:
 
-			partida->ejecutarAccionCosechar(Utils::stringToUnsignedInt(accion->obtenerParametros()[0]), accion->obtenerParametros()[1]);
+			partida->ejecutarAccionCosechar(Utils::stringToUnsignedInt(accion->obtenerParametros()[0].obtenerValor()), accion->obtenerParametros()[1].obtenerValor());
 			cout << "COSECHASTE!" << endl;
 			break;
 
 		case accion::ENVIAR_COSECHA:
 
-			partida->ejecutarAccionEnviarCosecha(accion->obtenerParametros()[0]);
+			partida->ejecutarAccionEnviarCosecha(accion->obtenerParametros()[0].obtenerValor());
 			cout << "ENVIASTE LA COSECHA!" << endl;
 			break;
 
@@ -127,18 +127,18 @@ void Granjeros::ejecutarAccionPartida(Accion* accion){
 
 		case accion::REGAR:
 
-			partida->ejecutarAccionRegar(Utils::stringToUnsignedInt(accion->obtenerParametros()[0]), accion->obtenerParametros()[1]);
+			partida->ejecutarAccionRegar(Utils::stringToUnsignedInt(accion->obtenerParametros()[0].obtenerValor()), accion->obtenerParametros()[1].obtenerValor());
 			cout << "REGASTE!" << endl;
 			break;
 
 		case accion::SEMBRAR:
 
-			partida->ejecutarAccionSembrar(Utils::stringToUnsignedInt(accion->obtenerParametros()[0]), accion->obtenerParametros()[1], accion->obtenerParametros()[2]);
+			partida->ejecutarAccionSembrar(Utils::stringToUnsignedInt(accion->obtenerParametros()[0].obtenerValor()), accion->obtenerParametros()[1].obtenerValor(), accion->obtenerParametros()[2].obtenerValor());
 			cout << "SEMBRASTE!" << endl;
 			break;
 		case accion::VENDER_TERRENO:
 
-			partida->ejecutarAccionVenderTerreno(Utils::stringToUnsignedInt(accion->obtenerParametros()[0]));
+			partida->ejecutarAccionVenderTerreno(Utils::stringToUnsignedInt(accion->obtenerParametros()[0].obtenerValor()));
 			cout << "VENDISTE UN TERRENO!" << endl;
 			break;
 
