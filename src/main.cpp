@@ -18,12 +18,12 @@ int main(){
 	Granjeros granjeros;
 	granjeros.iniciarJuego();
 
-	/*
+/*
 	BmpCultivos imagenTerreno;
 
-	imagenTerreno.crearImagen();
-	 */
+	imagenTerreno.crearBitmap();
 
+*/
 	return 0;
 }
 
