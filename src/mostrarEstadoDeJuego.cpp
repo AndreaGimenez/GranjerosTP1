@@ -167,9 +167,9 @@ void BmpCultivos::crearParcela(){
 
 	rellenarTerreno(imagen, lapizVerdeClaro, lapizVerdeOscuro);
 
-//	crearEnmarcado(imagen, lapizMarron);
+	crearEnmarcado(imagen, lapizMarron);
 
-//	asignarMacetas(imagen, salto, lapizMarron);
+	asignarMacetas(imagen, salto, lapizMarron);
 
 	imagen.WriteToFile("Aturno.bmp");
 

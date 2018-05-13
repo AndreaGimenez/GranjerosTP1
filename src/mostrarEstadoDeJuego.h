@@ -37,6 +37,7 @@ class BmpCultivos {
 
 	public:
 
+
 		BmpCultivos();
 
 		int mostrarEspacioEntreLateralYCultivos();
