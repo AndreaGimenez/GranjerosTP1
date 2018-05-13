@@ -10,7 +10,7 @@ BmpCultivos::BmpCultivos(){
 	espacioLateral=10;
 	espacioEntreLateralYCultivos=5;
 				   /*x, y*/
-	imagen.SetSize(asignarDimension(Configuracion::obtenerLargoTerreno()), asignarDimension(Configuracion::obtenerAnchoTerreno()));
+	imagen.SetSize(asignarDimension(Configuracion::obtenerAnchoTerreno()), asignarDimension(Configuracion::obtenerLargoTerreno()));
 	imagen.SetBitDepth(24);
 	lapizVerdeClaro.Red=0, lapizVerdeClaro.Blue=0, lapizVerdeClaro.Green=100, lapizVerdeClaro.Alpha=0;
 	lapizVerdeOscuro.Red=0, lapizVerdeOscuro.Blue=0, lapizVerdeOscuro.Green=50, lapizVerdeOscuro.Alpha=0;
