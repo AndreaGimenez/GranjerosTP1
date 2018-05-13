@@ -36,6 +36,7 @@ class BmpCultivos {
 
 		void asignarParcelas(BMP* punteroImagen, int salto, RGBApixel lapizMarron);
 
+
 	public:
 
 
