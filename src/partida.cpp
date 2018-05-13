@@ -34,6 +34,11 @@ unsigned int Partida::obtenerCantidadDeJugadores(){
 	return this->jugadores->contarElementos() ;
 }
 
+unsigned int Partida::obtenerTurnoActual(){
+
+	return this->cantidadTurnosJugados + 1;
+}
+
 Jugador* Partida::verJugadorActual(){
 
 	return jugadores->obtenerCursor();
