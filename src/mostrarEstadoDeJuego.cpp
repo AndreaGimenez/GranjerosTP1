@@ -5,6 +5,7 @@ using namespace std;
 
 BmpCultivos::BmpCultivos(){
 
+
 	distanciaAlBorde=10;
 	anchoLargoParcela=10;
 	imagenTerreno.SetSize(obtenerAnchoDelTerreno(), obtenerLargoDelTerreno());

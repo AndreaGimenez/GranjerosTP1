@@ -15,6 +15,7 @@ class BmpCultivos {
 	//ancho: width
 	//largo:height
 
+
 	Herramientas utilidades;
 	BMP imagenTerreno;
 	BMP* punteroImagenTerreno;
