@@ -28,6 +28,7 @@ class BmpCultivos {
 
 		int asignarDimension(int dimensionActual);
 
+
 		void rellenarTerreno(BMP* punteroImagen, RGBApixel lapizVerdeClaro, RGBApixel lapizVerdeOscuro);
 
 		void crearEnmarcado(BMP* punteroImagen, RGBApixel lapizMarron);

@@ -173,7 +173,7 @@ void BmpCultivos::crearImagen(){
 
 	crearEnmarcado(punteroImagen, lapizMarron);
 
-	//asignarParcelas(punteroImagen, salto, lapizMarron);
+	asignarParcelas(punteroImagen, salto, lapizMarron);
 
 	imagen.WriteToFile("Aturno.bmp");
 
