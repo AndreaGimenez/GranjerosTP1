@@ -20,7 +20,7 @@ int main(){
 
 	BmpCultivos imagenTerreno;
 
-	imagenTerreno.crearImagen();
+	imagenTerreno.crearBitmap();
 
 
 	return 0;

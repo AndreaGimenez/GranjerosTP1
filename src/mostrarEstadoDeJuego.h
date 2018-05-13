@@ -1,5 +1,7 @@
 #include "EasyBMP.h"
 #include "configuracion.h"
+#include "parcela.h"
+#include "utilidadesEasyBMP.h"
 #include <ctime>
 #include <cstdlib>
 
@@ -13,51 +15,28 @@ class BmpCultivos {
 	//ancho: width
 	//largo:height
 
-		BMP imagen;
-		BMP* punteroImagen;
-		RGBApixel lapizVerdeClaro;
-		RGBApixel lapizVerdeOscuro;
-		RGBApixel lapizMarron;
-		int ladoCultivo;
-		int espacioEntreCultivos;
-		int espacioLateral;
-		int espacioEntreLateralYCultivos;
-		int coordenadaAncho;
-		int coordenadaLargo;
-		int salto;
+	Herramientas utilidades;
+	BMP imagenTerreno;
+	BMP* punteroImagenTerreno;
+	BMP imagenCultivo;
+	BMP* punteroImagenCultivo;
+	int anchoLargoParcela;
+	int distanciaAlBorde;
 
-		int asignarDimension(int dimensionActual);
-
-
-		void rellenarTerreno(BMP* punteroImagen, RGBApixel lapizVerdeClaro, RGBApixel lapizVerdeOscuro);
-
-		void crearEnmarcado(BMP* punteroImagen, RGBApixel lapizMarron);
-
-		void crearParcelas(BMP* punteroImagen, int i, int j, RGBApixel lapizMarron);
-
-		void asignarParcelas(BMP* punteroImagen, int salto, RGBApixel lapizMarron);
-
+	void dibujarTerrenoVacio(BMP* punteroImagenTerreno, Herramientas utilidades, int distanciaAlBorde);
 
 	public:
 
-
 		BmpCultivos();
 
-		int mostrarEspacioEntreLateralYCultivos();
+		int obtenerAnchoDelTerreno();
 
-		int mostrarEspacioEntreCultivos();
+		int obtenerLargoDelTerreno();
 
-		int mostrarEspacioLateral();
+		void crearBitmap();
 
-		int mostrarLadoCultivo();
+		// void actualizarTerreno() deberia devolver la imagen con los cambios efectuados en el turno correspondiente
 
-		int obtenerPixelActualAncho();
-
-		int obtenerPixelActualLargo();
-
-		int obtenerTopeDeCoordenadas();
-
-		void crearImagen();
 
 
 };
