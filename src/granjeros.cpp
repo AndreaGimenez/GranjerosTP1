@@ -180,6 +180,7 @@ void Granjeros::ejecutarAccionPartida(Accion* accion){
 			if(partidaFinalizada){
 
 				finalizarPartida();
+				interfaz->mostrarResumenPartida(partida);
 				interfaz->irAMenuAnterior();
 			}
 

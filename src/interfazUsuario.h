@@ -104,6 +104,9 @@ public:
 	 */
 	void mostrarEstadoPartida(Partida* partida);
 
+	// Post: Muesta por pantalla el resumen de la partida jugada. Determina el ganador de la partida y los recursos finales de cada jugador.
+	void mostrarResumenPartida(Partida* partida);
+
 	/*
 	 * Pos: Libera los recursos reservados.
 	 */

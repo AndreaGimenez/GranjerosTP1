@@ -179,6 +179,10 @@ void InterfazUsuario::mostrarEstadoPartida(Partida* partida){
 	mostrarTerrenosJugador(partida->verJugadorActual());
 }
 
+void InterfazUsuario::mostrarResumenPartida(Partida* partida){
+
+}
+
 void InterfazUsuario::mostrarDatosPartida(Partida* partida){
 
 	cout << "TURNO " << partida->obtenerTurnoActual() << endl << endl;
