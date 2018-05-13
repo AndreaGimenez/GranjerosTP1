@@ -19,13 +19,8 @@ int main(){
 	//granjeros.iniciarJuego();
 
 	BmpCultivos imagenTerreno;
-	ParametroConfiguracion prueba1;
 
-	prueba1.cambiarParametroM(1);
-	prueba1.cambiarParametroN(1);
-
-
-	imagenTerreno.crearParcela();
+	imagenTerreno.crearImagen();
 
 
 	return 0;

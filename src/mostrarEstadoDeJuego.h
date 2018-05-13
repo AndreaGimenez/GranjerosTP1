@@ -14,6 +14,7 @@ class BmpCultivos {
 	//largo:height
 
 		BMP imagen;
+		BMP* punteroImagen;
 		RGBApixel lapizVerdeClaro;
 		RGBApixel lapizVerdeOscuro;
 		RGBApixel lapizMarron;
@@ -27,13 +28,13 @@ class BmpCultivos {
 
 		int asignarDimension(int dimensionActual);
 
-		void rellenarTerreno(BMP imagen, RGBApixel lapizVerdeClaro, RGBApixel lapizVerdeOscuro);
+		void rellenarTerreno(BMP* punteroImagen, RGBApixel lapizVerdeClaro, RGBApixel lapizVerdeOscuro);
 
-		void crearEnmarcado(BMP imagen, RGBApixel lapizMarron);
+		void crearEnmarcado(BMP* punteroImagen, RGBApixel lapizMarron);
 
-		void crearMaceta(BMP imagen, int i, int j, RGBApixel lapizMarron);
+		void crearParcelas(BMP* punteroImagen, int i, int j, RGBApixel lapizMarron);
 
-		void asignarMacetas(BMP imagen, int salto, RGBApixel lapizMarron);
+		void asignarParcelas(BMP* punteroImagen, int salto, RGBApixel lapizMarron);
 
 	public:
 
@@ -54,7 +55,7 @@ class BmpCultivos {
 
 		int obtenerTopeDeCoordenadas();
 
-		void crearParcela();
+		void crearImagen();
 
 
 };

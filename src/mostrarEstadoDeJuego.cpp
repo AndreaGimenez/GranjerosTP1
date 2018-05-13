@@ -5,19 +5,20 @@ using namespace std;
 
 BmpCultivos::BmpCultivos(){
 
-	ladoCultivo=10;
+	ladoCultivo=100;
 	espacioEntreCultivos=10;
 	espacioLateral=10;
 	espacioEntreLateralYCultivos=5;
 				   /*x, y*/
-	imagen.SetSize(asignarDimension(Configuracion::obtenerAnchoTerreno()), asignarDimension(Configuracion::obtenerLargoTerreno()));
-	imagen.SetBitDepth(24);
+	punteroImagen->SetSize(asignarDimension(Configuracion::obtenerAnchoTerreno()), asignarDimension(Configuracion::obtenerLargoTerreno()));
+	punteroImagen->SetBitDepth(24);
 	lapizVerdeClaro.Red=0, lapizVerdeClaro.Blue=0, lapizVerdeClaro.Green=100, lapizVerdeClaro.Alpha=0;
 	lapizVerdeOscuro.Red=0, lapizVerdeOscuro.Blue=0, lapizVerdeOscuro.Green=50, lapizVerdeOscuro.Alpha=0;
 	lapizMarron.Red=150, lapizMarron.Blue=100, lapizMarron.Green=125, lapizMarron.Alpha=0;
 	coordenadaAncho=espacioLateral+espacioEntreLateralYCultivos;
 	coordenadaLargo=coordenadaAncho;
 	salto=ladoCultivo+espacioEntreCultivos;
+	punteroImagen=&imagen;
 
 }
 
@@ -78,21 +79,21 @@ int BmpCultivos::asignarDimension(int dimensionActual){
 	return dimensionFinal;
 }
 
-void BmpCultivos::rellenarTerreno(BMP imagen, RGBApixel lapizVerdeClaro, RGBApixel lapizVerdeOscuro){
+void BmpCultivos::rellenarTerreno(BMP* punteroImagen, RGBApixel lapizVerdeClaro, RGBApixel lapizVerdeOscuro){
 
 	srand(time(NULL));
 
-	for(int i=0; i<imagen.TellWidth(); i++){
+	for(int i=0; i<punteroImagen->TellWidth(); i++){
 
-		for(int j=0; j<imagen.TellHeight(); j++){
+		for(int j=0; j<punteroImagen->TellHeight(); j++){
 
 			if((rand()%11)==5)
 
-				imagen.SetPixel(i, j, lapizVerdeOscuro);
+				punteroImagen->SetPixel(i, j, lapizVerdeOscuro);
 
 			else
 
-				imagen.SetPixel(i, j, lapizVerdeClaro);
+				punteroImagen->SetPixel(i, j, lapizVerdeClaro);
 
 		}
 
@@ -100,16 +101,16 @@ void BmpCultivos::rellenarTerreno(BMP imagen, RGBApixel lapizVerdeClaro, RGBApix
 
 }
 
-void BmpCultivos::crearEnmarcado(BMP imagen, RGBApixel lapizMarron){
+void BmpCultivos::crearEnmarcado(BMP* punteroImagen, RGBApixel lapizMarron){
 
 	for(int k=mostrarEspacioLateral(); k<mostrarEspacioLateral(); k++){
 
-		for(int l=imagen.TellWidth()-mostrarEspacioLateral(); l>imagen.TellWidth()-3; l--){
+		for(int l=punteroImagen->TellWidth()-mostrarEspacioLateral(); l>punteroImagen->TellWidth()-3; l--){
 
-			for(int i=mostrarEspacioLateral(); i<imagen.TellHeight()-mostrarEspacioLateral(); i++){
+			for(int i=mostrarEspacioLateral(); i<punteroImagen->TellHeight()-mostrarEspacioLateral(); i++){
 
-				imagen.SetPixel(k, i, lapizMarron);
-				imagen.SetPixel(l, i, lapizMarron);
+				punteroImagen->SetPixel(k, i, lapizMarron);
+				punteroImagen->SetPixel(l, i, lapizMarron);
 
 			}
 		}
@@ -117,31 +118,31 @@ void BmpCultivos::crearEnmarcado(BMP imagen, RGBApixel lapizMarron){
 
 	for(int k=mostrarEspacioLateral(); k<mostrarEspacioLateral()+3; k++){
 
-		for(int l=imagen.TellHeight()-mostrarEspacioLateral(); l>imagen.TellHeight()-3; l--){
+		for(int l=punteroImagen->TellHeight()-mostrarEspacioLateral(); l>punteroImagen->TellHeight()-3; l--){
 
-			for(int i=20; i<imagen.TellWidth()-mostrarEspacioLateral(); i++){
+			for(int i=mostrarEspacioLateral(); i<punteroImagen->TellWidth()-mostrarEspacioLateral(); i++){
 
-				imagen.SetPixel(i, k, lapizMarron);
-				imagen.SetPixel(i, l, lapizMarron);
+				punteroImagen->SetPixel(i, k, lapizMarron);
+				punteroImagen->SetPixel(i, l, lapizMarron);
 
 			}
 		}
 	}
 }
 
-void BmpCultivos::crearMaceta(BMP imagen, int i, int j, RGBApixel lapizMarron){
+void BmpCultivos::crearParcelas(BMP* punteroImagen, int i, int j, RGBApixel lapizMarron){
 
 	for(; i<mostrarLadoCultivo(); i++){
 
 		for(; j<mostrarLadoCultivo(); j++){
 
-			imagen.SetPixel(i, j, lapizMarron);
+			punteroImagen->SetPixel(i, j, lapizMarron);
 
-			imagen.SetPixel(i+mostrarLadoCultivo(), j, lapizMarron);
+			punteroImagen->SetPixel(i+mostrarLadoCultivo(), j, lapizMarron);
 
-			imagen.SetPixel(i, j, lapizMarron);
+			punteroImagen->SetPixel(i, j, lapizMarron);
 
-			imagen.SetPixel(i, j+mostrarLadoCultivo(), lapizMarron);
+			punteroImagen->SetPixel(i, j+mostrarLadoCultivo(), lapizMarron);
 
 		}
 
@@ -149,13 +150,13 @@ void BmpCultivos::crearMaceta(BMP imagen, int i, int j, RGBApixel lapizMarron){
 
 }
 
-void BmpCultivos::asignarMacetas(BMP imagen, int salto, RGBApixel lapizMarron){
+void BmpCultivos::asignarParcelas(BMP* punteroImagen, int salto, RGBApixel lapizMarron){
 
 	for(int i=obtenerPixelActualAncho(); i<=obtenerTopeDeCoordenadas(); i+=salto){
 
 		for(int j=obtenerPixelActualLargo(); j<=obtenerTopeDeCoordenadas(); j+=salto){
 
-			crearMaceta(imagen, i, j, lapizMarron);
+			crearParcelas(punteroImagen, i, j, lapizMarron);
 
 		}
 
@@ -163,15 +164,17 @@ void BmpCultivos::asignarMacetas(BMP imagen, int salto, RGBApixel lapizMarron){
 
 }
 
-void BmpCultivos::crearParcela(){
+void BmpCultivos::crearImagen(){
 
-	rellenarTerreno(imagen, lapizVerdeClaro, lapizVerdeOscuro);
+	rellenarTerreno(punteroImagen, lapizVerdeClaro, lapizVerdeOscuro);
 
-	crearEnmarcado(imagen, lapizMarron);
+	crearEnmarcado(punteroImagen, lapizMarron);
 
-	asignarMacetas(imagen, salto, lapizMarron);
+	asignarParcelas(punteroImagen, salto, lapizMarron);
 
 	imagen.WriteToFile("Aturno.bmp");
+
+	cout << "done";
 
 }
 
