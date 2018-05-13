@@ -7,6 +7,7 @@
 
 #include "accion.h"
 #include <cstdlib>
+#include "utils.h"
 
 
 using namespace std;
@@ -71,25 +72,35 @@ void Accion::cambiarParametros(string* parametros){
 	this->parametros = parametros;
 }
 
-void Accion::cambiarParametros(string parametros){
+bool Accion::cambiarParametros(string parametros){
 
-	int posicionRegex = parametros.find(" ");
-	unsigned int indiceParametro = 0;
+	unsigned int cantidadEspacios = Utils::contarRepeticiones(parametros, " ");
 
-	while(posicionRegex > 0){
+	//Tiene que haber exactamente obtenercantidadParametros() - 1 espacios de lo contrario se pasaron mas o menos parametros
+	bool cambiarCantidadParametros = cantidadEspacios == this->obtenerCantidadParametros() - 1;
 
-		string strParametro = parametros.substr(0, posicionRegex);
-		this->parametros[indiceParametro] = strParametro;
+	if(cambiarCantidadParametros){
 
-		parametros = parametros.substr(posicionRegex + 1);
-		posicionRegex = parametros.find(" ");
-		indiceParametro++;
+		Utils::splitString(parametros, " ", this->parametros);
+		cambiarCantidadParametros = validarTipoParametros();
 	}
 
-	if(parametros != ""){
+	return cambiarCantidadParametros;
+}
 
-		this->parametros[indiceParametro] = parametros;
+bool Accion::validarTipoParametros(){
+
+	/*
+	bool parametrosCorrectos = true;
+
+	for(unsigned int i = 0; i < this->obtenerCantidadParametros() && parametrosCorrectos; i++){
+
+		parametrosCorrectos = this->parametros->validarValor();
 	}
+
+	return parametrosCorrectos;*/
+
+	return true;
 }
 
 accion::EAccion Accion::obtenerAccion(){

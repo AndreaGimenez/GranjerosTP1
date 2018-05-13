@@ -15,13 +15,14 @@ int main(){
 
 	//Test::correrTests();
 
-	//Granjeros granjeros;
-	//granjeros.iniciarJuego();
+	Granjeros granjeros;
+	granjeros.iniciarJuego();
 
+	/*
 	BmpCultivos imagenTerreno;
 
 	imagenTerreno.crearImagen();
-
+	 */
 
 	return 0;
 }

@@ -75,19 +75,20 @@ ResultadoOpcion* OpcionMenu::ejecutar(){
 			resultado = new ResultadoOpcion(this->obtenerAccion());
 			Accion* accion = resultado->obtenerAccion();
 
+			bool parametrosCorrectos = false;
 			switch(accion->obtenerTipo()){
 
 				case accion::CON_PARAMETROS_USUARIO:
 
-					cout << this->leyendaIngresoUsuario << ": ";
-					cout.flush();
+					while(!parametrosCorrectos){
 
-					cin.clear();
-					cin.sync();
-					cin.ignore();
-					getline(cin, parametrosIngresados);
+						cout << this->leyendaIngresoUsuario << ": ";
+						cout.flush();
 
-					accion->cambiarParametros(parametrosIngresados);
+						getline(cin, parametrosIngresados);
+
+						parametrosCorrectos = accion->cambiarParametros(parametrosIngresados);
+					}
 
 					break;
 

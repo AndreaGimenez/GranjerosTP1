@@ -98,6 +98,9 @@ public:
 	 */
 	std::string* obtenerParametros();
 
+	//Post: Indica si los parametros ingresados por el usuario para la accion son correctos
+	bool validarTipoParametros();
+
 	/*
 	 * Pos: Devuelve la accion asociada.
 	 */
@@ -119,7 +122,7 @@ public:
 	 * 		 La cantidad de parametros obtenidos debe ser igual a 'obtenerCantidadParametros'.
 	 * Pos: Asigna los parametros al resultado de separar 'parametros' por espacios.
 	 */
-	void cambiarParametros(std::string parametros);
+	bool cambiarParametros(std::string parametros);
 
 	/*
 	 * Pos: Libera los recursos reservados.
