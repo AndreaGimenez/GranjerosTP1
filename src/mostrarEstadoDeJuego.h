@@ -1,6 +1,6 @@
 #include "EasyBMP.h"
-#include "configuracion.h"
-#include "parcela.h"
+#include "configuracion.h" //incluye cultivo.h
+#include "terreno.h" //incluye parcela.h
 #include "utilidadesEasyBMP.h"
 #include <ctime>
 #include <cstdlib>
@@ -18,24 +18,48 @@ class BmpCultivos {
 	Herramientas utilidades;
 	BMP imagenTerreno;
 	BMP* punteroImagenTerreno;
-	BMP imagenCultivo;
-	BMP* punteroImagenCultivo;
-	int anchoLargoParcela;
+	BMP imagenActualCultivo;
+	int anchoLargoParcela; //depende de las imagenes que usemos para los cultivos
 	int distanciaAlBorde;
 
-	void dibujarTerrenoVacio(BMP* punteroImagenTerreno, Herramientas utilidades, int distanciaAlBorde);
+	void dibujarTerrenoVacio(Herramientas utilidades);
+
+
 
 	public:
 
 		BmpCultivos();
 
+		int obtenerFilas();
+
+		int obtenerColumnas();
+
 		int obtenerAnchoDelTerreno();
 
 		int obtenerLargoDelTerreno();
 
+		int obtenerDistanciaAlBorde();
+
+		int obtenerAnchoLargoParcela();
+
+		BMP* obtenerImagen();
+
+		BMP obtenerImagenCultivo();
+
 		void crearBitmap();
 
-		// void actualizarTerreno() deberia devolver la imagen con los cambios efectuados en el turno correspondiente
+		//N filas, M columnas
+		int obtenerPrincipioDelTerreno();
+
+		bool finDelTerreno(int parcelaActualAncho, int parcelaActualLargo);
+
+		void obtenerSiguienteParcela();
+
+		void asignarImagenAlCultivo(Cultivo* cultivoActual, BMP* imagenAsignada)
+
+		void actualizarParcela(BMP* imagenAsignada, int coordenadasAncho, int coordenadasLargo);
+
+		void actualizarTerreno(); //deberia devolver la imagen con los cambios efectuados en el turno correspondiente
 
 
 
