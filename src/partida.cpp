@@ -119,6 +119,45 @@ bool Partida::avanzarTurno(){
 	return partidaFinalizada;
 }
 
+void Partida::obtenerJugadoresOrdenados(Jugador** jugadoresOrdenados){
+
+	if(!this->jugadores->estaVacia()){
+
+		int jugadoresAgregados = 0;
+		this->jugadores->iniciarCursor();
+		while(this->jugadores->avanzarCursor()){
+
+			Jugador* jugadorAAgregar = this->jugadores->obtenerCursor();
+
+			if(jugadoresAgregados != 0){
+
+				bool agregueJugador = false;
+				int posicionAAgregarJugador = 0;
+
+				for(; posicionAAgregarJugador <= jugadoresAgregados && !agregueJugador; posicionAAgregarJugador++){
+
+					agregueJugador = (posicionAAgregarJugador == jugadoresAgregados
+										   || jugadorAAgregar->monedasDisponibles() > jugadoresOrdenados[posicionAAgregarJugador]->monedasDisponibles());
+
+					if(agregueJugador){
+
+						for(int i = jugadoresAgregados - 1; i >= posicionAAgregarJugador; i--){
+							jugadoresOrdenados[i+1] = jugadoresOrdenados[i];
+						}
+						jugadoresOrdenados[posicionAAgregarJugador] = jugadorAAgregar;
+					}
+				}
+				jugadoresAgregados++;
+
+			}else{
+
+				jugadoresOrdenados[0] = jugadorAAgregar;
+				jugadoresAgregados++;
+			}
+		}
+	}
+}
+
 void Partida::cargarJugadores(Lista<string>* nombresJugadores){
 
 	nombresJugadores->iniciarCursor() ;

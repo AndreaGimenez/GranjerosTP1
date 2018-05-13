@@ -35,6 +35,8 @@ private:
 	void mostrarDatosPartida(Partida* partida);
 	void mostrarRecursosJugador(Jugador* jugador);
 	void mostrarTerrenosJugador(Jugador* jugador);
+	void mostrarGanador(unsigned int cantidadJugadores, Jugador** jugadores);
+	void mostrarPosiciones(unsigned int cantidadJugadores, Jugador** jugadores);
 
 public:
 

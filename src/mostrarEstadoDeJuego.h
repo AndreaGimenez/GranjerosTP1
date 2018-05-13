@@ -56,7 +56,7 @@ class BmpCultivos {
 
 		void obtenerSiguienteParcela();
 
-		void asignarImagenAlCultivo(Cultivo* cultivoActual, BMP* imagenAsignada)
+		void asignarImagenAlCultivo(Cultivo* cultivoActual, BMP* imagenAsignada);
 
 		void actualizarParcela(BMP* imagenAsignada, int coordenadasAncho, int coordenadasLargo);
 
