@@ -11,6 +11,8 @@
 #include "parcela.h"
 #include "utils.h"
 #include <iostream>
+#include "creadorAcciones.h"
+#include "partida.h"
 
 using namespace std;
 
@@ -19,6 +21,61 @@ void Test::correrTests(){
 	testParametros();
 	testAlmacen();
 	testParcela();
+}
+
+void Test::testAccionesPartida(){
+
+	ParametroConfiguracion parametros;
+
+	parametros.cambiarDificultad(MEDIO);
+	parametros.cambiarCantidadJugadores(1);
+	parametros.cambiarParametroN(10);
+	parametros.cambiarParametroM(5);
+	parametros.cambiarCantidadTurnos(10);
+
+	Configuracion::inicializar(&parametros);
+	CreadorAcciones::inicializar();
+
+	Lista<string> nombresJugadores;
+	nombresJugadores.agregar("Jugador1");
+
+	Partida partida(&nombresJugadores);
+
+	cout << "Turno 1" << endl;
+	cout << "Siembro Cultivo A en Terreno 1 Parcela 1,1" << endl;
+	partida.ejecutarAccionSembrar(1, "1,1", "A");
+	cout << "Estado Parcela 1: " << partida.verJugadorActual()->buscarTerreno(1)->buscarParcela("1,1")->obtenerEstado() << endl;
+	partida.avanzarTurno();
+
+
+	cout << "Turno 2" << endl;
+	partida.verJugadorActual()->aumentarUnidadesRiego(10);
+	cout << "Riego" << endl;
+	partida.ejecutarAccionRegar(1, "1,1");
+	cout << "Estado Parcela 1: " << partida.verJugadorActual()->buscarTerreno(1)->buscarParcela("1,1")->obtenerEstado() << endl;
+	cout << "Unidades Riego: " << partida.verJugadorActual()->obtenerUnidadesRiegoTotales() << endl;
+	partida.avanzarTurno();
+
+	cout << "Turno 3" << endl;
+	partida.verJugadorActual()->aumentarUnidadesRiego(10);
+	cout << "Riego" << endl;
+	partida.ejecutarAccionRegar(1, "1,1");
+	cout << "Estado Parcela 1: " << partida.verJugadorActual()->buscarTerreno(1)->buscarParcela("1,1")->obtenerEstado() << endl;
+	cout << "Unidades Riego: " << partida.verJugadorActual()->obtenerUnidadesRiegoTotales() << endl;
+	partida.avanzarTurno();
+
+	cout << "Turno 4" << endl;
+	partida.verJugadorActual()->aumentarUnidadesRiego(10);
+	cout << "Cosecho" << endl;
+	partida.ejecutarAccionCosechar(1, "1,1");
+	cout << "Cantidad Almacenada Cultivo A: " << partida.verJugadorActual()->obtenerCantidadAlmacenada("A") << endl;
+	cout << "Estado Parcela 1,1: " << partida.verJugadorActual()->buscarTerreno(1)->buscarParcela("1,1")->obtenerEstado() << endl;
+	cout << "Monedas: " << partida.verJugadorActual()->monedasDisponibles() << endl;
+	cout << "Envio cosecha" << endl;
+	partida.ejecutarAccionEnviarCosecha("A");
+	cout << "Monedas: " << partida.verJugadorActual()->monedasDisponibles() << endl;
+	cout << "Cantidad Almacenada Cultivo A: " << partida.verJugadorActual()->obtenerCantidadAlmacenada("A") << endl;
+
 }
 
 void Test::testSplit(){

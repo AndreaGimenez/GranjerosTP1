@@ -97,26 +97,50 @@ bool Almacen::almacenarCosecha(Cultivo* cultivoAAlmacenar, unsigned int cantidad
 	return almacenar;
 }
 
-bool Almacen::enviarCosecha(Cultivo* cultivoAEnviar){
+unsigned int Almacen::enviarCosecha(Cultivo* cultivoAEnviar){
 
 	return this->enviarCosecha(cultivoAEnviar, this->obtenerCantidadAlmacenada(cultivoAEnviar));
 }
 
-bool Almacen::enviarCosecha(Cultivo* cultivoAEnviar, unsigned int cantidadAEnviar){
+unsigned int Almacen::enviarCosecha(Cultivo* cultivoAEnviar, unsigned int cantidadAEnviar){
 
 	UnidadAlmacenamiento* unidadAlmacenamientoCosechaAEnviar = this->buscarUnidadAlmacenamiento(cultivoAEnviar);
-	bool cosechaEnviada = false;
+	return enviarCosecha(unidadAlmacenamientoCosechaAEnviar, cantidadAEnviar);
+}
+
+unsigned int Almacen::enviarCosecha(UnidadAlmacenamiento* unidadAlmacenamientoCosechaAEnviar){
+
+	return enviarCosecha(unidadAlmacenamientoCosechaAEnviar, unidadAlmacenamientoCosechaAEnviar->obtenerCantidadAlmacenada());
+}
+
+unsigned int Almacen::enviarCosecha(UnidadAlmacenamiento* unidadAlmacenamientoCosechaAEnviar, unsigned int cantidadAEnviar){
+
+	unsigned int rentabilidadObtenida = 0;
 
 	if(unidadAlmacenamientoCosechaAEnviar != NULL){
 
-		cosechaEnviada = unidadAlmacenamientoCosechaAEnviar->desalmacenar(cantidadAEnviar);
+		Cultivo* cultivoAEnviar = unidadAlmacenamientoCosechaAEnviar->obtenerCultivo();
+		if(unidadAlmacenamientoCosechaAEnviar->desalmacenar(cantidadAEnviar)){
 
-		if(cosechaEnviada){
 			this->volumenUtilizado -= cantidadAEnviar;
+
+			rentabilidadObtenida = Configuracion::calcularRentabilidad(cultivoAEnviar, cantidadAEnviar);
 		}
 	}
 
-	return cosechaEnviada;
+	return rentabilidadObtenida;
+}
+
+unsigned int Almacen::enviarCosechas(){
+
+	unsigned int rentabilidadObtenida = 0;
+
+	this->cosechasAlmacenadas.iniciarCursor();
+	while(this->cosechasAlmacenadas.avanzarCursor()){
+		rentabilidadObtenida += this->enviarCosecha(this->cosechasAlmacenadas.obtenerCursor());
+	}
+
+	return rentabilidadObtenida;
 }
 
 unsigned int Almacen::obtenerCostoEnvio(Cultivo* cultivoAEnviar){

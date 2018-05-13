@@ -95,6 +95,9 @@ public:
 	 */
 	void mostrarDespedida();
 
+	/*
+	 * Pos: Crea un archivo BMP con el estado del jugador actual de la partida.
+	 */
 	void mostrarEstadoPartida(Partida* partida);
 
 	/*

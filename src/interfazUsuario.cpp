@@ -8,6 +8,7 @@
 #include "interfazUsuario.h"
 #include <cstdlib>
 #include <iostream>
+#include "utils.h"
 
 
 using namespace std;
@@ -26,12 +27,14 @@ void InterfazUsuario::mostrarBienvenida(){
 void InterfazUsuario::solicitarNombresJugadores(unsigned int cantidadJugadores, Lista<string>& listaNombres){
 
 	cout << "Ingresa los nombres de los jugadores!" << endl << endl;
-	for(unsigned int i = 0; i < cantidadJugadores; i++){
+	for(unsigned int i = 1; i <= cantidadJugadores; i++){
 
-		cout << "Nombre jugador " + i << ": ";
+		cout << "Nombre jugador " + Utils::unsignedIntToString(i) << ": ";
 		cout.flush();
 
 		string nombreJugador;
+		cin.ignore();
+		cin.sync();
 		cin >> nombreJugador;
 		listaNombres.agregar(nombreJugador);
 	}
@@ -130,7 +133,10 @@ Menu* InterfazUsuario::crearMenuConfiguracion() {
 
 Menu* InterfazUsuario::crearMenuPartida() {
 
-	Menu* menu = new Menu("ACCIONES", 9);
+	Menu* menu = new Menu("ACCIONES", 10, false);
+
+	menu->cambiarOpcion(0, OpcionMenu("Finalizar Partida",
+									  accion::FINALIZAR_PARTIDA));
 
 	menu->cambiarOpcion(1, OpcionMenu("Sembrar",
 									  accion::SEMBRAR,

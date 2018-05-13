@@ -21,7 +21,7 @@ Granjeros::Granjeros() {
 	this->partida = NULL;
 }
 
-bool Granjeros::iniciarJuego(){
+void Granjeros::iniciarJuego(){
 
 	interfaz->mostrarBienvenida();
 	CreadorAcciones::inicializar();
@@ -42,20 +42,14 @@ bool Granjeros::iniciarJuego(){
 	}
 
 	interfaz->mostrarDespedida();
-
-	return true;
 }
 
 void Granjeros::ejecutarAccion(Accion* accion){
 
-	bool partidaFinalizada = false;
-
 	ejecutarAccionConfiguracion(accion);
-	partidaFinalizada = ejecutarAccionPartida(accion);
+	ejecutarAccionPartida(accion);
 
-	if(!partidaFinalizada){
-		interfaz->mostrarMenuActual();
-	}
+	interfaz->mostrarMenuActual();
 }
 
 void Granjeros::ejecutarAccionConfiguracion(Accion* accion){
@@ -90,7 +84,7 @@ void Granjeros::ejecutarAccionConfiguracion(Accion* accion){
 	}
 }
 
-bool Granjeros::ejecutarAccionPartida(Accion* accion){
+void Granjeros::ejecutarAccionPartida(Accion* accion){
 
 	bool partidaFinalizada = false;
 
@@ -151,6 +145,20 @@ bool Granjeros::ejecutarAccionPartida(Accion* accion){
 		case accion::FINALIZAR_TURNO:
 
 			partidaFinalizada = avanzarTurno();
+
+			if(partidaFinalizada){
+
+				finalizarPartida();
+				interfaz->irAMenuAnterior();
+			}
+
+			break;
+
+		case accion::FINALIZAR_PARTIDA:
+
+			finalizarPartida();
+			interfaz->irAMenuAnterior();
+
 			break;
 
 		case accion::SALIR:
@@ -160,8 +168,6 @@ bool Granjeros::ejecutarAccionPartida(Accion* accion){
 
 		default:;
 	}
-
-	return partidaFinalizada;
 }
 
 void Granjeros::comenzarPartida(){
@@ -178,19 +184,21 @@ void Granjeros::comenzarPartida(){
 
 bool Granjeros::avanzarTurno(){
 
-	//avanzarTurno deberia avanzar el jugador y si es necesario cambiar la ronda. Tambien tiene que actualizar el estado del jugador, sus recursos (cambia de estado tambien las parcelas).
-	//Debería devolver true si la partida se finalizo.
 	bool finPartida = partida->avanzarTurno();
-
-	//TODO: Este metodo generaria el bmp y mostraria el jugador y el estado actual de ese jugador.
-	//		Como primero se llama a avanzarTurno el jugadorActual deberia ser el jugador que le toca jugar esta ronda
 
 	if(!finPartida){
 
+		//TODO: Este metodo generaria el bmp y mostraria el jugador y el estado actual de ese jugador.
+		//		Como primero se llama a avanzarTurno el jugadorActual deberia ser el jugador que le toca jugar esta ronda
 		interfaz->mostrarEstadoPartida(partida);
 	}
 
 	return finPartida;
+}
+
+void Granjeros::finalizarPartida(){
+
+	delete this->partida;
 }
 
 Granjeros::~Granjeros(){

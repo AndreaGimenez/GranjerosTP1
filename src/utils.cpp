@@ -7,6 +7,7 @@
 
 #include "utils.h"
 #include <cstdlib>
+#include <sstream>
 
 using namespace std;
 
@@ -18,7 +19,7 @@ bool Utils::esUnsignedInt(string cadena){
 		esInt = false;
 	}else{
 		const char* caracteres = cadena.c_str();
-		for(unsigned int i = 0; i < cadena.size(); i++ && esInt){
+		for(unsigned int i = 0; i < cadena.size() && esInt; i++){
 			esInt = (caracteres[i] >= Utils::CHAR_0 && caracteres[i] <= Utils::CHAR_9);
 		}
 	}
@@ -39,6 +40,13 @@ unsigned int Utils::stringToUnsignedInt(string valor){
 char Utils::stringToChar(std::string valor){
 
 	return valor.c_str()[0];
+}
+
+string Utils::unsignedIntToString(unsigned int valor){
+
+	ostringstream ss;
+	ss << valor;
+	return ss.str();
 }
 
 unsigned int Utils::contarRepeticiones(string cadena, string subcadena){

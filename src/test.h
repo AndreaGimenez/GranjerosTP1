@@ -18,6 +18,7 @@ public:
 	static void testAlmacen();
 	static void testParcela();
 	static void testSplit();
+	static void testAccionesPartida();
 
 private:
 	static void testParcela1();

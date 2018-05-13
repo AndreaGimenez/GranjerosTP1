@@ -17,13 +17,23 @@ Jugador::Jugador(string nombre){
 
 	this->nombre = nombre;
 	this->monedas = Configuracion::obtenerCreditosIniciales();
-	this->turnos = Configuracion::obtenerCantidadTurnos();
+	this->unidadesRiego = 0;
 	this->tanque = new Tanque(Configuracion::obtenerCapacidadInicialTanque());
 	this->almacen = new Almacen(Configuracion::obtenerCapacidadInicialAlmacen());
 
 	for(unsigned int i = 1; i <= Configuracion::obtenerCantidadTerrenosIniciales(); i++){
-		this->terrenos.agregar(new Terreno());
+		Terreno* nuevoTerreno = new Terreno;
+		this->terrenos.agregar(nuevoTerreno);
 	}
+}
+
+void Jugador::aumentarUnidadesRiego(unsigned int unidadesRiegoASumar){
+
+	if(unidadesRiegoASumar < 0){
+		throw string("Cantidad de unidades de riego a sumar invalida \n");
+	}
+
+	this->unidadesRiego += unidadesRiegoASumar;
 }
 
 unsigned int Jugador::monedasDisponibles(){
@@ -38,7 +48,7 @@ void Jugador::agregarMonedas(unsigned int monedasASumar){
 		throw string("Cantidad de monedas a sumar invalida \n");
 	}
 
-	this->monedas += monedasASumar ;
+	this->monedas += monedasASumar;
 }
 
 
@@ -63,22 +73,22 @@ bool Jugador::puedeGastarMonedas(unsigned int cantidadMonedas){
 	return (cantidadMonedas <= this->monedas);
 }
 
-unsigned int Jugador::turnosRestantes(){
-
-	return (this-> turnos)-1 ; //para no contemplar el turno actual, solo los restantes
-
-}
-
-void Jugador::pasarProximoTurno(){
-
-	if(this->quedanTurnos()){
-		this->turnos -- ;
-	}
-}
-
-unsigned int Jugador::cantidadDeTerrenos(){
+unsigned int Jugador::obtenerCantidadTerrenos(){
 
 	return this->terrenos.contarElementos();
+}
+
+unsigned int Jugador::obtenerCantidadAlmacenada(std::string nombreCultivo){
+
+	unsigned int cantidadAlmacenada = 0;
+
+	Cultivo* cultivo = Configuracion::obtenerCultivo(nombreCultivo);
+
+	if(cultivo != NULL){
+		return this->almacen->obtenerCantidadAlmacenada(cultivo);
+	}
+
+	return cantidadAlmacenada;
 }
 
 void Jugador::asignarNombre(string nombre) {
@@ -96,29 +106,17 @@ void Jugador::imprimirJugador(){
 
 	cout<<"Nombre del jugador: "<<obtenerNombre() ;
 	cout<<"Cantidad de monedas: "<< monedasDisponibles() ;
-	cout<<"Turnos Restantes: "<<turnosRestantes() ;
-	cout<<"Cantidad de terrenos"<<cantidadDeTerrenos() ;
+	cout<<"Cantidad de terrenos"<<obtenerCantidadTerrenos() ;
 
 }
 
 Terreno* Jugador::buscarTerreno(unsigned int numeroTerreno){
 
-	if(numeroTerreno < 1 && numeroTerreno > this->terrenos.contarElementos() ){
+	if(numeroTerreno < 1 || numeroTerreno > this->terrenos.contarElementos() ){
 		throw string("El numero de terreno no existe");
 	}
 
 	return this->terrenos.obtener(numeroTerreno);
-}
-
-bool Jugador::quedanTurnos(){
-
-	bool turnos = false ;
-
-	if (this->turnos > 1){
-		turnos = true ;
-	}
-
-	return turnos;
 }
 
 bool Jugador::puedeAlmacenar(Cultivo* cultivo){
@@ -154,8 +152,8 @@ bool Jugador::puedeSembrar(unsigned int numeroTerreno, std::string coordenadasPa
 	Terreno* terreno = buscarTerreno(numeroTerreno);
 	if(terreno != NULL){
 
-		return (puedeGastarMonedas(cultivo->obtenerCosto())
-				&& terreno->puedeSembrar(coordenadasParcela));
+		return (terreno->puedeSembrar(coordenadasParcela)
+				&& puedeGastarMonedas(cultivo->obtenerCosto()));
 	}
 
 	return puedeCosechar;
@@ -180,7 +178,8 @@ bool Jugador::puedeCosechar(unsigned int numeroTerreno, string coordenadasParcel
 
 	Terreno* terreno = buscarTerreno(numeroTerreno);
 	if(terreno != NULL){
-		terreno->puedeCosechar(coordenadasParcela);
+		puedeCosechar = (terreno->puedeCosechar(coordenadasParcela)
+						 && this->puedeAlmacenar(terreno->obtenerCultivo(coordenadasParcela)));
 	}
 
 	return puedeCosechar;
@@ -207,8 +206,8 @@ bool Jugador::puedeRegar(unsigned int numeroTerreno, std::string coordenadasParc
 	if(terreno != NULL){
 
 		Cultivo* cultivo = terreno->obtenerCultivo(coordenadasParcela);
-		puedeRegar = (puedeConsumirUnidadesRiego(cultivo->obtenerConsumoAgua())
-					  && terreno->puedeRegar(coordenadasParcela));
+		puedeRegar = (terreno->puedeRegar(coordenadasParcela)
+					  && puedeConsumirUnidadesRiego(cultivo->obtenerConsumoAgua()));
 	}
 
 	return puedeRegar;
@@ -261,8 +260,23 @@ bool Jugador::consumirUnidadesRiego(unsigned int unidadesRiego){
 	return consumirUnidadesRiego;
 }
 
+bool Jugador::puedeEnviar(Cultivo* cultivo){
+
+	return (this->puedeGastarMonedas(almacen->obtenerCostoEnvio(cultivo)));
+}
+
 bool Jugador::enviar(Cultivo* cultivo){
-	return false;
+
+	bool enviar = puedeEnviar(cultivo);
+
+	if(enviar){
+
+		unsigned int costoEnvio = almacen->obtenerCostoEnvio(cultivo);
+		this->agregarMonedas(almacen->enviarCosecha(cultivo));
+		this->gastarMonedas(costoEnvio);
+	}
+
+	return enviar;
 }
 
 bool Jugador::comprarTerreno(){
@@ -281,9 +295,30 @@ bool Jugador::comprarCapacidadAlmacen(){
 	return false;
 }
 
+void Jugador::actualizar(){
+
+	actualizarUnidadesRiego();
+	actualizarTerrenos();
+}
+
+void Jugador::actualizarUnidadesRiego(){
+
+	this->tanque->almacenarAgua(this->unidadesRiego);
+	this->unidadesRiego = 0;
+}
+
+void Jugador::actualizarTerrenos(){
+
+	this->terrenos.iniciarCursor();
+	while(this->terrenos.avanzarCursor()){
+		terrenos.obtenerCursor()->actualizar();
+	}
+}
+
 Jugador::~Jugador(){
 
 	delete this->tanque;
+	delete this->almacen;
 
 	this->terrenos.iniciarCursor();
 	while(this->terrenos.avanzarCursor()){

@@ -215,6 +215,11 @@ void Configuracion::destruirDestinos(){
 	delete destinos;
 }
 
+unsigned int Configuracion::calcularRentabilidad(Cultivo* cultivo, unsigned int cantidad){
+
+	return cultivo->obtenerRentabilidad() * cantidad;
+}
+
 Configuracion::~Configuracion() {
 
 	destruirCultivos();

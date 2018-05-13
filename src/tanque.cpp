@@ -21,54 +21,42 @@ Tanque::Tanque(unsigned int capacidad){
 
 bool Tanque::estaLLeno(){
 
-	return volumenOcupado == capacidad ;
-
+	return volumenOcupado == capacidad;
 }
 
 bool Tanque::estaVacio(){
 
-	return volumenOcupado == 0 ;
-
+	return volumenOcupado == 0;
 }
 
 unsigned int Tanque::volumenUtilizado(){
 
 	return volumenOcupado;
-
 }
 
 unsigned int Tanque::volumenLibre(){
 
 	return (capacidad - volumenOcupado);
-
 }
 
 void Tanque::almacenarAgua(unsigned int cantidadDeAgua){
 
-	if(this->volumenLibre() < cantidadDeAgua){
-		while(!this->estaLLeno()){
-			this->volumenOcupado ++ ;
-			cantidadDeAgua -- ;
-		}
+	this->volumenOcupado += cantidadDeAgua;
+
+	if(this->volumenOcupado > this->capacidad){
+		this->volumenOcupado = this->capacidad;
 	}
-
-	else{
-		this->volumenOcupado += cantidadDeAgua ;	//este caso podria contemplarse en el while de arriba, pero
-	}									//preferi tratarlo aparte para evitar iterar en un ciclo innecesariamente.
-
 }
 
 bool Tanque::usarAguaAlmacenada(unsigned int aguaAUtilizar){
 
-	bool exito = false ;
+	bool hayAguaSuficiente = (this->volumenUtilizado() >= aguaAUtilizar) ;
 
-	if(this->volumenUtilizado() >= aguaAUtilizar){
-		this->volumenOcupado -= aguaAUtilizar ;
-		exito = true ;
+	if(hayAguaSuficiente){
+		this->volumenOcupado -= aguaAUtilizar;
 	}
 
-	return exito ;
-
+	return hayAguaSuficiente;
 }
 
 void Tanque::imprimirEstado(){
@@ -76,5 +64,4 @@ void Tanque::imprimirEstado(){
 	cout<<"Tanque \n Capacidad = "<<this->capacidad<<"\nVolumen Utilizado = "
 		<<this->volumenUtilizado()<<"\nVolumen Libre = "
 		<<this->volumenLibre()<<endl ;
-
 }
