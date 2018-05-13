@@ -10,29 +10,51 @@ class BmpCultivos {
 
 	private:
 
+	//ancho: width
+	//largo:height
+
 		BMP imagen;
 		RGBApixel lapizVerdeClaro;
 		RGBApixel lapizVerdeOscuro;
 		RGBApixel lapizMarron;
-		Configuracion dimensiones;
-		unsigned int perimetroCultivo;
-		unsigned int espacioEntreCultivos;
-		unsigned int espacioLateral;
-		unsigned int ancho;
-		unsigned int largo;
+		int ladoCultivo;
+		int espacioEntreCultivos;
+		int espacioLateral;
+		int espacioEntreLateralYCultivos;
 		int coordenadaAncho;
 		int coordenadaLargo;
+		int salto;
 
-		unsigned int asignarDimension(int dimensiones, unsigned int perimetroCultivo, unsigned int espacioEntreCultivos, unsigned int espacioLateral);
-		void rellenarTerreno(BMP imagen, unsigned int ancho, unsigned int largo);
-		void crearEnmarcado(BMP imagen, unsigned int ancho, unsigned int largo, unsigned int espacioLateral, RGBApixel lapizMarron);
-		void crearMaceta(BMP imagen, int coordenadaAncho, int coordenadaLargo, unsigned int perimetroCultivo, RGBApixel lapizMarron);
+		int asignarDimension(int dimensionActual);
+
+		void rellenarTerreno(BMP imagen, RGBApixel lapizVerdeClaro, RGBApixel lapizVerdeOscuro);
+
+		void crearEnmarcado(BMP imagen, RGBApixel lapizMarron);
+
+		void crearMaceta(BMP imagen, int i, int j, RGBApixel lapizMarron);
+
+		void asignarMacetas(BMP imagen, int salto, RGBApixel lapizMarron);
 
 	public:
 
 		BmpCultivos();
 
+		int mostrarEspacioEntreLateralYCultivos();
+
+		int mostrarEspacioEntreCultivos();
+
+		int mostrarEspacioLateral();
+
+		int mostrarLadoCultivo();
+
+		int obtenerPixelActualAncho();
+
+		int obtenerPixelActualLargo();
+
+		int obtenerTopeDeCoordenadas();
+
 		void crearParcela();
+
 
 };
 
