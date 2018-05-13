@@ -55,7 +55,7 @@ bool Parametro::validarValor(){
 	switch(this->tipo){
 
 		case parametro::CHAR:
-			validacionOk = Utils::esUnsignedInt(this->valor);
+			validacionOk = Utils::esChar(this->valor);
 			break;
 
 		case parametro::INT:
@@ -63,7 +63,7 @@ bool Parametro::validarValor(){
 			break;
 
 		case parametro::UNSIGNED_INT:
-			validacionOk = Utils::esChar(this->valor);
+			validacionOk = Utils::esUnsignedInt(this->valor);
 			break;
 
 		default:

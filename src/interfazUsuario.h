@@ -32,6 +32,10 @@ private:
 	Menu* crearMenuPartida();
 	void agregarMenu(Menu* menu);
 
+	void mostrarDatosPartida(Partida* partida);
+	void mostrarRecursosJugador(Jugador* jugador);
+	void mostrarTerrenosJugador(Jugador* jugador);
+
 public:
 
 	/*

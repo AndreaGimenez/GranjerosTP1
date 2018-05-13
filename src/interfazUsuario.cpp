@@ -33,9 +33,8 @@ void InterfazUsuario::solicitarNombresJugadores(unsigned int cantidadJugadores, 
 		cout.flush();
 
 		string nombreJugador;
-		cin.ignore();
-		cin.sync();
-		cin >> nombreJugador;
+		getline(cin, nombreJugador);
+
 		listaNombres.agregar(nombreJugador);
 	}
 }
@@ -174,6 +173,28 @@ Menu* InterfazUsuario::crearMenuPartida() {
 }
 
 void InterfazUsuario::mostrarEstadoPartida(Partida* partida){
+
+	mostrarDatosPartida(partida);
+	mostrarRecursosJugador(partida->verJugadorActual());
+	mostrarTerrenosJugador(partida->verJugadorActual());
+}
+
+void InterfazUsuario::mostrarDatosPartida(Partida* partida){
+
+	cout << "TURNO " << partida->obtenerTurnoActual() << endl << endl;
+}
+
+void InterfazUsuario::mostrarRecursosJugador(Jugador* jugador){
+
+	cout << "Jugador: " << jugador->obtenerNombre() << endl << endl;
+	cout << "Recursos Disponibles" << endl;
+	cout << "Monedas: " << jugador->monedasDisponibles() << endl;
+	cout << "Unidades de Riego: " << jugador->obtenerUnidadesRiego() << endl;
+	cout << "Tanque: " << jugador->obtenerUnidadesRiegoAlmacenadas() << endl;
+	cout << "Espacio disponible en Almacen: " << jugador->obtenerCantidadDisponibleAlmacen() << endl << endl;
+}
+
+void InterfazUsuario::mostrarTerrenosJugador(Jugador* jugador){
 	//TODO: con EasyBMP hay que mostrar el estado de la partida (solo del jugador actual).
 }
 

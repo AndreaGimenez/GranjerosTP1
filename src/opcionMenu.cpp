@@ -88,6 +88,10 @@ ResultadoOpcion* OpcionMenu::ejecutar(){
 						getline(cin, parametrosIngresados);
 
 						parametrosCorrectos = accion->cambiarParametros(parametrosIngresados);
+
+						if(!parametrosCorrectos){
+							cout << "Los parametros ingresados no son correctos" << endl;
+						}
 					}
 
 					break;

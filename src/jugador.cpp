@@ -91,6 +91,10 @@ unsigned int Jugador::obtenerCantidadAlmacenada(std::string nombreCultivo){
 	return cantidadAlmacenada;
 }
 
+unsigned int Jugador::obtenerCantidadDisponibleAlmacen(){
+	return this->almacen->obtenerVolumenDisponible();
+}
+
 void Jugador::asignarNombre(string nombre) {
 
 	this->nombre = nombre ;
@@ -111,10 +115,6 @@ void Jugador::imprimirJugador(){
 }
 
 Terreno* Jugador::buscarTerreno(unsigned int numeroTerreno){
-
-	if(numeroTerreno < 1 || numeroTerreno > this->terrenos.contarElementos() ){
-		throw string("El numero de terreno no existe");
-	}
 
 	return this->terrenos.obtener(numeroTerreno);
 }
@@ -229,6 +229,10 @@ bool Jugador::regar(unsigned int numeroTerreno, std::string coordenadasParcela){
 unsigned int Jugador::obtenerUnidadesRiego(){
 
 	return this->unidadesRiego;
+}
+
+unsigned int Jugador::obtenerUnidadesRiegoAlmacenadas(){
+	return this->tanque->volumenUtilizado();
 }
 
 unsigned int Jugador::obtenerUnidadesRiegoTotales(){

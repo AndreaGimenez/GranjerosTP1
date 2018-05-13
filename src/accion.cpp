@@ -55,7 +55,7 @@ Accion::Accion(accion::EAccion accion, unsigned int cantidadParametros, parametr
 		this->parametros = NULL;
 	}else{
 		this->tipo = accion::CON_PARAMETROS_USUARIO;
-		this->parametros = new Parametro;
+		this->parametros = new Parametro[this->cantidadParametros];
 
 		for(unsigned int i = 0; i < cantidadParametros; i++){
 			this->parametros[i].cambiarTipo(tiposParametros[i]);

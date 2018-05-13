@@ -110,8 +110,10 @@ bool Terreno::validarCoordenadas(string coordenadas[]){
 	bool validarCoordenadas = (Utils::esUnsignedInt(coordenadas[0]) && Utils::esUnsignedInt(coordenadas[1]));
 	//Ademas tienen que ser posiciones validas en el terreno
 	return (validarCoordenadas
-			&& (Utils::stringToUnsignedInt(coordenadas[0]) < this->largoTerreno)
-			&& (Utils::stringToUnsignedInt(coordenadas[1]) < this->anchoTerreno));
+			&& (Utils::stringToUnsignedInt(coordenadas[0]) > 0)
+			&& (Utils::stringToUnsignedInt(coordenadas[1]) > 0)
+			&& (Utils::stringToUnsignedInt(coordenadas[0]) <= this->largoTerreno)
+			&& (Utils::stringToUnsignedInt(coordenadas[1]) <= this->anchoTerreno));
 }
 
 Cultivo* Terreno::obtenerCultivo(string coordenadasParcela){
@@ -128,7 +130,7 @@ Cultivo* Terreno::obtenerCultivo(string coordenadasParcela){
 
 unsigned int Terreno::obtenerIndiceParcela(unsigned int coordenadas[]){
 
-	return coordenadas[0] * this->anchoTerreno + coordenadas[1];
+	return (coordenadas[0] - 1) * this->anchoTerreno + (coordenadas[1] - 1);
 }
 
 bool Terreno::puedeSembrar(std::string coordenadasParcela){
