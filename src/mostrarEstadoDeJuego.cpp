@@ -3,9 +3,9 @@
 using namespace std;
 
 
-BmpCultivos::BmpCultivos(){
+BmpCultivos::BmpCultivos(Jugador nombre){
 
-
+	this->jugador=nombre;
 	distanciaAlBorde=10;
 	anchoLargoParcela=10;
 	imagenTerreno.SetSize(obtenerAnchoDelTerreno(), obtenerLargoDelTerreno());
@@ -14,6 +14,12 @@ BmpCultivos::BmpCultivos(){
 	dibujarTerrenoVacio(utilidades);
 	imagenActualCultivo.SetSize(obtenerAnchoLargoParcela(), obtenerAnchoLargoParcela());
 	imagenActualCultivo.SetBitDepth(24);
+
+}
+
+Jugador BmpCultivos::mostrarJugador(){
+
+	return jugador;
 
 }
 
@@ -194,7 +200,15 @@ void BmpCultivos::actualizarTodosLosTerrenos(/*recibe la lista de terrenos de un
 
 void BmpCultivos::crearBitmap(){
 
-	imagenTerreno.WriteToFile("Turno.bmp");
+	int i=0;
+
+	const char* nombreDelArchivo=mostrarJugador().obtenerNombre().operator +=("Terreno").operator +=(i).operator +=(".bmp");
+
+	for(; i<mostrarJugador().obtenerCantidadTerrenos(); i++)
+
+		obtenerImagen()->WriteToFile(nombreDelArchivo);
+
+		//pasarSiguienteImagen(obtenerImagen()); en caso de que sea una lista de imagenes
 
 }
 

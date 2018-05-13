@@ -1,7 +1,7 @@
 #include "EasyBMP.h"
 #include "configuracion.h" //incluye cultivo.h
-#include "terreno.h" //incluye parcela.h
 #include "utilidadesEasyBMP.h"
+#include "jugador.h" // incluye parcela.h terreno.h
 #include <ctime>
 #include <cstdlib>
 
@@ -22,6 +22,7 @@ class BmpCultivos {
 	BMP imagenActualCultivo;
 	int anchoLargoParcela; //depende de las imagenes que usemos para los cultivos
 	int distanciaAlBorde;
+	Jugador jugador;
 
 	void dibujarTerrenoVacio(Herramientas utilidades);
 
@@ -34,7 +35,9 @@ class BmpCultivos {
 
 	public:
 
-		BmpCultivos();
+		BmpCultivos(Jugador nombre);
+
+		Jugador mostrarJugador();
 
 		int obtenerFilas();
 
