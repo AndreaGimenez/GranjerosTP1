@@ -78,7 +78,7 @@ int BmpCultivos::asignarDimension(int dimensionActual){
 	return dimensionFinal;
 }
 
-void BmpCultivos::rellenarTerreno(BMP imagen, RGBApixel lapizVerdeClaro, RGBApixel lapizVerdeOscuro){
+void BmpCultivos::rellenarTerreno(BMP& imagen, RGBApixel lapizVerdeClaro, RGBApixel lapizVerdeOscuro){
 
 	srand(time(NULL));
 
@@ -100,7 +100,7 @@ void BmpCultivos::rellenarTerreno(BMP imagen, RGBApixel lapizVerdeClaro, RGBApix
 
 }
 
-void BmpCultivos::crearEnmarcado(BMP imagen, RGBApixel lapizMarron){
+void BmpCultivos::crearEnmarcado(BMP& imagen, RGBApixel lapizMarron){
 
 	for(int k=mostrarEspacioLateral(); k<mostrarEspacioLateral(); k++){
 
@@ -129,7 +129,7 @@ void BmpCultivos::crearEnmarcado(BMP imagen, RGBApixel lapizMarron){
 	}
 }
 
-void BmpCultivos::crearMaceta(BMP imagen, int i, int j, RGBApixel lapizMarron){
+void BmpCultivos::crearMaceta(BMP& imagen, int i, int j, RGBApixel lapizMarron){
 
 	for(; i<mostrarLadoCultivo(); i++){
 
@@ -149,7 +149,7 @@ void BmpCultivos::crearMaceta(BMP imagen, int i, int j, RGBApixel lapizMarron){
 
 }
 
-void BmpCultivos::asignarMacetas(BMP imagen, int salto, RGBApixel lapizMarron){
+void BmpCultivos::asignarMacetas(BMP& imagen, int salto, RGBApixel lapizMarron){
 
 	for(int i=obtenerPixelActualAncho(); i<=obtenerTopeDeCoordenadas(); i+=salto){
 

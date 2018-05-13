@@ -27,13 +27,13 @@ class BmpCultivos {
 
 		int asignarDimension(int dimensionActual);
 
-		void rellenarTerreno(BMP imagen, RGBApixel lapizVerdeClaro, RGBApixel lapizVerdeOscuro);
+		void rellenarTerreno(BMP& imagen, RGBApixel lapizVerdeClaro, RGBApixel lapizVerdeOscuro);
 
-		void crearEnmarcado(BMP imagen, RGBApixel lapizMarron);
+		void crearEnmarcado(BMP& imagen, RGBApixel lapizMarron);
 
-		void crearMaceta(BMP imagen, int i, int j, RGBApixel lapizMarron);
+		void crearMaceta(BMP& imagen, int i, int j, RGBApixel lapizMarron);
 
-		void asignarMacetas(BMP imagen, int salto, RGBApixel lapizMarron);
+		void asignarMacetas(BMP& imagen, int salto, RGBApixel lapizMarron);
 
 	public:
 
