@@ -17,13 +17,6 @@ int main(){
 
 	Granjeros granjeros;
 	granjeros.iniciarJuego();
-
-/*
-	BmpCultivos imagenTerreno;
-
-	imagenTerreno.crearBitmap();
-
-*/
 	return 0;
 }
 

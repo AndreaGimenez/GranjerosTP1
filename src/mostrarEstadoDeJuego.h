@@ -25,6 +25,11 @@ class BmpCultivos {
 
 	void dibujarTerrenoVacio(Herramientas utilidades);
 
+	void asignarImagenAlCultivo(Cultivo* cultivoActual, BMP* imagenAsignada)
+
+	void actualizarParcela(BMP* imagenAsignada, int coordenadasAncho, int coordenadasLargo);
+
+	void obtenerSiguienteParcela();
 
 
 	public:
@@ -54,14 +59,9 @@ class BmpCultivos {
 
 		bool finDelTerreno(int parcelaActualAncho, int parcelaActualLargo);
 
-		void obtenerSiguienteParcela();
-
-		void asignarImagenAlCultivo(Cultivo* cultivoActual, BMP* imagenAsignada)
-
-		void actualizarParcela(BMP* imagenAsignada, int coordenadasAncho, int coordenadasLargo);
-
 		void actualizarTerreno(); //deberia devolver la imagen con los cambios efectuados en el turno correspondiente
 
+		void actualizarTodosLosTerrenos(/*recibe la lista de terrenos*/);
 
 
 };

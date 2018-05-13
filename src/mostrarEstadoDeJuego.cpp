@@ -12,7 +12,6 @@ BmpCultivos::BmpCultivos(){
 	imagenTerreno.SetBitDepth(24);
 	punteroImagenTerreno=&imagenTerreno;
 	dibujarTerrenoVacio(utilidades);
-
 	imagenActualCultivo.SetSize(obtenerAnchoLargoParcela(), obtenerAnchoLargoParcela());
 	imagenActualCultivo.SetBitDepth(24);
 
@@ -142,7 +141,32 @@ void BmpCultivos::asignarImagenAlCultivo(Cultivo* cultivoActual, BMP* imagenAsig
 }
 
 
-void BmpCultivos::actualizarTerreno(){
+void BmpCultivos::actualizarTerreno(/*recibe un solo terreno de un jugador*/){
+
+	int parcelaActual[2];
+
+	Cultivo* cultivoActual; //aca tengo que asignarle el primer cultivo
+
+	BMP* imagenAsignada=&obtenerImagenCultivo();
+
+	parcelaActual=obtenerPrincipioDelTerreno();
+
+	while(!finDelTerreno(parcelaActual[0], parcelaActual[1])){
+
+		asignarImagenAlCultivo(cultivoActual, imagenAsignada);
+
+		actualizarParcela(imagenAsignada, parcelaActual[0], parcelaActual[1]);
+
+		//cultivoActual=obtenerSiguienteCultivo(); necesito pasar a la siguiente parcela
+
+		parcelaActual=obtenerSiguienteParcela(); //recorre la imagen terreno
+
+	}
+
+
+}
+
+void BmpCultivos::actualizarTodosLosTerrenos(/*recibe la lista de terrenos de un jugador*/){
 
 	int parcelaActual[2];
 
