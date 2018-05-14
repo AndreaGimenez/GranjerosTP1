@@ -164,6 +164,7 @@ void Granjeros::ejecutarAccionPartida(Accion* accion){
 				cout << "No se pudo realizar la accion" << endl;
 			}
 			break;
+
 		case accion::VENDER_TERRENO:
 
 			if(partida->ejecutarAccionVenderTerreno(Utils::stringToUnsignedInt(accion->obtenerParametros()[0].obtenerValor()))){
@@ -179,8 +180,8 @@ void Granjeros::ejecutarAccionPartida(Accion* accion){
 
 			if(partidaFinalizada){
 
-				finalizarPartida();
 				interfaz->mostrarResumenPartida(partida);
+				finalizarPartida();
 				interfaz->irAMenuAnterior();
 			}
 

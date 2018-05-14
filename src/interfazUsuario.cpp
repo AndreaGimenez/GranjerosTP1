@@ -139,15 +139,15 @@ Menu* InterfazUsuario::crearMenuPartida() {
 
 	menu->cambiarOpcion(1, OpcionMenu("Sembrar",
 									  accion::SEMBRAR,
-									  "Indique, separando con espacios, las coordenadas de la parcela y el cultivo a sembrar (ej: 1,2 A)"));
+									  "Indique, separando con espacios, el numero de terreno, las coordenadas de la parcela y el cultivo a sembrar (ej: 1 1,2 A)"));
 
 	menu->cambiarOpcion(2, OpcionMenu("Cosechar",
 									  accion::COSECHAR,
-									  "Indique las coordenadas de la parcela a cosechar (ej: 1,2)"));
+									  "Indique el numero de terreno y las coordenadas de la parcela a cosechar (ej: 1 1,2)"));
 
 	menu->cambiarOpcion(3, OpcionMenu("Regar",
 									  accion::REGAR,
-									  "Indique las coordenadas de la parcela a regar (ej 1,2)"));
+									  "Indique el numero de terreno y las coordenadas de la parcela a regar (ej 1 1,2)"));
 
 	menu->cambiarOpcion(4, OpcionMenu("Enviar Cosecha",
 									  accion::ENVIAR_COSECHA,
@@ -181,6 +181,61 @@ void InterfazUsuario::mostrarEstadoPartida(Partida* partida){
 
 void InterfazUsuario::mostrarResumenPartida(Partida* partida){
 
+	cout << endl << endl << "FIN DE LA PARTIDA!" << endl << endl;
+
+	Jugador** jugadoresOrdenados = new Jugador*[partida->obtenerCantidadDeJugadores()];
+	partida->obtenerJugadoresOrdenados(jugadoresOrdenados);
+	mostrarGanador(partida->obtenerCantidadDeJugadores(), jugadoresOrdenados);
+	mostrarPosiciones(partida->obtenerCantidadDeJugadores(), jugadoresOrdenados);
+
+	delete[] jugadoresOrdenados;
+	cout << endl << "Presione enter para ir al menu principal";
+	string dummy = "";
+	getline(cin, dummy);
+}
+
+void InterfazUsuario::mostrarGanador(unsigned int cantidadJugadores, Jugador** jugadores){
+
+	cout << "                                          EL GANADOR ES                                           " << endl;
+	cout << string(49 - jugadores[0]->obtenerNombre().size()/2, ' ');
+	cout << jugadores[0]->obtenerNombre();
+	cout << string(50 - jugadores[0]->obtenerNombre().size()/2, ' ');
+	cout << endl << endl;
+	cout << "                                  ./*,...........,*******/(((((*                                  " << endl
+		 << "                             //****,**,......     ********/(((((/****,,                           " << endl
+		 << "                             //****,**,......     ********/(((((/****,,                           " << endl
+		 << "                           ,(/*  .****,.....      ********/(((((/*.  .,,.                         " << endl
+		 << "                           ((/     .**,.........,,,,******/(((((*      ..                         " << endl
+		 << "                           *(/      **,.......,,,,,**///**/(((((.     ..                          " << endl
+		 << "                            *(*     /*,.........,,***///**((((((      .                           " << endl
+		 << "                             .(/    ***.........**********(((((/    ..                            " << endl
+		 << "                               ,*,   /*,,,,...,,*********/(((((.  ...                             " << endl
+		 << "                                 ,*, */*,,,,,,****,,,,/**(((((/ .,.                               " << endl
+		 << "                                    ,,*/*,,,,,,***///****(((((/*                                  " << endl
+		 << "                                       ***,,,,,,,,******/(///                                     " << endl
+		 << "                                        .**,,,,,,,*****////,                                      " << endl
+		 << "                                          **,,,,,,,**,////                                        " << endl
+		 << "                                           ,*,,,,,,,,*//*                                         " << endl
+		 << "                                             ,,...,,***                                           " << endl
+		 << "                                              ,,...***                                            " << endl
+		 << "                                               .,.,*,                                             " << endl
+		 << "                                               ,...*,                                             " << endl
+		 << "                                               ,...**                                             " << endl
+		 << "                                              .,...,*,                                            " << endl
+		 << "                                              ,.....**                                            " << endl
+		 << "                                             .,.....**,                                           " << endl
+		 << "                                             ,......,**.                                          " << endl
+		 << "                                            *,.....,,***                                          " << endl
+		 << "                                        **/*,.....,****,,***                                      " << endl
+		 << "                                        &%%%%%%%%%%%%%%%%%%&.									   " << endl;
+}
+
+void InterfazUsuario::mostrarPosiciones(unsigned int cantidadJugadores, Jugador** jugadores){
+
+	cout << "Posiciones" << endl << endl;
+	for(unsigned int i = 0; i < cantidadJugadores; i++){
+		cout << i+1 << " - " << jugadores[i]->obtenerNombre() << " Monedas: " << jugadores[i]->monedasDisponibles() << endl;
+	}
 }
 
 void InterfazUsuario::mostrarDatosPartida(Partida* partida){

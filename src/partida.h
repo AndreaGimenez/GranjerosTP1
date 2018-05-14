@@ -168,6 +168,10 @@ class Partida{
 		 */
 		bool avanzarTurno();
 
+		//Post: Setea en 'jugadoresOrdenados' un array con los jugadores del juego ordenados de acuerdo a la cantidad de monedas que posea cada uno
+		//		El primer elemento del array es el jugador que mas monedas posee y el ultimo el que menos tiene
+		void obtenerJugadoresOrdenados(Jugador** jugadoresOrdenados);
+
 		// Post: Indica si la partida se encuentra finalizada, es decir que se jugaron todos los turnos.
 		bool partidaFinalizada();
 
