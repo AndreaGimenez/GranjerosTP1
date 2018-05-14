@@ -13,6 +13,8 @@
 #include "lista.h"
 #include "parametroConfiguracion.h"
 
+#define COSTO_MINIMO 20
+
 
 /*
  * Clase que representa las configuraciones del juego.

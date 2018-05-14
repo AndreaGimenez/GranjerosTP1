@@ -26,7 +26,7 @@ class BmpCultivos {
 
 	void dibujarTerrenoVacio(Herramientas utilidades);
 
-	void asignarImagenAlCultivo(Cultivo* cultivoActual, BMP* imagenAsignada)
+	void asignarImagenAlCultivo(Cultivo* cultivoActual, BMP* imagenAsignada);
 
 	void actualizarParcela(BMP* imagenAsignada, int coordenadasAncho, int coordenadasLargo);
 

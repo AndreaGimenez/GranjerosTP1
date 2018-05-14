@@ -283,15 +283,46 @@ bool Jugador::enviar(Cultivo* cultivo){
 	return enviar;
 }
 
+bool Jugador::puedeComprarTerreno(){
+
+	return monedas>Configuracion::obtenerCostoTerreno(Jugador::obtenerCantidadTerrenos()+1);
+}
+
 bool Jugador::comprarTerreno(){
 
-	unsigned int dificultad=configuracion::obtenerCoeficienteDificultad();
+	bool comproTerreno=false;
 
-	return false;
+	if(Jugador::puedeComprarTerreno()){
+
+		monedas-=Configuracion::obtenerCostoTerreno(Jugador::obtenerCantidadTerrenos()+1);
+
+		Terreno* nuevoTerreno = new Terreno;
+		this->terrenos.agregar(nuevoTerreno);
+
+		comproTerreno=true;
+	}
+
+	return comproTerreno;
+}
+
+bool Jugador::puedeVenderTerreno(unsigned int numeroTerreno){
+
+	return numeroTerreno>0 && numeroTerreno<=Jugador::obtenerCantidadTerrenos();
 }
 
 bool Jugador::venderTerreno(unsigned int numeroTerreno){
-	return false;
+
+	bool vendioTerreno=false;
+
+	if(Jugador::puedeVenderTerreno(numeroTerreno)){
+
+		monedas+=Configuracion::obtenerCostoTerreno(numeroTerreno)*0.5;
+		this->terrenos.remover(numeroTerreno);
+
+		vendioTerreno=true;
+	}
+
+	return vendioTerreno;
 }
 
 bool Jugador::comprarCapacidadTanque(){
