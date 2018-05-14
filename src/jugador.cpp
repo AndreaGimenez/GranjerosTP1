@@ -284,6 +284,9 @@ bool Jugador::enviar(Cultivo* cultivo){
 }
 
 bool Jugador::comprarTerreno(){
+
+	unsigned int dificultad=configuracion::obtenerCoeficienteDificultad();
+
 	return false;
 }
 
