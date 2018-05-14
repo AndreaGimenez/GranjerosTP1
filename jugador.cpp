@@ -82,6 +82,10 @@ Terreno* Jugador::obtenerTerreno(unsigned int numeroTerreno){
 	return this->terrenos.obtener(numeroTerreno);
 }
 
+Lista<Terreno*> Jugador::obtenerTodosLosTerrenos(){
+	return this->terrenos;
+}
+
 unsigned int Jugador::obtenerCantidadAlmacenada(std::string nombreCultivo){
 
 	unsigned int cantidadAlmacenada = 0;

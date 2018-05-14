@@ -85,6 +85,9 @@ class Jugador{
 		//Post: devuelve la primera posicion de la lista de terrenos.
 		Terreno* obtenerTerreno(unsigned int numeroTerreno);
 
+		//Post: devuelve la lista de terrenos.
+		Lista<Terreno*> obtenerTodosLosTerrenos();
+
 		// Post: Devuelve la cantidad de cosecha almacenada de 'nombreCultivo'
 		unsigned int obtenerCantidadAlmacenada(std::string nombreCultivo);
 
