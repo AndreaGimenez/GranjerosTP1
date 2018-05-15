@@ -137,6 +137,16 @@ unsigned int Parcela::obtenerTiempoRecuperacionRestante(){
 	return this->tiempoRecuperacionRestante;
 }
 
+unsigned int Parcela::obtenerTiempoSembrada(){
+
+	return this->tiempoSembrada;
+}
+
+bool Parcela::obtenerRegada(){
+	
+	return this->regada;
+}
+
 void Parcela::actualizar(){
 
 	if(this->actualizarEstado && this->estado != parcela::LIMPIA){

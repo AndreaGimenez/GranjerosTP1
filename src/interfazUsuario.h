@@ -34,7 +34,8 @@ private:
 
 	void mostrarDatosPartida(Partida* partida);
 	void mostrarRecursosJugador(Jugador* jugador);
-	void mostrarTerrenosJugador(Jugador* jugador);
+	void mostrarTerrenosJugadorPorConsola(Jugador* jugador);
+	void mostrarTerrenosJugadorPorImagen(Jugador* jugador);
 	void mostrarGanador(unsigned int cantidadJugadores, Jugador** jugadores);
 	void mostrarPosiciones(unsigned int cantidadJugadores, Jugador** jugadores);
 
@@ -95,6 +96,11 @@ public:
 	 * Pos: Indica si el usuario salio del primero menu que se genero con la interfaz.
 	 */
 	bool salir();
+
+	/*
+	 * Pos: Muestra los terrenos del jugador que esta jugando
+	 */
+	void mostrarTerrenosJugador(Jugador* jugador);	
 
 	/*
 	 * Pos: Muestra por pantalla un mensaje de despedida.
