@@ -134,6 +134,12 @@ public:
 	// Post: Devuelve la cantidad de turnos que es necesario esperar para poder realizar una nueva siembra.
 	unsigned int obtenerTiempoRecuperacionRestante();
 
+	// Post: Devuelve la cantidad de turnos que el cultivo estuvo sembrado en la parcela.
+	unsigned int obtenerTiempoSembrada();
+
+	// Post: Devuelve si la parcela fue regada en el turno actual.
+	bool obtenerRegada();
+
 	/*
 	 * Post: Actualiza la parcela luego de transcurrido un turno de acuerdo a las acciones que se realizaron sobre ella.
 	 * 		Debe invocarse al final de cada turno.

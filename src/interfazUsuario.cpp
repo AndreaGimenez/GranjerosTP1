@@ -255,7 +255,53 @@ void InterfazUsuario::mostrarRecursosJugador(Jugador* jugador){
 
 void InterfazUsuario::mostrarTerrenosJugador(Jugador* jugador){
 	//TODO: con EasyBMP hay que mostrar el estado de la partida (solo del jugador actual).
+	//mostrarTerrenosJugadorPorImagen(jugador);
+	mostrarTerrenosJugadorPorConsola(jugador);
 }
+
+void InterfazUsuario::mostrarTerrenosJugadorPorConsola(Jugador* jugador){
+	Terreno* terreno;
+	Parcela* parcelaActual;
+	parcela::Estado estadoParcela;
+	Cultivo* cultivoActual;
+	char regada;
+	for(int i=1;i<jugador->obtenerCantidadTerrenos();i++){
+		terreno=jugador->buscarTerreno(i);
+		
+		for(int j=0;j<terreno->obtenerLargoTerreno();j++){
+			for(int k=0;k<terreno->obtenerAnchoTerreno();k++){
+				parcelaActual=terreno->buscarParcela(to_string(j) + "," + to_string(k));				
+				switch(parcelaActual->obtenerEstado()){
+					case parcela::LIMPIA:
+						cout<<"|		|";
+						break;
+					case parcela::SEMBRADA:
+						cultivoActual=parcelaActual->obtenerCultivo();
+						if(parcelaActual->obtenerRegada())
+							regada=' ';
+						else regada='R';
+						cout<<"|"<<cultivoActual->obtenerNombre()
+							<<"("<<to_string(parcelaActual->obtenerTiempoSembrada())<<", "
+							<<regada<<")"<<"|";
+						break;
+					case parcela::SECA:
+						cout<<"|********|";
+						break;
+					case parcela::PODRIDA:
+						cout<<"##("<<parcelaActual->obtenerTiempoRecuperacionRestante()<<"##)";
+				}
+			}
+			cout<<endl;
+		}
+		cout<<endl<<endl;
+	}
+}
+
+void InterfazUsuario::mostrarTerrenosJugadorPorImagen(Jugador* jugador){
+
+}
+
+
 
 InterfazUsuario::~InterfazUsuario(){
 
