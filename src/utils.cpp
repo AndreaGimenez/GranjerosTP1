@@ -112,3 +112,21 @@ unsigned int Utils::splitString(string cadena, string subcadena, string* cadenaS
 
 	return tamanioCadenaSeparada;
 }
+
+string Utils::fillString(string cadena, string relleno, unsigned int cantidad, bool rellenarDerecha){
+
+	string cadenaRelleno = "";
+
+	for(unsigned int i = 0; i < cantidad; i++){
+
+		cadenaRelleno += relleno;
+	}
+
+	if(rellenarDerecha){
+		cadena += cadenaRelleno;
+	}else{
+		cadena = cadenaRelleno + cadena;
+	}
+
+	return cadena;
+}

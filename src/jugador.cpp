@@ -285,16 +285,16 @@ bool Jugador::enviar(Cultivo* cultivo){
 
 bool Jugador::puedeComprarTerreno(){
 
-	return monedas>Configuracion::obtenerCostoTerreno(Jugador::obtenerCantidadTerrenos()+1);
+	return monedas>=Configuracion::obtenerCostoTerreno(this->obtenerCantidadTerrenos()+1);
 }
 
 bool Jugador::comprarTerreno(){
 
 	bool comproTerreno=false;
 
-	if(Jugador::puedeComprarTerreno()){
+	if(this->puedeComprarTerreno()){
 
-		monedas-=Configuracion::obtenerCostoTerreno(Jugador::obtenerCantidadTerrenos()+1);
+		monedas-=Configuracion::obtenerCostoTerreno(this->obtenerCantidadTerrenos()+1);
 
 		Terreno* nuevoTerreno = new Terreno;
 		this->terrenos.agregar(nuevoTerreno);
@@ -307,14 +307,14 @@ bool Jugador::comprarTerreno(){
 
 bool Jugador::puedeVenderTerreno(unsigned int numeroTerreno){
 
-	return numeroTerreno>0 && numeroTerreno<=Jugador::obtenerCantidadTerrenos();
+	return numeroTerreno>0 && numeroTerreno<=this->obtenerCantidadTerrenos();
 }
 
 bool Jugador::venderTerreno(unsigned int numeroTerreno){
 
 	bool vendioTerreno=false;
 
-	if(Jugador::puedeVenderTerreno(numeroTerreno)){
+	if(this->puedeVenderTerreno(numeroTerreno)){
 
 		monedas+=Configuracion::obtenerCostoTerreno(numeroTerreno)*0.5;
 		this->terrenos.remover(numeroTerreno);

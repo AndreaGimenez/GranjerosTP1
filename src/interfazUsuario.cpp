@@ -260,7 +260,7 @@ void InterfazUsuario::mostrarTerrenosJugador(Jugador* jugador){
 }
 
 void InterfazUsuario::mostrarTerrenosJugadorPorConsola(Jugador* jugador){
-	Utils utils;
+
 	Terreno* terreno;
 	Parcela* parcelaActual;
 	parcela::Estado estadoParcela;
@@ -270,15 +270,22 @@ void InterfazUsuario::mostrarTerrenosJugadorPorConsola(Jugador* jugador){
 	for(unsigned int i=1;i<=jugador->obtenerCantidadTerrenos();i++){
 		terreno=jugador->buscarTerreno(i);
 		
+		cout << "    ";
+		for(unsigned int k=1;k<=terreno->obtenerAnchoTerreno();k++){
+			cout << "    " << k << "    ";
+		}
+		cout << endl;
+
 		for(unsigned int j=1;j<=terreno->obtenerLargoTerreno();j++){
+
 			cout<<"__________________________________________________________________________________"<<endl;
-			cout<<"|";
+			cout<< j << "  |";
 			for(unsigned int k=1;k<=terreno->obtenerAnchoTerreno();k++){
-				parcelaActual=terreno->buscarParcela(utils.unsignedIntToString(j) + "," + utils.unsignedIntToString(k));				
+				parcelaActual=terreno->buscarParcela(Utils::unsignedIntToString(j) + "," + Utils::unsignedIntToString(k));
 				estadoParcela=parcelaActual->obtenerEstado();				
 				switch(estadoParcela){
 					case parcela::LIMPIA:
-						cout<<"|	|";
+						cout<<"|       |";
 						break;
 					case parcela::SEMBRADA:
 						cultivoActual=parcelaActual->obtenerCultivo();
@@ -286,11 +293,11 @@ void InterfazUsuario::mostrarTerrenosJugadorPorConsola(Jugador* jugador){
 							regada=' ';
 						else regada='R';
 						cout<<"|"<<cultivoActual->obtenerNombre()
-							<<"("<<utils.unsignedIntToString(parcelaActual->obtenerTiempoSembrada())<<", "
+							<<"("<<Utils::unsignedIntToString(parcelaActual->obtenerTiempoSembrada())<<", "
 							<<regada<<")"<<"|";
 						break;
 					case parcela::SECA:
-						cout<<"|******|";
+						cout<<"|*******|";
 						break;
 					case parcela::PODRIDA:
 						cout<<"##("<<parcelaActual->obtenerTiempoRecuperacionRestante()<<")##";
@@ -301,7 +308,7 @@ void InterfazUsuario::mostrarTerrenosJugadorPorConsola(Jugador* jugador){
 				}
 			}
 			cout<<"|"<<endl;
-			cout<<"¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯"<<endl;
+			cout << "   ¯" << Utils::fillString("", "¯", terreno->obtenerAnchoTerreno()*9, false) << "¯" <<endl;
 			
 		}
 		cout<<endl<<endl;

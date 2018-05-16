@@ -13,7 +13,7 @@
 #include "lista.h"
 #include "parametroConfiguracion.h"
 
-#define COSTO_MINIMO 20
+int const COSTO_MINIMO = 20;
 
 
 /*
