@@ -170,6 +170,6 @@ void Parcela::actualizar(){
 			this->limpiar();
 		}
 	}
-
+	this->regada = false;
 	this->actualizarEstado = true;
 }

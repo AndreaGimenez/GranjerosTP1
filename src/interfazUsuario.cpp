@@ -267,13 +267,13 @@ void InterfazUsuario::mostrarTerrenosJugadorPorConsola(Jugador* jugador){
 	Cultivo* cultivoActual;
 	char regada;
 	
-	for(int i=1;i<=jugador->obtenerCantidadTerrenos();i++){
+	for(unsigned int i=1;i<=jugador->obtenerCantidadTerrenos();i++){
 		terreno=jugador->buscarTerreno(i);
 		
-		for(int j=1;j<=terreno->obtenerLargoTerreno();j++){
+		for(unsigned int j=1;j<=terreno->obtenerLargoTerreno();j++){
 			cout<<"__________________________________________________________________________________"<<endl;
 			cout<<"|";
-			for(int k=1;k<=terreno->obtenerAnchoTerreno();k++){
+			for(unsigned int k=1;k<=terreno->obtenerAnchoTerreno();k++){
 				parcelaActual=terreno->buscarParcela(utils.unsignedIntToString(j) + "," + utils.unsignedIntToString(k));				
 				estadoParcela=parcelaActual->obtenerEstado();				
 				switch(estadoParcela){
@@ -294,6 +294,10 @@ void InterfazUsuario::mostrarTerrenosJugadorPorConsola(Jugador* jugador){
 						break;
 					case parcela::PODRIDA:
 						cout<<"##("<<parcelaActual->obtenerTiempoRecuperacionRestante()<<")##";
+						break;
+					case parcela::COSECHADA:
+						cout<<"··("<<parcelaActual->obtenerTiempoRecuperacionRestante()<<")··";
+						break;
 				}
 			}
 			cout<<"|"<<endl;
