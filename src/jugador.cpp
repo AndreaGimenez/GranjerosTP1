@@ -95,6 +95,14 @@ unsigned int Jugador::obtenerCantidadDisponibleAlmacen(){
 	return this->almacen->obtenerVolumenDisponible();
 }
 
+unsigned int Jugador::obtenerCantidadMaximaAlmacen(){
+	return this->almacen->obtenerCapacidad();
+}
+
+unsigned int Jugador::obtenerCantidadMaximaTanque(){
+	return this->tanque->volumenMaximo();
+}
+
 void Jugador::asignarNombre(string nombre) {
 
 	this->nombre = nombre ;
@@ -240,6 +248,11 @@ unsigned int Jugador::obtenerUnidadesRiegoTotales(){
 	return this->unidadesRiego + this->tanque->volumenUtilizado();
 }
 
+unsigned int Jugador::obtenerCantidadAlmacenadaTotal(){
+
+	return this->almacen->obtenerVolumenUtilizado();
+}
+
 bool Jugador::puedeConsumirUnidadesRiego(unsigned int unidadesRiego){
 
 	return (unidadesRiego <= this->obtenerUnidadesRiegoTotales());
@@ -285,7 +298,7 @@ bool Jugador::enviar(Cultivo* cultivo){
 
 bool Jugador::puedeComprarTerreno(){
 
-	return monedas>=Configuracion::obtenerCostoTerreno(this->obtenerCantidadTerrenos()+1);
+	return this->puedeGastarMonedas(Configuracion::obtenerCostoTerreno(this->obtenerCantidadTerrenos()+1));
 }
 
 bool Jugador::comprarTerreno(){
@@ -294,7 +307,7 @@ bool Jugador::comprarTerreno(){
 
 	if(this->puedeComprarTerreno()){
 
-		monedas-=Configuracion::obtenerCostoTerreno(this->obtenerCantidadTerrenos()+1);
+		this->gastarMonedas(Configuracion::obtenerCostoTerreno(this->obtenerCantidadTerrenos()+1));
 
 		Terreno* nuevoTerreno = new Terreno;
 		this->terrenos.agregar(nuevoTerreno);
@@ -316,7 +329,7 @@ bool Jugador::venderTerreno(unsigned int numeroTerreno){
 
 	if(this->puedeVenderTerreno(numeroTerreno)){
 
-		monedas+=Configuracion::obtenerCostoTerreno(numeroTerreno)*0.5;
+		this->agregarMonedas(Configuracion::obtenerCostoTerreno(numeroTerreno)*0.5);
 		this->terrenos.remover(numeroTerreno);
 
 		vendioTerreno=true;
@@ -329,8 +342,22 @@ bool Jugador::comprarCapacidadTanque(){
 	return false;
 }
 
+bool Jugador::puedeComprarCapacidadAlmacen(){
+
+	return puedeGastarMonedas(Configuracion::obtenerCostoAumentoAlmacenamientoAlmacen(this->almacen->obtenerCapacidad()));
+}
+
 bool Jugador::comprarCapacidadAlmacen(){
-	return false;
+
+	bool puedeComprarCapacidadAlmacen = this->puedeComprarCapacidadAlmacen();
+
+	if(puedeComprarCapacidadAlmacen){
+
+		this->gastarMonedas(Configuracion::obtenerCostoAumentoAlmacenamientoAlmacen(this->almacen->obtenerCapacidad()));
+		this->almacen->ampliarAlmacen(this->almacen->obtenerCapacidad());
+	}
+
+	return puedeComprarCapacidadAlmacen;
 }
 
 void Jugador::actualizar(){

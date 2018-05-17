@@ -249,8 +249,8 @@ void InterfazUsuario::mostrarRecursosJugador(Jugador* jugador){
 	cout << "Recursos Disponibles" << endl;
 	cout << "Monedas: " << jugador->monedasDisponibles() << endl;
 	cout << "Unidades de Riego: " << jugador->obtenerUnidadesRiego() << endl;
-	cout << "Tanque: " << jugador->obtenerUnidadesRiegoAlmacenadas() << endl;
-	cout << "Espacio disponible en Almacen: " << jugador->obtenerCantidadDisponibleAlmacen() << endl << endl;
+	cout << "Tanque: " << jugador->obtenerUnidadesRiegoAlmacenadas() << "/" << jugador->obtenerCantidadMaximaTanque() << endl;
+	cout << "Espacio disponible en Almacen: " << jugador->obtenerCantidadAlmacenadaTotal() << "/" << jugador->obtenerCantidadMaximaAlmacen() << endl << endl;
 }
 
 void InterfazUsuario::mostrarTerrenosJugador(Jugador* jugador){

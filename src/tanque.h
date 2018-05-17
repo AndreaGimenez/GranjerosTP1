@@ -38,6 +38,9 @@ class Tanque{
 		// Post:devuelve cual es el volumen libre del tanque
 		unsigned int volumenLibre();
 
+		// Post:devuelve cual es el volumen maximo que puede almacenar el tanque
+		unsigned int volumenMaximo();
+
 		/*
 		 * Post: Se almacena el agua en el tanque. Si no tiene suficiente espacio,
 		 * 		 se almacena hasta que se llena y se descarta el excedente.

@@ -39,6 +39,11 @@ unsigned int Tanque::volumenLibre(){
 	return (capacidad - volumenOcupado);
 }
 
+unsigned int Tanque::volumenMaximo(){
+
+	return this->capacidad;
+}
+
 void Tanque::almacenarAgua(unsigned int cantidadDeAgua){
 
 	this->volumenOcupado += cantidadDeAgua;

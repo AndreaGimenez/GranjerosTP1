@@ -88,6 +88,12 @@ class Jugador{
 		// Post: Devuelve la cantidad disponible en el almacen
 		unsigned int obtenerCantidadDisponibleAlmacen();
 
+		// Post: Devuelve la cantidad maxima que puede almacenar el jugador en el tanque.
+		unsigned int obtenerCantidadMaximaTanque();
+
+		// Post: Devuelve la cantidad maxima que puede almacenar el jugador en el almacen.
+		unsigned int obtenerCantidadMaximaAlmacen();
+
 		// Post: Asigna el nombre del jugador
 		void asignarNombre(string nombre) ;
 
@@ -202,6 +208,9 @@ class Jugador{
 
 		// Post: Devuelve la cantidad de unidades de riego que tiene el jugador teniendo en cuenta las unidades del tanque.
 		unsigned int obtenerUnidadesRiegoTotales();
+
+		// Post: Devuelve la cantidad almacenada de todos los cultivos.
+		unsigned int obtenerCantidadAlmacenadaTotal();
 
 		/*
 		 * Post: Indica si el jugador puede consumir 'unidadesRiego'.

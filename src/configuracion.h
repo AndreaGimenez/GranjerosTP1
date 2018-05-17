@@ -14,6 +14,7 @@
 #include "parametroConfiguracion.h"
 
 int const COSTO_MINIMO = 20;
+int const COSTO_UNITARIO_ALMACENAMIENTO_ALMACEN = 2;
 
 
 /*
@@ -105,6 +106,10 @@ public:
 	//	   'numeroTerrenoAComprar' debe ser la cantidad de terrenos del jugador + 1.
 	//Pos: Devuelve el costo de comprar el terreno.
 	static unsigned int obtenerCostoTerreno(unsigned int numeroTerrenoAComprar);
+
+	//Pre: Se debe haber inicializado la configuracion con 'inicializar'.
+	//Pos: Devuelve el costo de comprar las undiades de almacenamiento indicadas en 'aumentoAlmacenamiento'.
+	static unsigned int obtenerCostoAumentoAlmacenamientoAlmacen(unsigned int aumentoAlmacenamiento);
 
 	//Pre: Se debe haber inicializado la configuracion con 'inicializar'.
 	//Pos: Devuelve los cultivos disponibles para que utilicen los jugadores.

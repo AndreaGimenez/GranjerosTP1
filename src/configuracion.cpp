@@ -138,6 +138,10 @@ unsigned int Configuracion::obtenerCostoTerreno(unsigned int numeroTerrenoACompr
 	return (numeroTerrenoAComprar * COSTO_MINIMO * (parametroN + parametroM)) / obtenerCoeficienteDificultad();
 }
 
+unsigned int Configuracion::obtenerCostoAumentoAlmacenamientoAlmacen(unsigned int aumentoAlmacenamiento){
+	return (aumentoAlmacenamiento * COSTO_UNITARIO_ALMACENAMIENTO_ALMACEN);
+}
+
 Lista<Cultivo*>* Configuracion::obtenerCultivos(){
 
 	return cultivos;
