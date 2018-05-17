@@ -48,14 +48,25 @@ void Granjeros::iniciarJuego(){
 
 void Granjeros::ejecutarAccion(Accion* accion){
 
-	ejecutarAccionConfiguracion(accion);
-	ejecutarAccionPartida(accion);
+	bool accionEjecutada = false; //Indica si la accion ya se ejecuto en alguno de los metodos
+
+	//Acciones que son estrictamente d  configuracion previa a la partida
+	accionEjecutada = ejecutarAccionConfiguracion(accion);
+
+	if(!accionEjecutada)
+		//Acciones que tienen que ver estrictametne con la partida
+		accionEjecutada = ejecutarAccionPartida(accion);
+
+	if(!accionEjecutada)
+		//Acciones de finalizacion de menues
+		accionEjecutada = ejecutarAccionSalida(accion);
 
 	interfaz->mostrarMenuActual();
 }
 
-void Granjeros::ejecutarAccionConfiguracion(Accion* accion){
+bool Granjeros::ejecutarAccionConfiguracion(Accion* accion){
 
+	bool accionEjecutada = true;
 	switch (accion->obtenerAccion()){
 
 		case accion::CAMBIAR_CANTIDAD_JUGADORES:
@@ -82,97 +93,116 @@ void Granjeros::ejecutarAccionConfiguracion(Accion* accion){
 			cout << "El parametro N ahora es: " << this->parametrosConfiguracion->obtenerParametroN() << endl;
 			break;
 
-		default:;
+		default:
+			accionEjecutada = false;
 	}
+
+	return accionEjecutada;
 }
 
-void Granjeros::ejecutarAccionPartida(Accion* accion){
+bool Granjeros::ejecutarAccionPartida(Accion* accion){
 
-	bool partidaFinalizada = false;
+	//Indica si 'accion' esta dentro de las acciones qeu contempla este metodo
+	bool accionEjecutada = true;
+	// Indica si la accion se ejecuto satisfactoriamente. En caso que 'accion' no pertenezca a las acciones que contempla este metodo queda en false
+	bool accionEjecutadaExistosamente = false;
 
 	switch (accion->obtenerAccion()){
 
 		case accion::COMPRAR_CAPACIDAD_AGUA:
 
-			if(partida->ejecutarAccionComprarCapacidadAgua()){
-				cout << "AUMENTO LA CAPACIDAD DEL TANQUE!" << endl;
-			}else{
-				cout << "No se pudo realizar la accion" << endl;
+			accionEjecutadaExistosamente = partida->ejecutarAccionComprarCapacidadAgua();
+			if(accionEjecutadaExistosamente){
+				cout << "AUMENTO LA CAPACIDAD DEL TANQUE!" << endl << endl;
 			}
-
 			break;
 
 		case accion::COMPRAR_CAPACIDAD_ALMACEN:
 
-			if(partida->ejecutarAccionComprarCapacidadAlmacen()){
-				cout << "AUMENTO LA CAPACIDAD DEL ALMACEN!" << endl;
-			}else{
-				cout << "No se pudo realizar la accion" << endl;
+			accionEjecutadaExistosamente = partida->ejecutarAccionComprarCapacidadAlmacen();
+			if(accionEjecutadaExistosamente){
+				cout << "AUMENTO LA CAPACIDAD DEL ALMACEN!" << endl << endl;
 			}
 			break;
 
 		case accion::COMPRAR_TERRENO:
 
-			if(partida->ejecutarAccionComprarTerreno()){
-				cout << "COMPRASTE UN TERRENO!" << endl;
-			}else{
-				cout << "No se pudo realizar la accion" << endl;
+			accionEjecutadaExistosamente = partida->ejecutarAccionComprarTerreno();
+			if(accionEjecutadaExistosamente){
+				cout << "COMPRASTE UN TERRENO!" << endl << endl;
 			}
 			break;
 
 		case accion::COSECHAR:
 
-			if(partida->ejecutarAccionCosechar(Utils::stringToUnsignedInt(accion->obtenerParametros()[0].obtenerValor()),
-											   accion->obtenerParametros()[1].obtenerValor())){
+			accionEjecutadaExistosamente = partida->ejecutarAccionCosechar(Utils::stringToUnsignedInt(accion->obtenerParametros()[0].obtenerValor()),
+														   	   	   	   	   accion->obtenerParametros()[1].obtenerValor());
+			if(accionEjecutadaExistosamente){
 				cout << "COSECHASTE!" << endl;
-			}else{
-				cout << "No se pudo realizar la accion" << endl;
 			}
 			break;
 
 		case accion::ENVIAR_COSECHA:
 
-			if(partida->ejecutarAccionEnviarCosecha(accion->obtenerParametros()[0].obtenerValor())){
-				cout << "ENVIASTE LA COSECHA!" << endl;
-			}else{
-				cout << "No se pudo realizar la accion" << endl;
+			accionEjecutadaExistosamente = partida->ejecutarAccionEnviarCosecha(accion->obtenerParametros()[0].obtenerValor());
+			if(accionEjecutadaExistosamente){
+				cout << "ENVIASTE LA COSECHA!" << endl << endl;
 			}
 			break;
 
 		case accion::JUGAR:
 
 			this->comenzarPartida();
+			accionEjecutadaExistosamente = true;
 			break;
 
 		case accion::REGAR:
 
-			if(partida->ejecutarAccionRegar(Utils::stringToUnsignedInt(accion->obtenerParametros()[0].obtenerValor()),
-											accion->obtenerParametros()[1].obtenerValor())){
-				cout << "REGASTE!" << endl;
-			}else{
-				cout << "No se pudo realizar la accion" << endl;
+			accionEjecutadaExistosamente = partida->ejecutarAccionRegar(Utils::stringToUnsignedInt(accion->obtenerParametros()[0].obtenerValor()),
+																		accion->obtenerParametros()[1].obtenerValor());
+			if(accionEjecutadaExistosamente){
+				cout << "REGASTE!" << endl << endl;
 			}
 			break;
 
 		case accion::SEMBRAR:
 
-			if(partida->ejecutarAccionSembrar(Utils::stringToUnsignedInt(accion->obtenerParametros()[0].obtenerValor()),
-											  accion->obtenerParametros()[1].obtenerValor(),
-											  accion->obtenerParametros()[2].obtenerValor())){
-				cout << "SEMBRASTE!" << endl;
-			}else{
-				cout << "No se pudo realizar la accion" << endl;
+			accionEjecutadaExistosamente = partida->ejecutarAccionSembrar(Utils::stringToUnsignedInt(accion->obtenerParametros()[0].obtenerValor()),
+																		  accion->obtenerParametros()[1].obtenerValor(),
+																		  accion->obtenerParametros()[2].obtenerValor());
+			if(accionEjecutadaExistosamente){
+				cout << "SEMBRASTE!" << endl << endl;
 			}
 			break;
 
 		case accion::VENDER_TERRENO:
 
-			if(partida->ejecutarAccionVenderTerreno(Utils::stringToUnsignedInt(accion->obtenerParametros()[0].obtenerValor()))){
-				cout << "VENDISTE UN TERRENO!" << endl;
-			}else{
-				cout << "No se pudo realizar la accion" << endl;
+			accionEjecutadaExistosamente = partida->ejecutarAccionVenderTerreno(Utils::stringToUnsignedInt(accion->obtenerParametros()[0].obtenerValor()));
+			if(accionEjecutadaExistosamente){
+				cout << "VENDISTE UN TERRENO!" << endl << endl;
 			}
 			break;
+
+		default:
+			accionEjecutada = false;
+	}
+
+	if(accionEjecutada){
+		if(accionEjecutadaExistosamente){
+			this->interfaz->mostrarEstadoPartida(partida);
+		}else{
+			cout << "No se pudo realizar la accion" << endl << endl;
+		}
+	}
+
+	return accionEjecutada;
+}
+
+bool Granjeros::ejecutarAccionSalida(Accion* accion){
+
+	bool partidaFinalizada = false;
+	bool accionEjecutada = true;
+	switch (accion->obtenerAccion()){
 
 		case accion::FINALIZAR_TURNO:
 
@@ -199,8 +229,11 @@ void Granjeros::ejecutarAccionPartida(Accion* accion){
 			interfaz->irAMenuAnterior();
 			break;
 
-		default:;
+		default:
+			accionEjecutada = false;
 	}
+
+	return accionEjecutada;
 }
 
 void Granjeros::comenzarPartida(){
@@ -216,7 +249,6 @@ void Granjeros::comenzarPartida(){
 	cout << endl << endl <<"COMIENZA LA PARTIDA!" << endl << endl << endl;
 
 	iniciarTurno();
-	interfaz->mostrarEstadoPartida(partida);
 }
 
 bool Granjeros::avanzarTurno(){

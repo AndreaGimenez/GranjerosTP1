@@ -2,7 +2,7 @@
 #include <iostream>
 using namespace std;
 
-
+/*
 BmpCultivos::BmpCultivos(Jugador nombre){
 
 	this->jugador=nombre;
@@ -147,7 +147,7 @@ void BmpCultivos::asignarImagenAlCultivo(Cultivo* cultivoActual, BMP* imagenAsig
 }
 
 
-void BmpCultivos::actualizarTerreno(/*recibe un solo terreno de un jugador*/){
+void BmpCultivos::actualizarTerreno(){
 
 	int parcelaActual[2];
 
@@ -172,7 +172,7 @@ void BmpCultivos::actualizarTerreno(/*recibe un solo terreno de un jugador*/){
 
 }
 
-void BmpCultivos::actualizarTodosLosTerrenos(/*recibe la lista de terrenos de un jugador*/){
+void BmpCultivos::actualizarTodosLosTerrenos(){
 
 	int parcelaActual[2];
 
@@ -212,3 +212,4 @@ void BmpCultivos::crearBitmap(){
 
 }
 
+*/

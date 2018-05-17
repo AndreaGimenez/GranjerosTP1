@@ -27,8 +27,9 @@ private:
 	Partida* partida;
 
 	void ejecutarAccion(Accion* accion);
-	void ejecutarAccionConfiguracion(Accion* accion);
-	void ejecutarAccionPartida(Accion* accion);
+	bool ejecutarAccionConfiguracion(Accion* accion);
+	bool ejecutarAccionPartida(Accion* accion);
+	bool ejecutarAccionSalida(Accion* accion);
 	void comenzarPartida();
 	bool avanzarTurno();
 	void iniciarTurno();
