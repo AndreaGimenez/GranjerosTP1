@@ -1,8 +1,8 @@
 #include "mostrarEstadoDeJuego.h"
 #include <iostream>
 using namespace std;
-
 /*
+
 BmpCultivos::BmpCultivos(Jugador nombre){
 
 	this->jugador=nombre;

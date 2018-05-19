@@ -12,6 +12,7 @@
 #include "menu.h"
 #include "pila.h"
 #include "partida.h"
+#include "creadorImagen.h"
 
 /*
  * 'InterfazUsuario' permite la interaccion con el usuario, tanto la salida como la entrada.
@@ -27,6 +28,8 @@ private:
 
 	Pila<Menu*> menues;
 
+	CreadorImagen* creadorImagen;
+
 	Menu* crearMenuPrincipal();
 	Menu* crearMenuConfiguracion();
 	Menu* crearMenuPartida();
@@ -38,6 +41,34 @@ private:
 	void mostrarTerrenosJugadorPorImagen(Jugador* jugador);
 	void mostrarGanador(unsigned int cantidadJugadores, Jugador** jugadores);
 	void mostrarPosiciones(unsigned int cantidadJugadores, Jugador** jugadores);
+
+	void dibujarTerreno(Terreno* terreno);
+	void dibujarParcela(Parcela* parcela, unsigned int coordenadaX, unsigned int coordenadaY);
+	void dibujarParcelaLimpia(Parcela* parcela, unsigned int coordenadaX, unsigned int coordenadaY);
+	void dibujarParcelaCosechada(Parcela* parcela, unsigned int coordenadaX, unsigned int coordenadaY);
+	void dibujarParcelaSembrada(Parcela* parcela,unsigned int coordenadaX, unsigned int coordenadaY);
+	void dibujarParcelaSeca(Parcela* parcela, unsigned int coordenadaX, unsigned int coordenadaY);
+	void dibujarParcelaPodrida(Parcela* parcela, unsigned int coordenadaX, unsigned int coordenadaY);
+	void dibujarAlambradoParcela(int coordenadaXEnDibujo, int coordenadaYEnDibujo);
+	void dibujarMarcasArado(Parcela* parcela, unsigned int coordenadaXEnDibujo, unsigned int coordenadaYEnDibujo);
+	void dibujarCultivos(Parcela* parcela, unsigned int coordenadaXEnDibujo, unsigned int coordenadaYEnDibujo);
+	void dibujarRiego(int coordenadaXEnDibujo, int coordenadaYEnDibujo);
+
+	void dibujarPoste(int coordenadaXEnDibujo, int coordenadaYEnDibujo);
+	unsigned int obtenerAnchoPoste();
+	unsigned int obtenerLargoPoste();
+	void dibujarAlambrado(int coordenadaXDesde, int coordenadaYDesde, int coordenadaXHasta, int coordenadaYHasta);
+
+	int obtenerAnchoTerreno();
+	int obtenerLargoTerreno();
+	int obtenerAnchoParcela();
+	int obtenerLargoParcela();
+	int obtenerDistanciaAlBorde();
+	int obtenerCoordenadaXEnDibujo(unsigned int coordenadaX);
+	int obtenerCoordenadaYEnDibujo(unsigned int coordenadaY);
+	std::string obtenerNombreImagenCultivo(Cultivo* cultivo);
+	int obtenerCoordenadaXImagenCultivo(int coordenadaXParcela);
+	int obtenerCoordenadaYImagenCultivo(int coordenadaYParcela);
 
 public:
 
