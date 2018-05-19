@@ -366,6 +366,15 @@ void InterfazUsuario::dibujarParcela(Parcela* parcela, unsigned int coordenadaX,
 	}
 
 	dibujarAlambradoParcela(coordenadaXEnDibujo, coordenadaYEnDibujo);
+	if(parcela->obtenerRegada()){
+		dibujarRiego(coordenadaXEnDibujo, coordenadaYEnDibujo);
+	}
+}
+
+void InterfazUsuario::dibujarRiego(int coordenadaXEnDibujo, int coordenadaYEnDibujo){
+
+	creadorImagen->pegarImagen("resources/img/regadera.bmp", coordenadaXEnDibujo + obtenerAnchoParcela()/2 - 14,
+								coordenadaYEnDibujo + obtenerLargoParcela() - 23);
 }
 
 void InterfazUsuario::dibujarParcelaLimpia(Parcela* parcela, unsigned int coordenadaXEnDibujo, unsigned int coordenadaYEnDibujo){
@@ -377,13 +386,32 @@ void InterfazUsuario::dibujarParcelaLimpia(Parcela* parcela, unsigned int coorde
 void InterfazUsuario::dibujarParcelaSembrada(Parcela* parcela, unsigned int coordenadaXEnDibujo, unsigned int coordenadaYEnDibujo){
 
 	creadorImagen->dibujarRectanguloConRelleno(obtenerAnchoParcela(), obtenerLargoParcela(), coordenadaXEnDibujo,
-											   coordenadaYEnDibujo, creadorImagen->obtenerColor(VERDE_HIERBA), creadorImagen->obtenerColor(VERDE));
+											   coordenadaYEnDibujo, creadorImagen->obtenerColor(VERDE_CLARO), creadorImagen->obtenerColor(VERDE));
+
+	dibujarCultivos(parcela, coordenadaXEnDibujo, coordenadaYEnDibujo);
 
 	string nombreImagenCultivo = obtenerNombreImagenCultivo(parcela->obtenerCultivo());
 	int coordenadaXImagenCultivo = obtenerCoordenadaXImagenCultivo(coordenadaXEnDibujo);
 	int coordenadaYImagenCultivo = obtenerCoordenadaYImagenCultivo(coordenadaYEnDibujo);
 
 	creadorImagen->pegarImagen(nombreImagenCultivo, coordenadaXImagenCultivo, coordenadaYImagenCultivo);
+}
+
+void InterfazUsuario::dibujarCultivos(Parcela* parcela, unsigned int coordenadaXEnDibujo, unsigned int coordenadaYEnDibujo){
+
+	unsigned int anchoMarca = 5;
+	unsigned int separacionEntreMarcas = 10;
+	unsigned int cantidadMarcas = (obtenerLargoParcela() - separacionEntreMarcas)/(anchoMarca + separacionEntreMarcas);
+
+	int posicionFinalUltimaMarca = coordenadaYEnDibujo;//Indica la coordenada Y en la que termino la ultima marca, se inicializa en el inicio de la parcela
+
+	for(unsigned int i  = 0; i < cantidadMarcas; i ++){
+
+		int posicionMarcaActual = posicionFinalUltimaMarca + separacionEntreMarcas;//La nueva marca comienza en esta coordenada
+		creadorImagen->dibujarRectanguloConRelleno(obtenerAnchoParcela(), anchoMarca, coordenadaXEnDibujo,
+												   posicionMarcaActual, creadorImagen->obtenerColor(VERDE_HIERBA), creadorImagen->obtenerColor(VERDE));
+		posicionFinalUltimaMarca = posicionMarcaActual + anchoMarca;
+	}
 }
 
 void InterfazUsuario::dibujarParcelaSeca(Parcela* parcela, unsigned int coordenadaXEnDibujo, unsigned int coordenadaYEnDibujo){
@@ -527,4 +555,6 @@ InterfazUsuario::~InterfazUsuario(){
 	if(this->menuPrincipal != NULL){
 		delete this->menuPrincipal;
 	}
+
+	delete this->creadorImagen;
 }

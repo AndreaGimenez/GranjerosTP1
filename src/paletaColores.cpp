@@ -33,3 +33,12 @@ Color* PaletaColores::obtenerColor(EColor color){
 
 	return this->colores[color];
 }
+
+PaletaColores::~PaletaColores() {
+
+	for(unsigned int i = 0; i < this->cantidadColores; i ++){
+		delete this->colores[i];
+	}
+
+	delete[] this->colores;
+}

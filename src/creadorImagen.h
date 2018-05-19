@@ -23,7 +23,9 @@ private:
 	PaletaColores* paletaColores;
 
 public:
+
 	CreadorImagen();
+
 	void crearNuevaImagen(unsigned int alto, unsigned int ancho, unsigned int calidad);
 	void guardarImagen(std::string nombreImagen);
 	Color* obtenerColor(EColor color);
@@ -33,6 +35,8 @@ public:
 	void dibujarRectanguloConRelleno(int ancho, int largo, int coordenadaX, int coordenadaY, Color* color);
 	void dibujarRectanguloConRelleno(int ancho, int largo, int coordenadaX, int coordenadaY, Color* color, Color* color2);
 	void pegarImagen(std::string nombreImagen, int coordenadaX, int coordenadaY);
+
+	~CreadorImagen();
 };
 
 #endif /* CREADORIMAGEN_H_ */

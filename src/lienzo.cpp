@@ -43,3 +43,8 @@ void Lienzo::guardar(string nombre){
 
 	this->bmp->WriteToFile(nombre.c_str());
 }
+
+Lienzo::~Lienzo(){
+
+	delete this->bmp;
+}

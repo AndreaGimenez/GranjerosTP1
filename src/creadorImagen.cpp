@@ -89,3 +89,13 @@ void CreadorImagen::pegarImagen(string nombreImagen, int coordenadaX, int coorde
 
 	lienzo->pegarImagen(nombreImagen, coordenadaX, coordenadaY);
 }
+
+
+CreadorImagen::~CreadorImagen(){
+
+	delete this->paletaColores;
+
+	if(this->lienzo != NULL){
+		delete this->lienzo;
+	}
+}

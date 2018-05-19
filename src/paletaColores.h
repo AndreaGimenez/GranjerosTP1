@@ -37,8 +37,10 @@ private:
 	unsigned int cantidadColores;
 
 public:
+
 	PaletaColores();
 	Color* obtenerColor(EColor color);
+	~PaletaColores();
 };
 
 #endif /* PALETACOLORES_H_ */
