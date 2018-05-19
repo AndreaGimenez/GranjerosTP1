@@ -302,10 +302,10 @@ void InterfazUsuario::mostrarTerrenosJugadorPorConsola(Jugador* jugador){
 						cout<<"|*******|";
 						break;
 					case parcela::PODRIDA:
-						cout<<"##("<<parcelaActual->obtenerTiempoRecuperacionRestante()<<")##";
+						cout<<"|##("<<parcelaActual->obtenerTiempoRecuperacionRestante()<<")##|";
 						break;
 					case parcela::COSECHADA:
-						cout<<"··("<<parcelaActual->obtenerTiempoRecuperacionRestante()<<")··";
+						cout<<"|··("<<parcelaActual->obtenerTiempoRecuperacionRestante()<<")··|";
 						break;
 				}
 			}
@@ -341,61 +341,148 @@ void InterfazUsuario::dibujarTerreno(Terreno* terreno){
 
 void InterfazUsuario::dibujarParcela(Parcela* parcela, unsigned int coordenadaX, unsigned int coordenadaY){
 
+	int coordenadaXEnDibujo = obtenerCoordenadaXEnDibujo(coordenadaX);
+	int coordenadaYEnDibujo = obtenerCoordenadaYEnDibujo(coordenadaY);
+
 	parcela::Estado estadoParcela = parcela->obtenerEstado();
 
 	switch(estadoParcela){
 
 		case parcela::LIMPIA:
-			dibujarParcelaLimpia(parcela,coordenadaX, coordenadaY);
+			dibujarParcelaLimpia(parcela,coordenadaXEnDibujo, coordenadaYEnDibujo);
 			break;
 		case parcela::SEMBRADA:
-			dibujarParcelaSembrada(parcela,coordenadaX, coordenadaY);
+			dibujarParcelaSembrada(parcela,coordenadaXEnDibujo, coordenadaYEnDibujo);
 			break;
 		case parcela::SECA:
-			dibujarParcelaSeca(parcela,coordenadaX, coordenadaY);
+			dibujarParcelaSeca(parcela,coordenadaXEnDibujo, coordenadaYEnDibujo);
 			break;
 		case parcela::PODRIDA:
-			dibujarParcelaPodrida(parcela,coordenadaX, coordenadaY);
+			dibujarParcelaPodrida(parcela,coordenadaXEnDibujo, coordenadaYEnDibujo);
 			break;
 		case parcela::COSECHADA:
-			dibujarParcelaCosechada(parcela,coordenadaX, coordenadaY);
+			dibujarParcelaCosechada(parcela,coordenadaXEnDibujo, coordenadaYEnDibujo);
 			break;
 	}
+
+	dibujarAlambradoParcela(coordenadaXEnDibujo, coordenadaYEnDibujo);
 }
 
-void InterfazUsuario::dibujarParcelaLimpia(Parcela* parcela, unsigned int coordenadaX, unsigned int coordenadaY){
-
-	int coordenadaXEnDibujo = obtenerCoordenadaXEnDibujo(coordenadaX);
-	int coordenadaYEnDibujo = obtenerCoordenadaYEnDibujo(coordenadaY);
+void InterfazUsuario::dibujarParcelaLimpia(Parcela* parcela, unsigned int coordenadaXEnDibujo, unsigned int coordenadaYEnDibujo){
 
 	creadorImagen->dibujarRectanguloConRelleno(obtenerAnchoParcela(), obtenerLargoParcela(), coordenadaXEnDibujo,
 											   coordenadaYEnDibujo, creadorImagen->obtenerColor(VERDE_CLARO), creadorImagen->obtenerColor(VERDE));
 }
 
-void InterfazUsuario::dibujarParcelaSembrada(Parcela* parcela, unsigned int coordenadaX, unsigned int coordenadaY){
-
-}
-
-void InterfazUsuario::dibujarParcelaSeca(Parcela* parcela, unsigned int coordenadaX, unsigned int coordenadaY){
-
-	int coordenadaXEnDibujo = obtenerCoordenadaXEnDibujo(coordenadaX);
-	int coordenadaYEnDibujo = obtenerCoordenadaYEnDibujo(coordenadaY);
+void InterfazUsuario::dibujarParcelaSembrada(Parcela* parcela, unsigned int coordenadaXEnDibujo, unsigned int coordenadaYEnDibujo){
 
 	creadorImagen->dibujarRectanguloConRelleno(obtenerAnchoParcela(), obtenerLargoParcela(), coordenadaXEnDibujo,
-											   coordenadaYEnDibujo, creadorImagen->obtenerColor(MARRON_CLARO), creadorImagen->obtenerColor(MARRON));
+											   coordenadaYEnDibujo, creadorImagen->obtenerColor(VERDE_HIERBA), creadorImagen->obtenerColor(VERDE));
+
+	string nombreImagenCultivo = obtenerNombreImagenCultivo(parcela->obtenerCultivo());
+	int coordenadaXImagenCultivo = obtenerCoordenadaXImagenCultivo(coordenadaXEnDibujo);
+	int coordenadaYImagenCultivo = obtenerCoordenadaYImagenCultivo(coordenadaYEnDibujo);
+
+	creadorImagen->pegarImagen(nombreImagenCultivo, coordenadaXImagenCultivo, coordenadaYImagenCultivo);
 }
 
-void InterfazUsuario::dibujarParcelaPodrida(Parcela* parcela, unsigned int coordenadaX, unsigned int coordenadaY){
-
-	int coordenadaXEnDibujo = obtenerCoordenadaXEnDibujo(coordenadaX);
-	int coordenadaYEnDibujo = obtenerCoordenadaYEnDibujo(coordenadaY);
+void InterfazUsuario::dibujarParcelaSeca(Parcela* parcela, unsigned int coordenadaXEnDibujo, unsigned int coordenadaYEnDibujo){
 
 	creadorImagen->dibujarRectanguloConRelleno(obtenerAnchoParcela(), obtenerLargoParcela(), coordenadaXEnDibujo,
-											   coordenadaYEnDibujo, creadorImagen->obtenerColor(GRIS), creadorImagen->obtenerColor(BLANCO));
+											   coordenadaYEnDibujo, creadorImagen->obtenerColor(AMARILLO_ARENA), creadorImagen->obtenerColor(AMARILLO_MIEL));
 }
 
-void InterfazUsuario::dibujarParcelaCosechada(Parcela* parcela, unsigned int coordenadaX, unsigned int coordenadaY){
+void InterfazUsuario::dibujarParcelaPodrida(Parcela* parcela, unsigned int coordenadaXEnDibujo, unsigned int coordenadaYEnDibujo){
 
+	creadorImagen->dibujarRectanguloConRelleno(obtenerAnchoParcela(), obtenerLargoParcela(), coordenadaXEnDibujo,
+											   coordenadaYEnDibujo, creadorImagen->obtenerColor(VERDE_HIERBA), creadorImagen->obtenerColor(MARRON_TIERRA));
+}
+
+void InterfazUsuario::dibujarParcelaCosechada(Parcela* parcela, unsigned int coordenadaXEnDibujo, unsigned int coordenadaYEnDibujo){
+
+	creadorImagen->dibujarRectanguloConRelleno(obtenerAnchoParcela(), obtenerLargoParcela(), coordenadaXEnDibujo,
+											   coordenadaYEnDibujo, creadorImagen->obtenerColor(MARRON_CLARO), creadorImagen->obtenerColor(VERDE));
+
+	dibujarMarcasArado(parcela, coordenadaXEnDibujo, coordenadaYEnDibujo);
+}
+
+void InterfazUsuario::dibujarMarcasArado(Parcela* parcela, unsigned int coordenadaXEnDibujo, unsigned int coordenadaYEnDibujo){
+
+	unsigned int anchoMarca = 5;
+	unsigned int separacionEntreMarcas = 10;
+	unsigned int cantidadMarcas = (obtenerLargoParcela() - separacionEntreMarcas)/(anchoMarca + separacionEntreMarcas);
+
+	int posicionFinalUltimaMarca = coordenadaYEnDibujo;//Indica la coordenada Y en la que termino la ultima marca, se inicializa en el inicio de la parcela
+
+	for(unsigned int i  = 0; i < cantidadMarcas; i ++){
+
+		int posicionMarcaActual = posicionFinalUltimaMarca + separacionEntreMarcas;//La nueva marca comienza en esta coordenada
+		creadorImagen->dibujarRectanguloConRelleno(obtenerAnchoParcela(), anchoMarca, coordenadaXEnDibujo,
+												   posicionMarcaActual, creadorImagen->obtenerColor(MARRON), creadorImagen->obtenerColor(MARRON_TIERRA));
+		posicionFinalUltimaMarca = posicionMarcaActual + anchoMarca;
+	}
+}
+
+void InterfazUsuario::dibujarAlambradoParcela(int coordenadaXEnDibujo, int coordenadaYEnDibujo){
+
+	//Se dibujan 4 postes, uno en cada esquina de la parcela
+	dibujarPoste(coordenadaXEnDibujo, coordenadaYEnDibujo);
+	dibujarPoste(coordenadaXEnDibujo + obtenerAnchoParcela() - obtenerAnchoPoste(), coordenadaYEnDibujo);
+	dibujarPoste(coordenadaXEnDibujo, coordenadaYEnDibujo + obtenerLargoParcela() - obtenerLargoPoste());
+	dibujarPoste(coordenadaXEnDibujo + obtenerAnchoParcela() - obtenerAnchoPoste(),
+				 coordenadaYEnDibujo + obtenerLargoParcela() - obtenerLargoPoste());
+
+	//Se unen los postes con el alambrado
+	dibujarAlambrado(coordenadaXEnDibujo + obtenerAnchoPoste(), coordenadaYEnDibujo + obtenerLargoPoste()/2,
+					 coordenadaXEnDibujo + obtenerAnchoParcela() - obtenerAnchoPoste(), coordenadaYEnDibujo + obtenerLargoPoste()/2);
+	dibujarAlambrado(coordenadaXEnDibujo + obtenerAnchoPoste()/2, coordenadaYEnDibujo + obtenerLargoPoste(),
+					 coordenadaXEnDibujo + obtenerAnchoPoste()/2, coordenadaYEnDibujo + obtenerLargoParcela() - obtenerLargoPoste());
+	dibujarAlambrado(coordenadaXEnDibujo + obtenerAnchoPoste(), coordenadaYEnDibujo + obtenerLargoParcela() - obtenerLargoPoste()/2,
+					 coordenadaXEnDibujo + obtenerLargoParcela() - obtenerAnchoPoste(), coordenadaYEnDibujo + obtenerLargoParcela() - obtenerLargoPoste()/2);
+	dibujarAlambrado(coordenadaXEnDibujo + obtenerAnchoParcela() - obtenerAnchoPoste()/2, coordenadaYEnDibujo + obtenerLargoPoste(),
+					 coordenadaXEnDibujo + obtenerAnchoParcela() - obtenerAnchoPoste()/2, coordenadaYEnDibujo + obtenerLargoParcela() - obtenerLargoPoste());
+
+}
+
+void InterfazUsuario::dibujarPoste(int coordenadaXEnDibujo, int coordenadaYEnDibujo){
+
+	creadorImagen->dibujarRectanguloConRelleno(obtenerAnchoPoste(), obtenerLargoPoste(), coordenadaXEnDibujo, coordenadaYEnDibujo, creadorImagen->obtenerColor(MARRON));
+}
+
+unsigned int InterfazUsuario::obtenerAnchoPoste(){
+	return 6;
+}
+
+unsigned int InterfazUsuario::obtenerLargoPoste(){
+	return 6;
+}
+
+void InterfazUsuario::dibujarAlambrado(int coordenadaXDesde, int coordenadaYDesde, int coordenadaXHasta, int coordenadaYHasta){
+
+	Color* colorAlambrado = creadorImagen->obtenerColor(GRIS);
+
+	if(coordenadaYDesde == coordenadaYHasta){
+		creadorImagen->dibujarLineaHorizontal(colorAlambrado, coordenadaXHasta - coordenadaXDesde, coordenadaXDesde, coordenadaYDesde);
+	}else if(coordenadaXDesde == coordenadaXHasta){
+		creadorImagen->dibujarLineaVertical(colorAlambrado, coordenadaYHasta - coordenadaYDesde, coordenadaXDesde, coordenadaYDesde);
+	}else{
+		throw string("No hay soporte para alambrados que no sean verticales u horizontales");
+	}
+}
+
+string InterfazUsuario::obtenerNombreImagenCultivo(Cultivo* cultivo){
+
+	return "resources/img/Cultivo_" + cultivo->obtenerNombre() + ".bmp";
+}
+
+int InterfazUsuario::obtenerCoordenadaXImagenCultivo(int coordenadaXParcela){
+
+	return coordenadaXParcela + obtenerAnchoParcela()/2 - 15/2;
+}
+
+int InterfazUsuario::obtenerCoordenadaYImagenCultivo(int coordenadaYParcela){
+
+	return coordenadaYParcela + obtenerLargoParcela()/2 - 15/2;
 }
 
 int InterfazUsuario::obtenerCoordenadaXEnDibujo(unsigned int coordenadaX){

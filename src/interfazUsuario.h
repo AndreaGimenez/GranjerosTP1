@@ -49,6 +49,14 @@ private:
 	void dibujarParcelaSembrada(Parcela* parcela,unsigned int coordenadaX, unsigned int coordenadaY);
 	void dibujarParcelaSeca(Parcela* parcela, unsigned int coordenadaX, unsigned int coordenadaY);
 	void dibujarParcelaPodrida(Parcela* parcela, unsigned int coordenadaX, unsigned int coordenadaY);
+	void dibujarAlambradoParcela(int coordenadaXEnDibujo, int coordenadaYEnDibujo);
+	void dibujarMarcasArado(Parcela* parcela, unsigned int coordenadaXEnDibujo, unsigned int coordenadaYEnDibujo);
+
+	void dibujarPoste(int coordenadaXEnDibujo, int coordenadaYEnDibujo);
+	unsigned int obtenerAnchoPoste();
+	unsigned int obtenerLargoPoste();
+	void dibujarAlambrado(int coordenadaXDesde, int coordenadaYDesde, int coordenadaXHasta, int coordenadaYHasta);
+
 	int obtenerAnchoTerreno();
 	int obtenerLargoTerreno();
 	int obtenerAnchoParcela();
@@ -56,6 +64,9 @@ private:
 	int obtenerDistanciaAlBorde();
 	int obtenerCoordenadaXEnDibujo(unsigned int coordenadaX);
 	int obtenerCoordenadaYEnDibujo(unsigned int coordenadaY);
+	std::string obtenerNombreImagenCultivo(Cultivo* cultivo);
+	int obtenerCoordenadaXImagenCultivo(int coordenadaXParcela);
+	int obtenerCoordenadaYImagenCultivo(int coordenadaYParcela);
 
 public:
 

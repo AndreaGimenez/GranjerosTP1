@@ -32,6 +32,13 @@ void Lienzo::dibujarPunto(Color* color, int coordenadaX, int coordenadaY){
 	this->bmp->SetPixel(coordenadaX, coordenadaY, obtenerRGBApixel(color));
 }
 
+void Lienzo::pegarImagen(std::string nombreImagen, int coordenadaX, int coordenadaY){
+
+	BMP imagen;
+	imagen.ReadFromFile(nombreImagen.c_str());
+	RangedPixelToPixelCopy(imagen, 0, imagen.TellWidth(), 0, imagen.TellHeight(), *this->bmp, coordenadaX, coordenadaY);
+}
+
 void Lienzo::guardar(string nombre){
 
 	this->bmp->WriteToFile(nombre.c_str());

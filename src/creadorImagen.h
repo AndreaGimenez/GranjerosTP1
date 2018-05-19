@@ -27,11 +27,12 @@ public:
 	void crearNuevaImagen(unsigned int alto, unsigned int ancho, unsigned int calidad);
 	void guardarImagen(std::string nombreImagen);
 	Color* obtenerColor(EColor color);
-	void dibujarLineaHorizontal(Color* lapiz, int longitud, int coordenadaX, int coordenadaY);
-	void dibujarLineaVertical(Color* lapiz, int longitud, int coordenadaX, int coordenadaY);
+	void dibujarLineaHorizontal(Color* color, int longitud, int coordenadaX, int coordenadaY);
+	void dibujarLineaVertical(Color* color, int longitud, int coordenadaX, int coordenadaY);
 	void dibujarRectangulo(int ancho, int largo, int coordenadaX, int coordenadaY, Color* color);
 	void dibujarRectanguloConRelleno(int ancho, int largo, int coordenadaX, int coordenadaY, Color* color);
 	void dibujarRectanguloConRelleno(int ancho, int largo, int coordenadaX, int coordenadaY, Color* color, Color* color2);
+	void pegarImagen(std::string nombreImagen, int coordenadaX, int coordenadaY);
 };
 
 #endif /* CREADORIMAGEN_H_ */

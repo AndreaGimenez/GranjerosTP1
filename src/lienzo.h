@@ -23,6 +23,7 @@ public:
 
 	RGBApixel obtenerRGBApixel(Color* color);
 	void dibujarPunto(Color* lapiz, int coordenadaX, int coordenadaY);
+	void pegarImagen(std::string nombreImagen, int coordenadaX, int coordenadaY);
 	void guardar(std::string nombre);
 };
 

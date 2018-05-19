@@ -84,3 +84,8 @@ void CreadorImagen::dibujarRectanguloConRelleno(int ancho, int largo, int coorde
 		}
 	}
 }
+
+void CreadorImagen::pegarImagen(string nombreImagen, int coordenadaX, int coordenadaY){
+
+	lienzo->pegarImagen(nombreImagen, coordenadaX, coordenadaY);
+}
