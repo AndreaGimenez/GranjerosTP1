@@ -65,13 +65,9 @@ void Herramientas::pintarZona(BMP* imagen, int ancho, int largo, int pixelAncho,
 void Herramientas::cambiarColorPor(RGBApixel* colorPrevio, int rojo, int verde, int azul, int opacidad){
 
 	colorPrevio->Alpha=opacidad;
-
 	colorPrevio->Red=rojo;
-
 	colorPrevio->Green=verde;
-
 	colorPrevio->Blue=azul;
-
 }
 
 void Herramientas::dibujarLineaHorizontal(BMP* imagen, int longitud, int pixelAncho, int pixelLargo, RGBApixel* colorDeLaLinea){

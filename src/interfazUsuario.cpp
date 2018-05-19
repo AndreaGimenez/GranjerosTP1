@@ -9,6 +9,7 @@
 #include <cstdlib>
 #include <iostream>
 #include "utils.h"
+#include "configuracion.h"
 
 
 using namespace std;
@@ -17,6 +18,7 @@ InterfazUsuario::InterfazUsuario() {
 
 	this->menuPrincipal = NULL;
 	this->menuPartida = NULL;
+	this->creadorImagen = new CreadorImagen();
 }
 
 void InterfazUsuario::mostrarBienvenida(){
@@ -254,8 +256,8 @@ void InterfazUsuario::mostrarRecursosJugador(Jugador* jugador){
 }
 
 void InterfazUsuario::mostrarTerrenosJugador(Jugador* jugador){
-	//TODO: con EasyBMP hay que mostrar el estado de la partida (solo del jugador actual).
-	//mostrarTerrenosJugadorPorImagen(jugador);
+
+	mostrarTerrenosJugadorPorImagen(jugador);
 	mostrarTerrenosJugadorPorConsola(jugador);
 }
 
@@ -317,6 +319,116 @@ void InterfazUsuario::mostrarTerrenosJugadorPorConsola(Jugador* jugador){
 
 void InterfazUsuario::mostrarTerrenosJugadorPorImagen(Jugador* jugador){
 
+	for(unsigned int iTerreno = 1; iTerreno <= jugador->obtenerCantidadTerrenos(); iTerreno++){
+
+		creadorImagen->crearNuevaImagen(obtenerLargoTerreno(), obtenerAnchoTerreno(), 24);
+		Terreno* terreno = jugador->buscarTerreno(iTerreno);
+		dibujarTerreno(terreno);
+		creadorImagen->guardarImagen(jugador->obtenerNombre() + "_Terreno_" + Utils::unsignedIntToString(iTerreno));
+	}
+}
+
+void InterfazUsuario::dibujarTerreno(Terreno* terreno){
+
+	for(unsigned int coordenadaY = 1; coordenadaY <= terreno->obtenerLargoTerreno(); coordenadaY++){
+		for(unsigned int coordenadaX = 1; coordenadaX <= terreno->obtenerAnchoTerreno(); coordenadaX++){
+
+			Parcela* parcelaActual = terreno->buscarParcela(Utils::unsignedIntToString(coordenadaY) + "," + Utils::unsignedIntToString(coordenadaX));
+			dibujarParcela(parcelaActual, coordenadaX, coordenadaY);
+		}
+	}
+}
+
+void InterfazUsuario::dibujarParcela(Parcela* parcela, unsigned int coordenadaX, unsigned int coordenadaY){
+
+	parcela::Estado estadoParcela = parcela->obtenerEstado();
+
+	switch(estadoParcela){
+
+		case parcela::LIMPIA:
+			dibujarParcelaLimpia(parcela,coordenadaX, coordenadaY);
+			break;
+		case parcela::SEMBRADA:
+			dibujarParcelaSembrada(parcela,coordenadaX, coordenadaY);
+			break;
+		case parcela::SECA:
+			dibujarParcelaSeca(parcela,coordenadaX, coordenadaY);
+			break;
+		case parcela::PODRIDA:
+			dibujarParcelaPodrida(parcela,coordenadaX, coordenadaY);
+			break;
+		case parcela::COSECHADA:
+			dibujarParcelaCosechada(parcela,coordenadaX, coordenadaY);
+			break;
+	}
+}
+
+void InterfazUsuario::dibujarParcelaLimpia(Parcela* parcela, unsigned int coordenadaX, unsigned int coordenadaY){
+
+	int coordenadaXEnDibujo = obtenerCoordenadaXEnDibujo(coordenadaX);
+	int coordenadaYEnDibujo = obtenerCoordenadaYEnDibujo(coordenadaY);
+
+	creadorImagen->dibujarRectanguloConRelleno(obtenerAnchoParcela(), obtenerLargoParcela(), coordenadaXEnDibujo,
+											   coordenadaYEnDibujo, creadorImagen->obtenerColor(VERDE_CLARO), creadorImagen->obtenerColor(VERDE));
+}
+
+void InterfazUsuario::dibujarParcelaSembrada(Parcela* parcela, unsigned int coordenadaX, unsigned int coordenadaY){
+
+}
+
+void InterfazUsuario::dibujarParcelaSeca(Parcela* parcela, unsigned int coordenadaX, unsigned int coordenadaY){
+
+	int coordenadaXEnDibujo = obtenerCoordenadaXEnDibujo(coordenadaX);
+	int coordenadaYEnDibujo = obtenerCoordenadaYEnDibujo(coordenadaY);
+
+	creadorImagen->dibujarRectanguloConRelleno(obtenerAnchoParcela(), obtenerLargoParcela(), coordenadaXEnDibujo,
+											   coordenadaYEnDibujo, creadorImagen->obtenerColor(MARRON_CLARO), creadorImagen->obtenerColor(MARRON));
+}
+
+void InterfazUsuario::dibujarParcelaPodrida(Parcela* parcela, unsigned int coordenadaX, unsigned int coordenadaY){
+
+	int coordenadaXEnDibujo = obtenerCoordenadaXEnDibujo(coordenadaX);
+	int coordenadaYEnDibujo = obtenerCoordenadaYEnDibujo(coordenadaY);
+
+	creadorImagen->dibujarRectanguloConRelleno(obtenerAnchoParcela(), obtenerLargoParcela(), coordenadaXEnDibujo,
+											   coordenadaYEnDibujo, creadorImagen->obtenerColor(GRIS), creadorImagen->obtenerColor(BLANCO));
+}
+
+void InterfazUsuario::dibujarParcelaCosechada(Parcela* parcela, unsigned int coordenadaX, unsigned int coordenadaY){
+
+}
+
+int InterfazUsuario::obtenerCoordenadaXEnDibujo(unsigned int coordenadaX){
+
+	return (coordenadaX - 1) * obtenerAnchoParcela() + obtenerDistanciaAlBorde();
+}
+
+int InterfazUsuario::obtenerCoordenadaYEnDibujo(unsigned int coordenadaY){
+
+	return (coordenadaY - 1) * obtenerLargoParcela() + obtenerDistanciaAlBorde();
+}
+
+int InterfazUsuario::obtenerAnchoTerreno(){
+
+	return Configuracion::obtenerAnchoTerreno() * obtenerAnchoParcela() + obtenerDistanciaAlBorde() * 2;
+}
+
+
+int InterfazUsuario::obtenerLargoTerreno(){
+
+	return Configuracion::obtenerLargoTerreno() * obtenerLargoParcela() + obtenerDistanciaAlBorde() * 2;
+}
+
+int InterfazUsuario::obtenerAnchoParcela(){
+	return 100;
+}
+
+int InterfazUsuario::obtenerLargoParcela(){
+	return 100;
+}
+
+int InterfazUsuario::obtenerDistanciaAlBorde(){
+	return 50;
 }
 
 InterfazUsuario::~InterfazUsuario(){
@@ -329,4 +441,3 @@ InterfazUsuario::~InterfazUsuario(){
 		delete this->menuPrincipal;
 	}
 }
-
