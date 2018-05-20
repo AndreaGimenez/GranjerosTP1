@@ -90,6 +90,10 @@ void CreadorImagen::pegarImagen(string nombreImagen, int coordenadaX, int coorde
 	lienzo->pegarImagen(nombreImagen, coordenadaX, coordenadaY);
 }
 
+void CreadorImagen::pegarImagenConTransparencia(std::string nombreImagen, int coordenadaX, int coordenadaY, Color* color){
+
+	lienzo->pegarImagenConTransparencia(nombreImagen, coordenadaX, coordenadaY, color);
+}
 
 CreadorImagen::~CreadorImagen(){
 

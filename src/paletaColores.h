@@ -26,7 +26,8 @@ enum EColor{
 	AMARILLO_ARENA,
 	AMARILLO_ORO,
 	AMARILLO_MIEL,
-	BEIGE
+	BEIGE,
+	ROJO
 };
 
 class PaletaColores {

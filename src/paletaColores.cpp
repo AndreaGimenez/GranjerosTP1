@@ -9,7 +9,7 @@
 
 PaletaColores::PaletaColores() {
 
-	this->cantidadColores = 15;
+	this->cantidadColores = 16;
 	this->colores = new Color*[this->cantidadColores];
 
 	this->colores[BLANCO] = new Color(255, 255, 255, 0);
@@ -27,6 +27,7 @@ PaletaColores::PaletaColores() {
 	this->colores[AMARILLO_ORO] = new Color(205, 164, 52, 0);
 	this->colores[AMARILLO_MIEL] = new Color(169, 131, 7, 0);
 	this->colores[BEIGE] = new Color(106, 93, 77, 0);
+	this->colores[ROJO] = new Color(255, 0, 0, 0);
 }
 
 Color* PaletaColores::obtenerColor(EColor color){

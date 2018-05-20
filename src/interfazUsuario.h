@@ -53,6 +53,7 @@ private:
 	void dibujarMarcasArado(Parcela* parcela, unsigned int coordenadaXEnDibujo, unsigned int coordenadaYEnDibujo);
 	void dibujarCultivos(Parcela* parcela, unsigned int coordenadaXEnDibujo, unsigned int coordenadaYEnDibujo);
 	void dibujarRiego(int coordenadaXEnDibujo, int coordenadaYEnDibujo);
+	void dibujarHoz(Parcela* parcela, int coordenadaXEnDibujo, int coordenadaYEnDibujo);
 
 	void dibujarPoste(int coordenadaXEnDibujo, int coordenadaYEnDibujo);
 	unsigned int obtenerAnchoPoste();

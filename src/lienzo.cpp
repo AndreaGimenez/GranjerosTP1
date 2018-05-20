@@ -39,6 +39,14 @@ void Lienzo::pegarImagen(std::string nombreImagen, int coordenadaX, int coordena
 	RangedPixelToPixelCopy(imagen, 0, imagen.TellWidth(), 0, imagen.TellHeight(), *this->bmp, coordenadaX, coordenadaY);
 }
 
+void Lienzo::pegarImagenConTransparencia(std::string nombreImagen, int coordenadaX, int coordenadaY, Color* color){
+
+	BMP imagen;
+	imagen.ReadFromFile(nombreImagen.c_str());
+	RGBApixel transparencia = obtenerRGBApixel(color);
+	RangedPixelToPixelCopyTransparent(imagen, 0, imagen.TellWidth(), 0, imagen.TellHeight(), *this->bmp, coordenadaX, coordenadaY, transparencia);
+}
+
 void Lienzo::guardar(string nombre){
 
 	this->bmp->WriteToFile(nombre.c_str());

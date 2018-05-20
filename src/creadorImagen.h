@@ -35,6 +35,7 @@ public:
 	void dibujarRectanguloConRelleno(int ancho, int largo, int coordenadaX, int coordenadaY, Color* color);
 	void dibujarRectanguloConRelleno(int ancho, int largo, int coordenadaX, int coordenadaY, Color* color, Color* color2);
 	void pegarImagen(std::string nombreImagen, int coordenadaX, int coordenadaY);
+	void pegarImagenConTransparencia(std::string nombreImagen, int coordenadaX, int coordenadaY, Color* color);
 
 	~CreadorImagen();
 };

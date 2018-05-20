@@ -373,8 +373,8 @@ void InterfazUsuario::dibujarParcela(Parcela* parcela, unsigned int coordenadaX,
 
 void InterfazUsuario::dibujarRiego(int coordenadaXEnDibujo, int coordenadaYEnDibujo){
 
-	creadorImagen->pegarImagen("resources/img/regadera.bmp", coordenadaXEnDibujo + obtenerAnchoParcela()/2 - 14,
-								coordenadaYEnDibujo + obtenerLargoParcela() - 23);
+	creadorImagen->pegarImagenConTransparencia("resources/img/gota.bmp", coordenadaXEnDibujo + obtenerAnchoParcela()/2 - 10,
+								coordenadaYEnDibujo + obtenerLargoParcela() - 30, creadorImagen->obtenerColor(VERDE_HIERBA));
 }
 
 void InterfazUsuario::dibujarParcelaLimpia(Parcela* parcela, unsigned int coordenadaXEnDibujo, unsigned int coordenadaYEnDibujo){
@@ -394,7 +394,7 @@ void InterfazUsuario::dibujarParcelaSembrada(Parcela* parcela, unsigned int coor
 	int coordenadaXImagenCultivo = obtenerCoordenadaXImagenCultivo(coordenadaXEnDibujo);
 	int coordenadaYImagenCultivo = obtenerCoordenadaYImagenCultivo(coordenadaYEnDibujo);
 
-	creadorImagen->pegarImagen(nombreImagenCultivo, coordenadaXImagenCultivo, coordenadaYImagenCultivo);
+	creadorImagen->pegarImagenConTransparencia(nombreImagenCultivo, coordenadaXImagenCultivo, coordenadaYImagenCultivo, creadorImagen->obtenerColor(VERDE_HIERBA));
 }
 
 void InterfazUsuario::dibujarCultivos(Parcela* parcela, unsigned int coordenadaXEnDibujo, unsigned int coordenadaYEnDibujo){
@@ -432,6 +432,13 @@ void InterfazUsuario::dibujarParcelaCosechada(Parcela* parcela, unsigned int coo
 											   coordenadaYEnDibujo, creadorImagen->obtenerColor(MARRON_CLARO), creadorImagen->obtenerColor(VERDE));
 
 	dibujarMarcasArado(parcela, coordenadaXEnDibujo, coordenadaYEnDibujo);
+	dibujarHoz(parcela, coordenadaXEnDibujo, coordenadaYEnDibujo);
+}
+
+void InterfazUsuario::dibujarHoz(Parcela* parcela, int coordenadaXEnDibujo, int coordenadaYEnDibujo){
+
+	creadorImagen->pegarImagenConTransparencia("resources/img/hoz.bmp", coordenadaXEnDibujo + obtenerAnchoParcela()/2 - 50/2,
+												coordenadaYEnDibujo + obtenerLargoParcela()/2 - 50/2, creadorImagen->obtenerColor(VERDE_HIERBA));
 }
 
 void InterfazUsuario::dibujarMarcasArado(Parcela* parcela, unsigned int coordenadaXEnDibujo, unsigned int coordenadaYEnDibujo){
@@ -505,12 +512,12 @@ string InterfazUsuario::obtenerNombreImagenCultivo(Cultivo* cultivo){
 
 int InterfazUsuario::obtenerCoordenadaXImagenCultivo(int coordenadaXParcela){
 
-	return coordenadaXParcela + obtenerAnchoParcela()/2 - 15/2;
+	return coordenadaXParcela + obtenerAnchoParcela()/2 - 24/2;
 }
 
 int InterfazUsuario::obtenerCoordenadaYImagenCultivo(int coordenadaYParcela){
 
-	return coordenadaYParcela + obtenerLargoParcela()/2 - 15/2;
+	return coordenadaYParcela + obtenerLargoParcela()/2 - 2/2;
 }
 
 int InterfazUsuario::obtenerCoordenadaXEnDibujo(unsigned int coordenadaX){
