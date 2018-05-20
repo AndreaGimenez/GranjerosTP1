@@ -517,7 +517,7 @@ int InterfazUsuario::obtenerCoordenadaXImagenCultivo(int coordenadaXParcela){
 
 int InterfazUsuario::obtenerCoordenadaYImagenCultivo(int coordenadaYParcela){
 
-	return coordenadaYParcela + obtenerLargoParcela()/2 - 2/2;
+	return coordenadaYParcela + obtenerLargoParcela()/2 - 24/2;
 }
 
 int InterfazUsuario::obtenerCoordenadaXEnDibujo(unsigned int coordenadaX){
