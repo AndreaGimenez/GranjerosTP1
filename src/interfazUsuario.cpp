@@ -274,14 +274,19 @@ void InterfazUsuario::mostrarTerrenosJugadorPorConsola(Jugador* jugador){
 		
 		cout << "    ";
 		for(unsigned int k=1;k<=terreno->obtenerAnchoTerreno();k++){
-			cout << "    " << k << "    ";
+
+			string stringIndice = Utils::unsignedIntToString(k);
+			cout << Utils::fillString("", " ", 4 - stringIndice.size()/2, true) + stringIndice + Utils::fillString("", " ", 5 - stringIndice.size()/2 - stringIndice.size()%2, true);
 		}
 		cout << endl;
 
 		for(unsigned int j=1;j<=terreno->obtenerLargoTerreno();j++){
 
 			cout<<"__________________________________________________________________________________"<<endl;
-			cout<< j << "  |";
+
+			string stringIndice = Utils::unsignedIntToString(j);
+			cout<<  stringIndice + Utils::fillString("", " ", 3 - stringIndice.size(), true) + "|";
+
 			for(unsigned int k=1;k<=terreno->obtenerAnchoTerreno();k++){
 				parcelaActual=terreno->buscarParcela(Utils::unsignedIntToString(j) + "," + Utils::unsignedIntToString(k));
 				estadoParcela=parcelaActual->obtenerEstado();				
@@ -330,11 +335,66 @@ void InterfazUsuario::mostrarTerrenosJugadorPorImagen(Jugador* jugador){
 
 void InterfazUsuario::dibujarTerreno(Terreno* terreno){
 
+	//dibujarCabecera(terreno);
+	dibujarCoordenadas(terreno);
+
 	for(unsigned int coordenadaY = 1; coordenadaY <= terreno->obtenerLargoTerreno(); coordenadaY++){
 		for(unsigned int coordenadaX = 1; coordenadaX <= terreno->obtenerAnchoTerreno(); coordenadaX++){
 
 			Parcela* parcelaActual = terreno->buscarParcela(Utils::unsignedIntToString(coordenadaY) + "," + Utils::unsignedIntToString(coordenadaX));
 			dibujarParcela(parcelaActual, coordenadaX, coordenadaY);
+		}
+	}
+}
+
+void InterfazUsuario::dibujarCoordenadas(Terreno* terreno){
+
+	dibujarCoordenadasX(terreno);
+	dibujarCoordenadasY(terreno);
+}
+
+void InterfazUsuario::dibujarCoordenadasX(Terreno* terreno){
+
+	unsigned int distanciaBordeHorizontal = obtenerDistanciaAlBorde();
+	unsigned int coordenadaYEnDibujo = obtenerDistanciaAlBorde() - 10 - 19;
+
+	for(unsigned int coordenadaX = 1; coordenadaX <= terreno->obtenerAnchoTerreno(); coordenadaX++){
+
+		string stringCoordenada = Utils::unsignedIntToString(coordenadaX);
+		int coordenadaXPrimerNumeroEnDibujo = distanciaBordeHorizontal
+								+ ((coordenadaX - 1) * obtenerAnchoParcela())
+								+ (obtenerAnchoParcela() / 2)
+								- ((stringCoordenada.size() * 14 + (stringCoordenada.size() - 1 * 2)) / 2);
+
+		int coordenadaXNumeroActual = coordenadaXPrimerNumeroEnDibujo;
+
+		for(unsigned int i = 0; i < stringCoordenada.size(); i++){
+
+			creadorImagen->pegarImagen("resources/img/" + stringCoordenada.substr(i, 1) + ".bmp", coordenadaXNumeroActual, coordenadaYEnDibujo);
+			coordenadaXNumeroActual = coordenadaXNumeroActual + 14 + 2;
+		}
+	}
+}
+
+void InterfazUsuario::dibujarCoordenadasY(Terreno* terreno){
+
+	unsigned int distanciaBordeVertical = obtenerDistanciaAlBorde();
+
+	for(unsigned int coordenadaY = 1; coordenadaY <= terreno->obtenerLargoTerreno(); coordenadaY++){
+
+		string stringCoordenada = Utils::unsignedIntToString(coordenadaY);
+		unsigned int coordenadaXPrimerNumeroEnDibujo = obtenerDistanciaAlBorde() - 10 - (stringCoordenada.size() * 14 + (stringCoordenada.size() - 1 * 4));
+
+		int coordenadaYEnDibujo = distanciaBordeVertical
+								+ ((coordenadaY - 1) * obtenerLargoParcela())
+								+ (obtenerLargoParcela() / 2)
+								- 19/2;
+
+		int coordenadaXNumeroActual = coordenadaXPrimerNumeroEnDibujo;
+		for(unsigned int i = 0; i < stringCoordenada.size(); i++){
+
+			creadorImagen->pegarImagen("resources/img/" + stringCoordenada.substr(i, 1) + ".bmp", coordenadaXNumeroActual, coordenadaYEnDibujo);
+			coordenadaXNumeroActual = coordenadaXNumeroActual + 14 + 2;
 		}
 	}
 }

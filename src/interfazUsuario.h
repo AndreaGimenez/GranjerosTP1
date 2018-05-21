@@ -54,6 +54,9 @@ private:
 	void dibujarCultivos(Parcela* parcela, unsigned int coordenadaXEnDibujo, unsigned int coordenadaYEnDibujo);
 	void dibujarRiego(int coordenadaXEnDibujo, int coordenadaYEnDibujo);
 	void dibujarHoz(Parcela* parcela, int coordenadaXEnDibujo, int coordenadaYEnDibujo);
+	void dibujarCoordenadas(Terreno* terreno);
+	void dibujarCoordenadasX(Terreno* terreno);
+	void dibujarCoordenadasY(Terreno* terreno);
 
 	void dibujarPoste(int coordenadaXEnDibujo, int coordenadaYEnDibujo);
 	unsigned int obtenerAnchoPoste();
