@@ -70,3 +70,7 @@ void Tanque::imprimirEstado(){
 		<<this->volumenUtilizado()<<"\nVolumen Libre = "
 		<<this->volumenLibre()<<endl ;
 }
+
+void Tanque::ampliarTanque(unsigned int nuevaCapacidad){
+	this->capacidad += nuevaCapacidad ;
+}

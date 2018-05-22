@@ -13,6 +13,7 @@
 #include "tanque.h"
 #include "lista.h"
 #include "almacen.h"
+#include "tanque.h"
 
 using namespace std ;
 
