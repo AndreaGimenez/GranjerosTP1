@@ -142,6 +142,11 @@ unsigned int Configuracion::obtenerCostoAumentoAlmacenamientoAlmacen(unsigned in
 	return (aumentoAlmacenamiento * COSTO_UNITARIO_ALMACENAMIENTO_ALMACEN);
 }
 
+unsigned int Configuracion::obtenerCostoAumentoCapacidadTanque(unsigned int aumentoVolumen){
+
+	return(aumentoVolumen*COSTO_UNITARIO_ALMACENAMIENTO_TANQUE) ;
+}
+
 Lista<Cultivo*>* Configuracion::obtenerCultivos(){
 
 	return cultivos;

@@ -15,6 +15,7 @@
 
 int const COSTO_MINIMO = 20;
 int const COSTO_UNITARIO_ALMACENAMIENTO_ALMACEN = 2;
+int const COSTO_UNITARIO_ALMACENAMIENTO_TANQUE = 2 ;
 
 
 /*
@@ -110,6 +111,10 @@ public:
 	//Pre: Se debe haber inicializado la configuracion con 'inicializar'.
 	//Pos: Devuelve el costo de comprar las undiades de almacenamiento indicadas en 'aumentoAlmacenamiento'.
 	static unsigned int obtenerCostoAumentoAlmacenamientoAlmacen(unsigned int aumentoAlmacenamiento);
+
+	//Pre:
+	//Post: Devuelve el costo de comprar las undiades de almacenamiento indicadas en 'aumentoVolumen'.
+	static unsigned int obtenerCostoAumentoCapacidadTanque(unsigned int aumentoVolumen);
 
 	//Pre: Se debe haber inicializado la configuracion con 'inicializar'.
 	//Pos: Devuelve los cultivos disponibles para que utilicen los jugadores.

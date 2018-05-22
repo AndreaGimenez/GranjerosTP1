@@ -11,6 +11,7 @@
 #include "jugador.h"
 #include "configuracion.h"
 
+
 using namespace std ;
 
 Jugador::Jugador(string nombre){
@@ -338,8 +339,21 @@ bool Jugador::venderTerreno(unsigned int numeroTerreno){
 	return vendioTerreno;
 }
 
+bool Jugador::puedeComprarCapacidadTanque(){
+
+	return puedeGastarMonedas(Configuracion::obtenerCostoAumentoCapacidadTanque(this->tanque->volumenMaximo()));
+}
+
 bool Jugador::comprarCapacidadTanque(){
-	return false;
+
+	bool puedeComprarVolumen = this->puedeComprarCapacidadTanque();
+
+	if(puedeComprarVolumen){
+		this->gastarMonedas(Configuracion::obtenerCostoAumentoCapacidadTanque(this->tanque->volumenMaximo()));
+		this->tanque->ampliarTanque(this->tanque->volumenMaximo());
+	}
+
+	return puedeComprarVolumen ;
 }
 
 bool Jugador::puedeComprarCapacidadAlmacen(){
