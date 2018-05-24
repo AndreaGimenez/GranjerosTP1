@@ -130,3 +130,22 @@ string Utils::fillString(string cadena, string relleno, unsigned int cantidad, b
 
 	return cadena;
 }
+
+string Utils::padString(string cadena, string relleno, unsigned int largo, bool rellenarDerecha){
+
+	string cadenaRelleno = "";
+	int largoRelleno = largo - cadena.size();
+
+	for(int i = 0; i < largoRelleno; i++){
+
+		cadenaRelleno += relleno;
+	}
+
+	if(rellenarDerecha){
+		cadena += cadenaRelleno;
+	}else{
+		cadena = cadenaRelleno + cadena;
+	}
+
+	return cadena;
+}

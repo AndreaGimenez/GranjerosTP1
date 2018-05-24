@@ -283,15 +283,24 @@ void InterfazUsuario::dibujarTerrenoConsola(Terreno* terreno){
 
 		cout << "__________________________________________________________________________________" << endl;
 		dibujarCoordenadaYEnConsola(j);
-
+		cout << PlantillaTerrenoConsola::obtenerSimboloSeparacionEntreParcelas();
 		for(unsigned int k = 1; k <= terreno->obtenerAnchoTerreno(); k++){
 
 			Parcela* parcelaActual = terreno->buscarParcela(Utils::unsignedIntToString(j) + "," + Utils::unsignedIntToString(k));
 			dibujarParcelaEnConsola(parcelaActual);
 		}
-		cout << "|" << endl;
-		cout << "   ¯" << Utils::fillString("", "¯", terreno->obtenerAnchoTerreno()*9, false) << "¯" << endl;
+		cout << PlantillaTerrenoConsola::obtenerSimboloSeparacionEntreParcelas() << endl;
+		dibujarSueloTerrenoEnConsola(terreno);
 	}
+}
+
+void InterfazUsuario::dibujarSueloTerrenoEnConsola(Terreno* terreno){
+
+	cout << Utils::fillString("", " ", PlantillaTerrenoConsola::obtenerDistanciaBordeIzquierdo(), true)
+		 << PlantillaTerrenoConsola::obtenerSimboloSueloParcela()
+		 << Utils::fillString("", PlantillaTerrenoConsola::obtenerSimboloSueloParcela(),
+				 	 	 	 terreno->obtenerAnchoTerreno() * (PlantillaTerrenoConsola::obtenerAnchoParcela() + 2), false)
+		 << PlantillaTerrenoConsola::obtenerSimboloSueloParcela() << endl;
 }
 
 void InterfazUsuario::dibujarParcelaEnConsola(Parcela* parcela){
@@ -323,8 +332,9 @@ string InterfazUsuario::obtenerInformacionAMostrarParcela(Parcela* parcela){
 		case parcela::SEMBRADA:
 
 			cultivo = parcela->obtenerCultivo();
-			informacionAMostrar = cultivo->obtenerNombre() + ", " + "("
+			informacionAMostrar = cultivo->obtenerNombre() + "("
 								 + Utils::unsignedIntToString(parcela->obtenerTiempoSembrada())
+								 + ", "
 								 + simboloRiego
 								 + ")";
 			break;
@@ -387,16 +397,18 @@ string InterfazUsuario::obtenerSimboloParcela(Parcela* parcela){
 void InterfazUsuario::dibujarCoordenadaYEnConsola(unsigned int coordenadaY){
 
 	string stringIndice = Utils::unsignedIntToString(coordenadaY);
-	cout<<  stringIndice + Utils::fillString("", " ", 3 - stringIndice.size(), true) + "|";
+	cout<<  Utils::padString(stringIndice, " ", PlantillaTerrenoConsola::obtenerDistanciaBordeIzquierdo(), true);
 }
 
 void InterfazUsuario::dibujarCoordenadasXEnConsola(Terreno* terreno){
 
-	cout << "    ";
+	//hay que imprimir distancia de coordenadas Y + 1 porque hay que que agregar el espacio que ocupa la separacion de la parcela
+	cout << Utils::fillString("", " ", PlantillaTerrenoConsola::obtenerDistanciaBordeIzquierdo() + 1, true);
 	for(unsigned int k=1;k<=terreno->obtenerAnchoTerreno();k++){
 
 		string stringIndice = Utils::unsignedIntToString(k);
-		cout << Utils::fillString("", " ", 4 - stringIndice.size()/2, true) + stringIndice + Utils::fillString("", " ", 5 - stringIndice.size()/2 - stringIndice.size()%2, true);
+		unsigned int cantidadEspacios = PlantillaTerrenoConsola::obtenerAnchoParcela() + 2 - stringIndice.size();//Es + 2 por la separacion de la parcela
+		cout << Utils::fillString("", " ", cantidadEspacios/2, true) + stringIndice + Utils::fillString("", " ", cantidadEspacios/2 + cantidadEspacios%2, true);
 	}
 }
 

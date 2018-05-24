@@ -45,6 +45,7 @@ private:
 	void dibujarCoordenadasXEnConsola(Terreno* terreno);
 	void dibujarCoordenadaYEnConsola(unsigned int coordenadaY);
 	void dibujarParcelaEnConsola(Parcela* parcela);
+	void dibujarSueloTerrenoEnConsola(Terreno* terreno);
 	std::string obtenerInformacionAMostrarParcela(Parcela* parcela);
 	std::string obtenerSimboloParcela(Parcela* parcela);
 

@@ -19,7 +19,7 @@ string PlantillaTerrenoConsola::simboloParcelaSinRegar = " ";
 string PlantillaTerrenoConsola::simboloSeparacionEntreParcelas = "|";
 string PlantillaTerrenoConsola::simboloSueloParcela = "¯";
 unsigned int PlantillaTerrenoConsola::anchoParcela = 7;
-unsigned int PlantillaTerrenoConsola::distanciaCoordenadasY = 4;
+unsigned int PlantillaTerrenoConsola::distanciaBordeIzquierdo = 4;
 
 PlantillaTerrenoConsola::PlantillaTerrenoConsola() {
 	// TODO Auto-generated constructor stub
@@ -66,6 +66,6 @@ unsigned int PlantillaTerrenoConsola::obtenerAnchoParcela(){
 	return anchoParcela;
 }
 
-unsigned int PlantillaTerrenoConsola::obtenerDistanciaCoordenadasY(){
-	return distanciaCoordenadasY;
+unsigned int PlantillaTerrenoConsola::obtenerDistanciaBordeIzquierdo(){
+	return distanciaBordeIzquierdo;
 }

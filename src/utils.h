@@ -23,6 +23,7 @@ public:
 	static unsigned int contarRepeticiones(std::string cadena, std::string subcadena);
 	static unsigned int splitString(std::string cadena, std::string subcadena, std::string* cadenaSeparada);
 	static std::string fillString(std::string cadena, std::string relleno, unsigned int cantidad, bool rellenerDerecha);
+	static std::string padString(std::string cadena, std::string relleno, unsigned int largo, bool rellenerDerecha);
 
 	static const char CHAR_0 = '0';
 	static const char CHAR_9 = '9';

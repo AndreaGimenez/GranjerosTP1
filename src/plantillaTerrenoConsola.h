@@ -24,7 +24,7 @@ private:
 	static std::string simboloSeparacionEntreParcelas;
 	static std::string simboloSueloParcela;
 	static unsigned int anchoParcela;
-	static unsigned int distanciaCoordenadasY;
+	static unsigned int distanciaBordeIzquierdo;
 
 	PlantillaTerrenoConsola();
 
@@ -40,7 +40,7 @@ public:
 	static std::string obtenerSimboloSeparacionEntreParcelas();
 	static std::string obtenerSimboloSueloParcela();
 	static unsigned int obtenerAnchoParcela();
-	static unsigned int obtenerDistanciaCoordenadasY();
+	static unsigned int obtenerDistanciaBordeIzquierdo();
 
 };
 
