@@ -22,6 +22,12 @@ unsigned int Configuracion::cantidadTurnos = 10;
 Lista<Cultivo*>* Configuracion::cultivos = NULL;
 Lista<Destino*>* Configuracion::destinos = NULL;
 
+string Configuracion::resourcesPath = "resources/";
+string Configuracion::imagesPath = resourcesPath + "img/";
+
+string Configuracion::cultivosFileName = "cultivos.txt";
+string Configuracion::destinosFileName = "destinos.txt";
+
 
 Configuracion::Configuracion(){
 
@@ -43,7 +49,7 @@ void Configuracion::cargarCultivos(){
 
 	cultivos = new Lista<Cultivo*>();
 
-	FileParser parser("resources/cultivos.txt", ",", 6);
+	FileParser parser(obtenerArchivoCultivos(), ",", 6);
 	parser.abrir();
 
 	while(!parser.esFinArchivo()){
@@ -59,11 +65,15 @@ void Configuracion::cargarCultivos(){
 	parser.cerrar();
 }
 
+string Configuracion::obtenerArchivoCultivos(){
+	return resourcesPath + cultivosFileName;
+}
+
 void Configuracion::cargarDestinos(){
 
 	destinos = new Lista<Destino*>();
 
-	FileParser parser("resources/destinos.txt", ",", 4);
+	FileParser parser(obtenerArchivoDestinos(), ",", 4);
 	parser.abrir();
 
 	while(!parser.esFinArchivo()){
@@ -76,6 +86,10 @@ void Configuracion::cargarDestinos(){
 	}
 
 	parser.cerrar();
+}
+
+string Configuracion::obtenerArchivoDestinos(){
+	return resourcesPath + destinosFileName;
 }
 
 unsigned int Configuracion::obtenerCoeficienteDificultad(){
@@ -227,6 +241,16 @@ void Configuracion::destruirDestinos(){
 unsigned int Configuracion::calcularRentabilidad(Cultivo* cultivo, unsigned int cantidad){
 
 	return cultivo->obtenerRentabilidad() * cantidad;
+}
+
+string Configuracion::obtenerResourcesPath(){
+
+	return resourcesPath;
+}
+
+string Configuracion::obtenerImagesPath(){
+
+	return imagesPath;
 }
 
 Configuracion::~Configuracion() {

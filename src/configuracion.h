@@ -37,6 +37,10 @@ private:
 	static unsigned int cantidadTurnos;
 	static Lista<Cultivo*>* cultivos;
 	static Lista<Destino*>* destinos;
+	static std::string resourcesPath;
+	static std::string imagesPath;
+	static std::string cultivosFileName;
+	static std::string destinosFileName;
 
 	//Para evitar que sea instanciada el constructor es private, debe usarse de manera estatica.
 	Configuracion();
@@ -45,9 +49,13 @@ private:
 	//Pos: Carga los cultivos con la informacion del archivo 'cultivos.txt'.
 	static void cargarCultivos();
 
+	static std::string obtenerArchivoCultivos();
+
 	//Pre: En el archivo 'destinos.txt' no puede haber mas de 1 destino para cada cultivo.
 	//Pos: Carga los destinos con la informacion del archivo 'destinos.txt'.
 	static void cargarDestinos();
+
+	static std::string obtenerArchivoDestinos();
 
 	//Pos: Devuelve el coeficiente que se utilizara para calcular:
 	//			- Creditos iniciales
@@ -137,6 +145,10 @@ public:
 	static Destino* obtenerDestino(Cultivo* cultivo);
 
 	static unsigned int calcularRentabilidad(Cultivo* cultivo, unsigned int cantidad);
+
+	static std::string obtenerResourcesPath();
+
+	static std::string obtenerImagesPath();
 
 	//Pos: Libera la memoria reservada para los cultivos y destinos.
 	~Configuracion();

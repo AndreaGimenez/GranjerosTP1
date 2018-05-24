@@ -281,7 +281,8 @@ void InterfazUsuario::dibujarTerrenoConsola(Terreno* terreno){
 
 	for(unsigned int j = 1; j <= terreno->obtenerLargoTerreno(); j++){
 
-		cout << "__________________________________________________________________________________" << endl;
+		//cout << "__________________________________________________________________________________" << endl;
+		cout << endl;
 		dibujarCoordenadaYEnConsola(j);
 		cout << PlantillaTerrenoConsola::obtenerSimboloSeparacionEntreParcelas();
 		for(unsigned int k = 1; k <= terreno->obtenerAnchoTerreno(); k++){
@@ -342,13 +343,11 @@ string InterfazUsuario::obtenerInformacionAMostrarParcela(Parcela* parcela){
 		case parcela::PODRIDA:
 
 			informacionAMostrar = "(" + Utils::unsignedIntToString(parcela->obtenerTiempoRecuperacionRestante()) + ")";
-
 			break;
 
 		case parcela::COSECHADA:
 
 			informacionAMostrar = "(" + Utils::unsignedIntToString(parcela->obtenerTiempoRecuperacionRestante()) + ")";
-
 			break;
 
 		default:
@@ -482,7 +481,7 @@ void InterfazUsuario::dibujarCoordenadasXParcelas(Terreno* terreno){
 		int coordenadaXNumeroActual = coordenadaXPrimerDigito;
 		for(unsigned int i = 0; i < cantidadDigitosNumeroCoordenada; i++){
 
-			creadorImagen->pegarImagen("resources/img/" + stringNumeroCoordenada.substr(i, 1) + ".bmp", coordenadaXNumeroActual, coordenadaYNumeroCoordenada);
+			creadorImagen->pegarImagen(Configuracion::obtenerImagesPath() + stringNumeroCoordenada.substr(i, 1) + ".bmp", coordenadaXNumeroActual, coordenadaYNumeroCoordenada);
 			coordenadaXNumeroActual = coordenadaXNumeroActual
 									+ PlantillaTerrenoImagen::obtenerAnchoImagenNumeroCoordenada()
 									+ PlantillaTerrenoImagen::obtenerEspacioDigitosCoordenada();
@@ -513,7 +512,7 @@ void InterfazUsuario::dibujarCoordenadasYParcelas(Terreno* terreno){
 		int coordenadaXNumeroActual = coordenadaXPrimerDigito;
 		for(unsigned int i = 0; i < cantidadDigitosNumeroCoordenada; i++){
 
-			creadorImagen->pegarImagen("resources/img/" + stringNumeroCoordenada.substr(i, 1) + ".bmp", coordenadaXNumeroActual, coordenadaYEnDibujo);
+			creadorImagen->pegarImagen(Configuracion::obtenerImagesPath() + stringNumeroCoordenada.substr(i, 1) + ".bmp", coordenadaXNumeroActual, coordenadaYEnDibujo);
 			coordenadaXNumeroActual = coordenadaXNumeroActual
 									+ PlantillaTerrenoImagen::obtenerAnchoImagenNumeroCoordenada()
 									+ PlantillaTerrenoImagen::obtenerEspacioDigitosCoordenada();
@@ -623,7 +622,7 @@ void InterfazUsuario::dibujarParcelaCosechada(Parcela* parcela, unsigned int coo
 
 void InterfazUsuario::dibujarHoz(Parcela* parcela, int coordenadaXEnDibujo, int coordenadaYEnDibujo){
 
-	creadorImagen->pegarImagenConTransparencia("resources/img/hoz.bmp",
+	creadorImagen->pegarImagenConTransparencia(Configuracion::obtenerImagesPath() + "hoz.bmp",
 												coordenadaXEnDibujo + PlantillaTerrenoImagen::obtenerAnchoParcela()/2 - PlantillaTerrenoImagen::obtenerAnchoImagenHoz()/2,
 												coordenadaYEnDibujo + PlantillaTerrenoImagen::obtenerLargoParcela()/2 - PlantillaTerrenoImagen::obtenerAltoImagenHoz()/2,
 												creadorImagen->obtenerColor(VERDE_HIERBA));
@@ -693,7 +692,7 @@ void InterfazUsuario::dibujarAlambrado(int coordenadaXDesde, int coordenadaYDesd
 
 string InterfazUsuario::obtenerNombreImagenCultivo(Cultivo* cultivo){
 
-	return "resources/img/Cultivo_" + cultivo->obtenerNombre() + ".bmp";
+	return Configuracion::obtenerImagesPath() + "Cultivo_" + cultivo->obtenerNombre() + ".bmp";
 }
 
 int InterfazUsuario::obtenerCoordenadaXImagenCultivo(int coordenadaXParcela){
