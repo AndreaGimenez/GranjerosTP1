@@ -10,6 +10,8 @@
 #include <iostream>
 #include "utils.h"
 #include "configuracion.h"
+#include "plantillaTerrenoImagen.h"
+#include "plantillaTerrenoConsola.h"
 
 
 using namespace std;
@@ -262,63 +264,139 @@ void InterfazUsuario::mostrarTerrenosJugador(Jugador* jugador){
 }
 
 void InterfazUsuario::mostrarTerrenosJugadorPorConsola(Jugador* jugador){
-
-	Terreno* terreno;
-	Parcela* parcelaActual;
-	parcela::Estado estadoParcela;
-	Cultivo* cultivoActual;
-	char regada;
 	
-	for(unsigned int i=1;i<=jugador->obtenerCantidadTerrenos();i++){
-		terreno=jugador->buscarTerreno(i);
+	for(unsigned int i = 1; i <= jugador->obtenerCantidadTerrenos(); i++){
 		
-		cout << "    ";
-		for(unsigned int k=1;k<=terreno->obtenerAnchoTerreno();k++){
+		Terreno* terreno = jugador->buscarTerreno(i);
 
-			string stringIndice = Utils::unsignedIntToString(k);
-			cout << Utils::fillString("", " ", 4 - stringIndice.size()/2, true) + stringIndice + Utils::fillString("", " ", 5 - stringIndice.size()/2 - stringIndice.size()%2, true);
+		dibujarTerrenoConsola(terreno);
+		cout << endl << endl;
+	}
+}
+
+void InterfazUsuario::dibujarTerrenoConsola(Terreno* terreno){
+
+	dibujarCoordenadasXEnConsola(terreno);
+	cout << endl;
+
+	for(unsigned int j = 1; j <= terreno->obtenerLargoTerreno(); j++){
+
+		cout << "__________________________________________________________________________________" << endl;
+		dibujarCoordenadaYEnConsola(j);
+
+		for(unsigned int k = 1; k <= terreno->obtenerAnchoTerreno(); k++){
+
+			Parcela* parcelaActual = terreno->buscarParcela(Utils::unsignedIntToString(j) + "," + Utils::unsignedIntToString(k));
+			dibujarParcelaEnConsola(parcelaActual);
 		}
-		cout << endl;
+		cout << "|" << endl;
+		cout << "   ¯" << Utils::fillString("", "¯", terreno->obtenerAnchoTerreno()*9, false) << "¯" << endl;
+	}
+}
 
-		for(unsigned int j=1;j<=terreno->obtenerLargoTerreno();j++){
+void InterfazUsuario::dibujarParcelaEnConsola(Parcela* parcela){
 
-			cout<<"__________________________________________________________________________________"<<endl;
+	string informacionAMostrar = obtenerInformacionAMostrarParcela(parcela);
+	string simboloEstadoParcela = obtenerSimboloParcela(parcela);
+	string simboloSeparacionEntreParcelas = PlantillaTerrenoConsola::obtenerSimboloSeparacionEntreParcelas();
 
-			string stringIndice = Utils::unsignedIntToString(j);
-			cout<<  stringIndice + Utils::fillString("", " ", 3 - stringIndice.size(), true) + "|";
+	unsigned int cantidadSimbolosEstadoParcela = PlantillaTerrenoConsola::obtenerAnchoParcela() - informacionAMostrar.size();
 
-			for(unsigned int k=1;k<=terreno->obtenerAnchoTerreno();k++){
-				parcelaActual=terreno->buscarParcela(Utils::unsignedIntToString(j) + "," + Utils::unsignedIntToString(k));
-				estadoParcela=parcelaActual->obtenerEstado();				
-				switch(estadoParcela){
-					case parcela::LIMPIA:
-						cout<<"|       |";
-						break;
-					case parcela::SEMBRADA:
-						cultivoActual=parcelaActual->obtenerCultivo();
-						if(parcelaActual->obtenerRegada())
-							regada=' ';
-						else regada='R';
-						cout<<"|"<<cultivoActual->obtenerNombre()
-							<<"("<<Utils::unsignedIntToString(parcelaActual->obtenerTiempoSembrada())<<", "
-							<<regada<<")"<<"|";
-						break;
-					case parcela::SECA:
-						cout<<"|*******|";
-						break;
-					case parcela::PODRIDA:
-						cout<<"|##("<<parcelaActual->obtenerTiempoRecuperacionRestante()<<")##|";
-						break;
-					case parcela::COSECHADA:
-						cout<<"|··("<<parcelaActual->obtenerTiempoRecuperacionRestante()<<")··|";
-						break;
-				}
-			}
-			cout<<"|"<<endl;
-			cout << "   ¯" << Utils::fillString("", "¯", terreno->obtenerAnchoTerreno()*9, false) << "¯" <<endl;
-			
-		}
-		cout<<endl<<endl;
+	string dibujoParcela = simboloSeparacionEntreParcelas
+						 + Utils::fillString("", simboloEstadoParcela, cantidadSimbolosEstadoParcela/2 + cantidadSimbolosEstadoParcela%2, true)
+				  	  	 + informacionAMostrar
+						 + Utils::fillString("", simboloEstadoParcela, cantidadSimbolosEstadoParcela/2, true)
+				  	  	 + simboloSeparacionEntreParcelas;
+
+	cout << dibujoParcela;
+}
+
+string InterfazUsuario::obtenerInformacionAMostrarParcela(Parcela* parcela){
+
+	string informacionAMostrar = "";
+
+	Cultivo* cultivo;
+	string simboloRiego = (parcela->obtenerRegada())?PlantillaTerrenoConsola::obtenerSimboloParcelaRegada():PlantillaTerrenoConsola::obtenerSimboloParcelaSinRegar();
+
+	switch(parcela->obtenerEstado()){
+
+		case parcela::SEMBRADA:
+
+			cultivo = parcela->obtenerCultivo();
+			informacionAMostrar = cultivo->obtenerNombre() + ", " + "("
+								 + Utils::unsignedIntToString(parcela->obtenerTiempoSembrada())
+								 + simboloRiego
+								 + ")";
+			break;
+
+		case parcela::PODRIDA:
+
+			informacionAMostrar = "(" + Utils::unsignedIntToString(parcela->obtenerTiempoRecuperacionRestante()) + ")";
+
+			break;
+
+		case parcela::COSECHADA:
+
+			informacionAMostrar = "(" + Utils::unsignedIntToString(parcela->obtenerTiempoRecuperacionRestante()) + ")";
+
+			break;
+
+		default:
+
+			informacionAMostrar = "";
+	}
+
+	return informacionAMostrar;
+}
+
+string InterfazUsuario::obtenerSimboloParcela(Parcela* parcela){
+
+	string simboloEstadoParcela = "";
+
+	switch(parcela->obtenerEstado()){
+
+		case parcela::LIMPIA:
+
+			simboloEstadoParcela = PlantillaTerrenoConsola::obtenerSimboloParcelaLimpia();
+			break;
+
+		case parcela::SEMBRADA:
+
+			simboloEstadoParcela = PlantillaTerrenoConsola::obtenerSimboloParcelaSembrada();
+			break;
+
+		case parcela::SECA:
+
+			simboloEstadoParcela = PlantillaTerrenoConsola::obtenerSimboloParcelaSeca();
+			break;
+
+		case parcela::PODRIDA:
+
+			simboloEstadoParcela = PlantillaTerrenoConsola::obtenerSimboloParcelaPodrida();
+			break;
+
+		case parcela::COSECHADA:
+
+			simboloEstadoParcela = PlantillaTerrenoConsola::obtenerSimboloParcelaCosechada();
+			break;
+	}
+
+	return simboloEstadoParcela;
+}
+
+void InterfazUsuario::dibujarCoordenadaYEnConsola(unsigned int coordenadaY){
+
+	string stringIndice = Utils::unsignedIntToString(coordenadaY);
+	cout<<  stringIndice + Utils::fillString("", " ", 3 - stringIndice.size(), true) + "|";
+}
+
+void InterfazUsuario::dibujarCoordenadasXEnConsola(Terreno* terreno){
+
+	cout << "    ";
+	for(unsigned int k=1;k<=terreno->obtenerAnchoTerreno();k++){
+
+		string stringIndice = Utils::unsignedIntToString(k);
+		cout << Utils::fillString("", " ", 4 - stringIndice.size()/2, true) + stringIndice + Utils::fillString("", " ", 5 - stringIndice.size()/2 - stringIndice.size()%2, true);
 	}
 }
 
@@ -326,7 +404,8 @@ void InterfazUsuario::mostrarTerrenosJugadorPorImagen(Jugador* jugador){
 
 	for(unsigned int iTerreno = 1; iTerreno <= jugador->obtenerCantidadTerrenos(); iTerreno++){
 
-		creadorImagen->crearNuevaImagen(obtenerLargoTerreno(), obtenerAnchoTerreno(), 24);
+		creadorImagen->crearNuevaImagen(PlantillaTerrenoImagen::obtenerLargoTerreno(),
+										PlantillaTerrenoImagen::obtenerAnchoTerreno(), 24);
 		Terreno* terreno = jugador->buscarTerreno(iTerreno);
 		dibujarTerreno(terreno);
 		creadorImagen->guardarImagen(jugador->obtenerNombre() + "_Terreno_" + Utils::unsignedIntToString(iTerreno));
@@ -335,7 +414,6 @@ void InterfazUsuario::mostrarTerrenosJugadorPorImagen(Jugador* jugador){
 
 void InterfazUsuario::dibujarTerreno(Terreno* terreno){
 
-	//dibujarCabecera(terreno);
 	dibujarCoordenadas(terreno);
 
 	for(unsigned int coordenadaY = 1; coordenadaY <= terreno->obtenerLargoTerreno(); coordenadaY++){
@@ -349,60 +427,94 @@ void InterfazUsuario::dibujarTerreno(Terreno* terreno){
 
 void InterfazUsuario::dibujarCoordenadas(Terreno* terreno){
 
-	dibujarCoordenadasX(terreno);
-	dibujarCoordenadasY(terreno);
+	dibujarCoordenadasXParcelas(terreno);
+	dibujarCoordenadasYParcelas(terreno);
 }
 
-void InterfazUsuario::dibujarCoordenadasX(Terreno* terreno){
+void InterfazUsuario::dibujarCoordenadasXParcelas(Terreno* terreno){
 
-	unsigned int distanciaBordeHorizontal = obtenerDistanciaAlBorde();
-	unsigned int coordenadaYEnDibujo = obtenerDistanciaAlBorde() - 10 - 19;
+	unsigned int distanciaHorizontalAlBorde = PlantillaTerrenoImagen::obtenerDistanciaHorizontalAlBorde();
 
-	for(unsigned int coordenadaX = 1; coordenadaX <= terreno->obtenerAnchoTerreno(); coordenadaX++){
+	//Distancia en pixeles de la parte superior de la imagen de la coordenada respecto del margen superior del lienzo
+	unsigned int coordenadaYNumeroCoordenada = PlantillaTerrenoImagen::obtenerDistanciaVerticalAlBorde()
+											 - PlantillaTerrenoImagen::obtenerDistanciaParcelaCoordenadaX()
+											 - PlantillaTerrenoImagen::obtenerAltoImagenNumeroCoordenada();
 
-		string stringCoordenada = Utils::unsignedIntToString(coordenadaX);
-		int coordenadaXPrimerNumeroEnDibujo = distanciaBordeHorizontal
-								+ ((coordenadaX - 1) * obtenerAnchoParcela())
-								+ (obtenerAnchoParcela() / 2)
-								- ((stringCoordenada.size() * 14 + (stringCoordenada.size() - 1 * 2)) / 2);
+	for(unsigned int numeroCoordenada = 1; numeroCoordenada <= terreno->obtenerAnchoTerreno(); numeroCoordenada++){
 
-		int coordenadaXNumeroActual = coordenadaXPrimerNumeroEnDibujo;
+		string stringNumeroCoordenada = Utils::unsignedIntToString(numeroCoordenada);
+		unsigned int cantidadDigitosNumeroCoordenada = stringNumeroCoordenada.size();
+		unsigned int cantidadEspaciosNumeroCoordenada = cantidadDigitosNumeroCoordenada - 1;//Si el numero tiene 2 digitos hay 1 espacio, si tiene 3 son 2 espacios, es decir n-1
+		/*
+		 * Calculamos la coordenada respecto del borde izquiero del lienzo del primer digito del numero de coordenada.
+		 * Si el numero de coordenada fuese 15, indica la posicion donde va el 1.
+		 *
+		 * Se calcula como: distanciaHorizontalAlBorde
+		 * 					+ (cantidad de parcelas antes que la parcela actual(es el numero de parcela actual - 1) * ancho de parcela)
+		 * 					+ (la mitad del ancho de una parcela)
+		 * 					- (la mitad del ancho que ocupa la imagen completa del numero de coordenada)
+		 * 					                                    |
+		 * 					                                    v
+		 * 		hay que tener en cuenta que un numero de coordenada tiene n digitos y n - 1 espacios por lo tanto el ancho completo
+		 * 		es el ancho de la imagen de 1 numero * n(digitos) + ancho del espacio entre numeros * n-1
+		 */
+		int coordenadaXPrimerDigito = distanciaHorizontalAlBorde
+									+ ((numeroCoordenada - 1) * PlantillaTerrenoImagen::obtenerAnchoParcela())
+									+ (PlantillaTerrenoImagen::obtenerAnchoParcela() / 2)
+									- ((cantidadDigitosNumeroCoordenada * PlantillaTerrenoImagen::obtenerAnchoImagenNumeroCoordenada()
+										+ (cantidadEspaciosNumeroCoordenada * PlantillaTerrenoImagen::obtenerEspacioDigitosCoordenada())) / 2);
 
-		for(unsigned int i = 0; i < stringCoordenada.size(); i++){
+		//Si el numero de coordenada tiene mas de 1 digito hay que buscar digito por digito la imagen que le corresponde y pegarlas una al lado de la otra
+		//Por ejemplo el numero 10 primero busca la imagen 1 y la pega, luego busca la imagen del 0 y la pega al lado dejando un espacio entre las imagenes
+		//A medida que se van pegando los digitos hay que ir moviendo la coordenada donde se pega el siguiente digito, para eso se usa esta variable
+		int coordenadaXNumeroActual = coordenadaXPrimerDigito;
+		for(unsigned int i = 0; i < cantidadDigitosNumeroCoordenada; i++){
 
-			creadorImagen->pegarImagen("resources/img/" + stringCoordenada.substr(i, 1) + ".bmp", coordenadaXNumeroActual, coordenadaYEnDibujo);
-			coordenadaXNumeroActual = coordenadaXNumeroActual + 14 + 2;
+			creadorImagen->pegarImagen("resources/img/" + stringNumeroCoordenada.substr(i, 1) + ".bmp", coordenadaXNumeroActual, coordenadaYNumeroCoordenada);
+			coordenadaXNumeroActual = coordenadaXNumeroActual
+									+ PlantillaTerrenoImagen::obtenerAnchoImagenNumeroCoordenada()
+									+ PlantillaTerrenoImagen::obtenerEspacioDigitosCoordenada();
 		}
 	}
 }
 
-void InterfazUsuario::dibujarCoordenadasY(Terreno* terreno){
+void InterfazUsuario::dibujarCoordenadasYParcelas(Terreno* terreno){
 
-	unsigned int distanciaBordeVertical = obtenerDistanciaAlBorde();
+	unsigned int distanciaVerticalAlBorde = PlantillaTerrenoImagen::obtenerDistanciaVerticalAlBorde();
 
-	for(unsigned int coordenadaY = 1; coordenadaY <= terreno->obtenerLargoTerreno(); coordenadaY++){
+	for(unsigned int numeroCoordenada = 1; numeroCoordenada <= terreno->obtenerLargoTerreno(); numeroCoordenada++){
 
-		string stringCoordenada = Utils::unsignedIntToString(coordenadaY);
-		unsigned int coordenadaXPrimerNumeroEnDibujo = obtenerDistanciaAlBorde() - 10 - (stringCoordenada.size() * 14 + (stringCoordenada.size() - 1 * 4));
+		string stringNumeroCoordenada = Utils::unsignedIntToString(numeroCoordenada);
+		unsigned int cantidadDigitosNumeroCoordenada = stringNumeroCoordenada.size();
+		unsigned int cantidadEspaciosNumeroCoordenada = cantidadDigitosNumeroCoordenada - 1;//Si el numero tiene 2 digitos hay 1 espacio, si tiene 3 son 2 espacios, es decir n-1
 
-		int coordenadaYEnDibujo = distanciaBordeVertical
-								+ ((coordenadaY - 1) * obtenerLargoParcela())
-								+ (obtenerLargoParcela() / 2)
-								- 19/2;
+		int coordenadaXPrimerDigito = PlantillaTerrenoImagen::obtenerDistanciaHorizontalAlBorde()
+									- PlantillaTerrenoImagen::obtenerDistanciaParcelaCoordenadaY()
+									- (cantidadDigitosNumeroCoordenada * PlantillaTerrenoImagen::obtenerAnchoImagenNumeroCoordenada()
+										+ (cantidadEspaciosNumeroCoordenada * PlantillaTerrenoImagen::obtenerEspacioDigitosCoordenada()));
 
-		int coordenadaXNumeroActual = coordenadaXPrimerNumeroEnDibujo;
-		for(unsigned int i = 0; i < stringCoordenada.size(); i++){
+		int coordenadaYEnDibujo = distanciaVerticalAlBorde
+								+ ((numeroCoordenada - 1) * PlantillaTerrenoImagen::obtenerLargoParcela())
+								+ (PlantillaTerrenoImagen::obtenerLargoParcela() / 2)
+								- PlantillaTerrenoImagen::obtenerAltoImagenNumeroCoordenada() / 2;
 
-			creadorImagen->pegarImagen("resources/img/" + stringCoordenada.substr(i, 1) + ".bmp", coordenadaXNumeroActual, coordenadaYEnDibujo);
-			coordenadaXNumeroActual = coordenadaXNumeroActual + 14 + 2;
+		int coordenadaXNumeroActual = coordenadaXPrimerDigito;
+		for(unsigned int i = 0; i < cantidadDigitosNumeroCoordenada; i++){
+
+			creadorImagen->pegarImagen("resources/img/" + stringNumeroCoordenada.substr(i, 1) + ".bmp", coordenadaXNumeroActual, coordenadaYEnDibujo);
+			coordenadaXNumeroActual = coordenadaXNumeroActual
+									+ PlantillaTerrenoImagen::obtenerAnchoImagenNumeroCoordenada()
+									+ PlantillaTerrenoImagen::obtenerEspacioDigitosCoordenada();
 		}
 	}
 }
 
 void InterfazUsuario::dibujarParcela(Parcela* parcela, unsigned int coordenadaX, unsigned int coordenadaY){
 
-	int coordenadaXEnDibujo = obtenerCoordenadaXEnDibujo(coordenadaX);
-	int coordenadaYEnDibujo = obtenerCoordenadaYEnDibujo(coordenadaY);
+	//Estas variables almacenan la posicion dentro de la imagen en la que se debe dibujar la parela
+	//A partir de los numeros de coordenada se puede obtener la posicion en la imagen
+	int coordenadaXEnDibujo = obtenerCoordenadaXParcelaEnDibujo(coordenadaX);
+	int coordenadaYEnDibujo = obtenerCoordenadaYParcelaEnDibujo(coordenadaY);
 
 	parcela::Estado estadoParcela = parcela->obtenerEstado();
 
@@ -433,20 +545,22 @@ void InterfazUsuario::dibujarParcela(Parcela* parcela, unsigned int coordenadaX,
 
 void InterfazUsuario::dibujarRiego(int coordenadaXEnDibujo, int coordenadaYEnDibujo){
 
-	creadorImagen->pegarImagenConTransparencia("resources/img/gota.bmp", coordenadaXEnDibujo + obtenerAnchoParcela()/2 - 10,
-								coordenadaYEnDibujo + obtenerLargoParcela() - 30, creadorImagen->obtenerColor(VERDE_HIERBA));
+	creadorImagen->pegarImagenConTransparencia("resources/img/gota.bmp",
+												coordenadaXEnDibujo + PlantillaTerrenoImagen::obtenerAnchoParcela()/2 - PlantillaTerrenoImagen::obtenerAnchoImagenRiego(),
+												coordenadaYEnDibujo + PlantillaTerrenoImagen::obtenerLargoParcela() - PlantillaTerrenoImagen::obtenerAltoImagenRiego(),
+												creadorImagen->obtenerColor(VERDE_HIERBA));
 }
 
 void InterfazUsuario::dibujarParcelaLimpia(Parcela* parcela, unsigned int coordenadaXEnDibujo, unsigned int coordenadaYEnDibujo){
 
-	creadorImagen->dibujarRectanguloConRelleno(obtenerAnchoParcela(), obtenerLargoParcela(), coordenadaXEnDibujo,
-											   coordenadaYEnDibujo, creadorImagen->obtenerColor(VERDE_CLARO), creadorImagen->obtenerColor(VERDE));
+	creadorImagen->dibujarRectanguloConRelleno(PlantillaTerrenoImagen::obtenerAnchoParcela(), PlantillaTerrenoImagen::obtenerLargoParcela(),
+											   coordenadaXEnDibujo, coordenadaYEnDibujo, creadorImagen->obtenerColor(VERDE_CLARO), creadorImagen->obtenerColor(VERDE));
 }
 
 void InterfazUsuario::dibujarParcelaSembrada(Parcela* parcela, unsigned int coordenadaXEnDibujo, unsigned int coordenadaYEnDibujo){
 
-	creadorImagen->dibujarRectanguloConRelleno(obtenerAnchoParcela(), obtenerLargoParcela(), coordenadaXEnDibujo,
-											   coordenadaYEnDibujo, creadorImagen->obtenerColor(VERDE_CLARO), creadorImagen->obtenerColor(VERDE));
+	creadorImagen->dibujarRectanguloConRelleno(PlantillaTerrenoImagen::obtenerAnchoParcela(), PlantillaTerrenoImagen::obtenerLargoParcela(),
+											   coordenadaXEnDibujo, coordenadaYEnDibujo, creadorImagen->obtenerColor(VERDE_CLARO), creadorImagen->obtenerColor(VERDE));
 
 	dibujarCultivos(parcela, coordenadaXEnDibujo, coordenadaYEnDibujo);
 
@@ -459,37 +573,37 @@ void InterfazUsuario::dibujarParcelaSembrada(Parcela* parcela, unsigned int coor
 
 void InterfazUsuario::dibujarCultivos(Parcela* parcela, unsigned int coordenadaXEnDibujo, unsigned int coordenadaYEnDibujo){
 
-	unsigned int anchoMarca = 5;
-	unsigned int separacionEntreMarcas = 10;
-	unsigned int cantidadMarcas = (obtenerLargoParcela() - separacionEntreMarcas)/(anchoMarca + separacionEntreMarcas);
+	unsigned int anchoCultivo = PlantillaTerrenoImagen::obtenerAnchoCultivo();
+	unsigned int separacionEntreCultivos = PlantillaTerrenoImagen::obtenerSeparacionEntreCultivos();
+	unsigned int cantidadCultivos = (PlantillaTerrenoImagen::obtenerLargoParcela() - separacionEntreCultivos)/(anchoCultivo + separacionEntreCultivos);
 
-	int posicionFinalUltimaMarca = coordenadaYEnDibujo;//Indica la coordenada Y en la que termino la ultima marca, se inicializa en el inicio de la parcela
+	int posicionFinalUltimoCultivo = coordenadaYEnDibujo;//Indica la coordenada Y en la que termino la ultima marca, se inicializa en el inicio de la parcela
 
-	for(unsigned int i  = 0; i < cantidadMarcas; i ++){
+	for(unsigned int i  = 0; i < cantidadCultivos; i ++){
 
-		int posicionMarcaActual = posicionFinalUltimaMarca + separacionEntreMarcas;//La nueva marca comienza en esta coordenada
-		creadorImagen->dibujarRectanguloConRelleno(obtenerAnchoParcela(), anchoMarca, coordenadaXEnDibujo,
-												   posicionMarcaActual, creadorImagen->obtenerColor(VERDE_HIERBA), creadorImagen->obtenerColor(VERDE));
-		posicionFinalUltimaMarca = posicionMarcaActual + anchoMarca;
+		int posicionCultivoActual = posicionFinalUltimoCultivo + separacionEntreCultivos;//La nueva marca comienza en esta coordenada
+		creadorImagen->dibujarRectanguloConRelleno(PlantillaTerrenoImagen::obtenerLargoParcela(), anchoCultivo,
+												   coordenadaXEnDibujo, posicionCultivoActual, creadorImagen->obtenerColor(VERDE_HIERBA), creadorImagen->obtenerColor(VERDE));
+		posicionFinalUltimoCultivo = posicionCultivoActual + anchoCultivo;
 	}
 }
 
 void InterfazUsuario::dibujarParcelaSeca(Parcela* parcela, unsigned int coordenadaXEnDibujo, unsigned int coordenadaYEnDibujo){
 
-	creadorImagen->dibujarRectanguloConRelleno(obtenerAnchoParcela(), obtenerLargoParcela(), coordenadaXEnDibujo,
-											   coordenadaYEnDibujo, creadorImagen->obtenerColor(AMARILLO_ARENA), creadorImagen->obtenerColor(AMARILLO_MIEL));
+	creadorImagen->dibujarRectanguloConRelleno(PlantillaTerrenoImagen::obtenerAnchoParcela(), PlantillaTerrenoImagen::obtenerLargoParcela(),
+											   coordenadaXEnDibujo, coordenadaYEnDibujo, creadorImagen->obtenerColor(AMARILLO_ARENA), creadorImagen->obtenerColor(AMARILLO_MIEL));
 }
 
 void InterfazUsuario::dibujarParcelaPodrida(Parcela* parcela, unsigned int coordenadaXEnDibujo, unsigned int coordenadaYEnDibujo){
 
-	creadorImagen->dibujarRectanguloConRelleno(obtenerAnchoParcela(), obtenerLargoParcela(), coordenadaXEnDibujo,
-											   coordenadaYEnDibujo, creadorImagen->obtenerColor(VERDE_HIERBA), creadorImagen->obtenerColor(MARRON_TIERRA));
+	creadorImagen->dibujarRectanguloConRelleno(PlantillaTerrenoImagen::obtenerAnchoParcela(), PlantillaTerrenoImagen::obtenerLargoParcela(),
+											   coordenadaXEnDibujo, coordenadaYEnDibujo, creadorImagen->obtenerColor(VERDE_HIERBA), creadorImagen->obtenerColor(MARRON_TIERRA));
 }
 
 void InterfazUsuario::dibujarParcelaCosechada(Parcela* parcela, unsigned int coordenadaXEnDibujo, unsigned int coordenadaYEnDibujo){
 
-	creadorImagen->dibujarRectanguloConRelleno(obtenerAnchoParcela(), obtenerLargoParcela(), coordenadaXEnDibujo,
-											   coordenadaYEnDibujo, creadorImagen->obtenerColor(MARRON_CLARO), creadorImagen->obtenerColor(VERDE));
+	creadorImagen->dibujarRectanguloConRelleno(PlantillaTerrenoImagen::obtenerAnchoParcela(), PlantillaTerrenoImagen::obtenerLargoParcela(),
+											   coordenadaXEnDibujo, coordenadaYEnDibujo, creadorImagen->obtenerColor(MARRON_CLARO), creadorImagen->obtenerColor(VERDE));
 
 	dibujarMarcasArado(parcela, coordenadaXEnDibujo, coordenadaYEnDibujo);
 	dibujarHoz(parcela, coordenadaXEnDibujo, coordenadaYEnDibujo);
@@ -497,59 +611,59 @@ void InterfazUsuario::dibujarParcelaCosechada(Parcela* parcela, unsigned int coo
 
 void InterfazUsuario::dibujarHoz(Parcela* parcela, int coordenadaXEnDibujo, int coordenadaYEnDibujo){
 
-	creadorImagen->pegarImagenConTransparencia("resources/img/hoz.bmp", coordenadaXEnDibujo + obtenerAnchoParcela()/2 - 50/2,
-												coordenadaYEnDibujo + obtenerLargoParcela()/2 - 50/2, creadorImagen->obtenerColor(VERDE_HIERBA));
+	creadorImagen->pegarImagenConTransparencia("resources/img/hoz.bmp",
+												coordenadaXEnDibujo + PlantillaTerrenoImagen::obtenerAnchoParcela()/2 - PlantillaTerrenoImagen::obtenerAnchoImagenHoz()/2,
+												coordenadaYEnDibujo + PlantillaTerrenoImagen::obtenerLargoParcela()/2 - PlantillaTerrenoImagen::obtenerAltoImagenHoz()/2,
+												creadorImagen->obtenerColor(VERDE_HIERBA));
 }
 
 void InterfazUsuario::dibujarMarcasArado(Parcela* parcela, unsigned int coordenadaXEnDibujo, unsigned int coordenadaYEnDibujo){
 
-	unsigned int anchoMarca = 5;
-	unsigned int separacionEntreMarcas = 10;
-	unsigned int cantidadMarcas = (obtenerLargoParcela() - separacionEntreMarcas)/(anchoMarca + separacionEntreMarcas);
+	unsigned int anchoMarcaArado = PlantillaTerrenoImagen::obtenerAnchoMarcaArado();
+	unsigned int separacionEntreMarcasArado = PlantillaTerrenoImagen::obtenerSeparacionEntreMarcasArado();
+	unsigned int cantidadMarcasArado = (PlantillaTerrenoImagen::obtenerLargoParcela() - separacionEntreMarcasArado)/(anchoMarcaArado + separacionEntreMarcasArado);
 
 	int posicionFinalUltimaMarca = coordenadaYEnDibujo;//Indica la coordenada Y en la que termino la ultima marca, se inicializa en el inicio de la parcela
 
-	for(unsigned int i  = 0; i < cantidadMarcas; i ++){
+	for(unsigned int i  = 0; i < cantidadMarcasArado; i ++){
 
-		int posicionMarcaActual = posicionFinalUltimaMarca + separacionEntreMarcas;//La nueva marca comienza en esta coordenada
-		creadorImagen->dibujarRectanguloConRelleno(obtenerAnchoParcela(), anchoMarca, coordenadaXEnDibujo,
-												   posicionMarcaActual, creadorImagen->obtenerColor(MARRON), creadorImagen->obtenerColor(MARRON_TIERRA));
-		posicionFinalUltimaMarca = posicionMarcaActual + anchoMarca;
+		int posicionMarcaActual = posicionFinalUltimaMarca + separacionEntreMarcasArado;//La nueva marca comienza en esta coordenada
+		creadorImagen->dibujarRectanguloConRelleno(PlantillaTerrenoImagen::obtenerLargoParcela(), anchoMarcaArado,
+												   coordenadaXEnDibujo, posicionMarcaActual, creadorImagen->obtenerColor(MARRON), creadorImagen->obtenerColor(MARRON_TIERRA));
+		posicionFinalUltimaMarca = posicionMarcaActual + anchoMarcaArado;
 	}
 }
 
 void InterfazUsuario::dibujarAlambradoParcela(int coordenadaXEnDibujo, int coordenadaYEnDibujo){
 
+	unsigned int anchoParcela = PlantillaTerrenoImagen::obtenerAnchoParcela();
+	unsigned int largoParcela = PlantillaTerrenoImagen::obtenerLargoParcela();
+	unsigned int anchoPoste = PlantillaTerrenoImagen::obtenerAnchoPoste();
+	unsigned int largoPoste = PlantillaTerrenoImagen::obtenerLargoPoste();
+
 	//Se dibujan 4 postes, uno en cada esquina de la parcela
 	dibujarPoste(coordenadaXEnDibujo, coordenadaYEnDibujo);
-	dibujarPoste(coordenadaXEnDibujo + obtenerAnchoParcela() - obtenerAnchoPoste(), coordenadaYEnDibujo);
-	dibujarPoste(coordenadaXEnDibujo, coordenadaYEnDibujo + obtenerLargoParcela() - obtenerLargoPoste());
-	dibujarPoste(coordenadaXEnDibujo + obtenerAnchoParcela() - obtenerAnchoPoste(),
-				 coordenadaYEnDibujo + obtenerLargoParcela() - obtenerLargoPoste());
+	dibujarPoste(coordenadaXEnDibujo + anchoParcela - anchoPoste, coordenadaYEnDibujo);
+	dibujarPoste(coordenadaXEnDibujo, coordenadaYEnDibujo + largoParcela - largoPoste);
+	dibujarPoste(coordenadaXEnDibujo + anchoParcela - anchoPoste,
+				 coordenadaYEnDibujo + largoParcela - largoPoste);
 
 	//Se unen los postes con el alambrado
-	dibujarAlambrado(coordenadaXEnDibujo + obtenerAnchoPoste(), coordenadaYEnDibujo + obtenerLargoPoste()/2,
-					 coordenadaXEnDibujo + obtenerAnchoParcela() - obtenerAnchoPoste(), coordenadaYEnDibujo + obtenerLargoPoste()/2);
-	dibujarAlambrado(coordenadaXEnDibujo + obtenerAnchoPoste()/2, coordenadaYEnDibujo + obtenerLargoPoste(),
-					 coordenadaXEnDibujo + obtenerAnchoPoste()/2, coordenadaYEnDibujo + obtenerLargoParcela() - obtenerLargoPoste());
-	dibujarAlambrado(coordenadaXEnDibujo + obtenerAnchoPoste(), coordenadaYEnDibujo + obtenerLargoParcela() - obtenerLargoPoste()/2,
-					 coordenadaXEnDibujo + obtenerLargoParcela() - obtenerAnchoPoste(), coordenadaYEnDibujo + obtenerLargoParcela() - obtenerLargoPoste()/2);
-	dibujarAlambrado(coordenadaXEnDibujo + obtenerAnchoParcela() - obtenerAnchoPoste()/2, coordenadaYEnDibujo + obtenerLargoPoste(),
-					 coordenadaXEnDibujo + obtenerAnchoParcela() - obtenerAnchoPoste()/2, coordenadaYEnDibujo + obtenerLargoParcela() - obtenerLargoPoste());
+	dibujarAlambrado(coordenadaXEnDibujo + anchoPoste, coordenadaYEnDibujo + largoPoste/2,
+					 coordenadaXEnDibujo + anchoParcela - anchoPoste, coordenadaYEnDibujo + largoPoste/2);
+	dibujarAlambrado(coordenadaXEnDibujo + anchoPoste/2, coordenadaYEnDibujo + largoPoste,
+					 coordenadaXEnDibujo + anchoPoste/2, coordenadaYEnDibujo + largoParcela - largoPoste);
+	dibujarAlambrado(coordenadaXEnDibujo + anchoPoste, coordenadaYEnDibujo + largoParcela - largoPoste/2,
+					 coordenadaXEnDibujo + anchoParcela - anchoPoste, coordenadaYEnDibujo + largoParcela - largoPoste/2);
+	dibujarAlambrado(coordenadaXEnDibujo + anchoParcela - anchoPoste/2, coordenadaYEnDibujo + largoPoste,
+					 coordenadaXEnDibujo + anchoParcela - anchoPoste/2, coordenadaYEnDibujo + largoParcela - largoPoste);
 
 }
 
 void InterfazUsuario::dibujarPoste(int coordenadaXEnDibujo, int coordenadaYEnDibujo){
 
-	creadorImagen->dibujarRectanguloConRelleno(obtenerAnchoPoste(), obtenerLargoPoste(), coordenadaXEnDibujo, coordenadaYEnDibujo, creadorImagen->obtenerColor(MARRON));
-}
-
-unsigned int InterfazUsuario::obtenerAnchoPoste(){
-	return 6;
-}
-
-unsigned int InterfazUsuario::obtenerLargoPoste(){
-	return 6;
+	creadorImagen->dibujarRectanguloConRelleno(PlantillaTerrenoImagen::obtenerAnchoPoste(), PlantillaTerrenoImagen::obtenerLargoPoste(),
+											   coordenadaXEnDibujo, coordenadaYEnDibujo, creadorImagen->obtenerColor(MARRON));
 }
 
 void InterfazUsuario::dibujarAlambrado(int coordenadaXDesde, int coordenadaYDesde, int coordenadaXHasta, int coordenadaYHasta){
@@ -572,45 +686,26 @@ string InterfazUsuario::obtenerNombreImagenCultivo(Cultivo* cultivo){
 
 int InterfazUsuario::obtenerCoordenadaXImagenCultivo(int coordenadaXParcela){
 
-	return coordenadaXParcela + obtenerAnchoParcela()/2 - 24/2;
+	return coordenadaXParcela
+			+ PlantillaTerrenoImagen::obtenerAnchoParcela() / 2
+			- PlantillaTerrenoImagen::obtenerAnchoImagenNombreCultivo() / 2;
 }
 
 int InterfazUsuario::obtenerCoordenadaYImagenCultivo(int coordenadaYParcela){
 
-	return coordenadaYParcela + obtenerLargoParcela()/2 - 24/2;
+	return coordenadaYParcela
+			+ PlantillaTerrenoImagen::obtenerLargoParcela() / 2
+			- PlantillaTerrenoImagen::obtenerAltoImagenNombreCultivo() / 2;
 }
 
-int InterfazUsuario::obtenerCoordenadaXEnDibujo(unsigned int coordenadaX){
+int InterfazUsuario::obtenerCoordenadaXParcelaEnDibujo(unsigned int coordenadaX){
 
-	return (coordenadaX - 1) * obtenerAnchoParcela() + obtenerDistanciaAlBorde();
+	return (coordenadaX - 1) * PlantillaTerrenoImagen::obtenerAnchoParcela() + PlantillaTerrenoImagen::obtenerDistanciaHorizontalAlBorde();
 }
 
-int InterfazUsuario::obtenerCoordenadaYEnDibujo(unsigned int coordenadaY){
+int InterfazUsuario::obtenerCoordenadaYParcelaEnDibujo(unsigned int coordenadaY){
 
-	return (coordenadaY - 1) * obtenerLargoParcela() + obtenerDistanciaAlBorde();
-}
-
-int InterfazUsuario::obtenerAnchoTerreno(){
-
-	return Configuracion::obtenerAnchoTerreno() * obtenerAnchoParcela() + obtenerDistanciaAlBorde() * 2;
-}
-
-
-int InterfazUsuario::obtenerLargoTerreno(){
-
-	return Configuracion::obtenerLargoTerreno() * obtenerLargoParcela() + obtenerDistanciaAlBorde() * 2;
-}
-
-int InterfazUsuario::obtenerAnchoParcela(){
-	return 100;
-}
-
-int InterfazUsuario::obtenerLargoParcela(){
-	return 100;
-}
-
-int InterfazUsuario::obtenerDistanciaAlBorde(){
-	return 50;
+	return (coordenadaY - 1) * PlantillaTerrenoImagen::obtenerLargoParcela() + PlantillaTerrenoImagen::obtenerDistanciaVerticalAlBorde();
 }
 
 InterfazUsuario::~InterfazUsuario(){

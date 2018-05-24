@@ -22,7 +22,6 @@ class Terreno{
 
 		unsigned int anchoTerreno;
 		unsigned int largoTerreno;
-		//unsigned int precio;
 		Parcela** parcelas;
 
 		void inicializarParcelas();
@@ -43,14 +42,8 @@ class Terreno{
 		// Post: Devuelve la cantidad de filas
 		unsigned int obtenerLargoTerreno();
 
-		// Post: Devuelve el precio actual del terreno
-		unsigned int obtenerPrecio();
-
 		// Post: Devuelve la cantidad de Parcelas que tiene el terreno
 		unsigned int obtenerCantidadParcelas();
-
-		// Post: Devuelve la cantidad de cultivos que se encuentran actualemnte en el terreno
-		unsigned int obtenerCantidadCultivos();
 
 		/*
 		 * Pre: Coordenadas debe tener el formato "x,y", donde x es la fila e y la columna

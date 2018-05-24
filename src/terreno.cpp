@@ -16,8 +16,6 @@ Terreno::Terreno(){
 
 	this->anchoTerreno = Configuracion::obtenerAnchoTerreno();
 	this->largoTerreno = Configuracion::obtenerLargoTerreno();
-	//this->precio = PRECIO_INICIAL*cantidadColumnas*cantidadFilas;
-	//this->parcelas = new Parcela[cantidadFilas][cantidadColumnas];
 	inicializarParcelas();
 }
 
@@ -52,37 +50,9 @@ unsigned int Terreno::obtenerLargoTerreno(){
 	return this->largoTerreno;
 }
 
-unsigned int Terreno::obtenerPrecio(){
-	/*
-	unsigned int precioActual=this->precio;
-	for(int i=0; i<this->cantidadFilas; i++){
-		for(int j=0; j<this->cantidadColumnas; j++){
-			precioActual+=(this->(terreno*)[i][j]).costo;
-		}
-	}
-	return precioActual;
-	*/
-	return 0;
-}
-
 unsigned int Terreno::obtenerCantidadParcelas(){
 
 	return this->largoTerreno * this->anchoTerreno;
-}
-
-//bool parcelaCultivada(char)
-
-unsigned int Terreno::obtenerCantidadCultivos(){
-
-	/*
-	unsigned int cantidadCultivos=0;
-	for(int i=0; i<this->cantidadFilas; i++){
-		for(int j=0; j<this->cantidadColumnas; j++){
-			if()
-		}
-	}
-	*/
-	return 0;
 }
 
 Parcela* Terreno::buscarParcela(string strCoordenadas){

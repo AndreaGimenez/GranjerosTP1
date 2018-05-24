@@ -37,11 +37,18 @@ private:
 
 	void mostrarDatosPartida(Partida* partida);
 	void mostrarRecursosJugador(Jugador* jugador);
-	void mostrarTerrenosJugadorPorConsola(Jugador* jugador);
-	void mostrarTerrenosJugadorPorImagen(Jugador* jugador);
 	void mostrarGanador(unsigned int cantidadJugadores, Jugador** jugadores);
 	void mostrarPosiciones(unsigned int cantidadJugadores, Jugador** jugadores);
 
+	void mostrarTerrenosJugadorPorConsola(Jugador* jugador);
+	void dibujarTerrenoConsola(Terreno* terreno);
+	void dibujarCoordenadasXEnConsola(Terreno* terreno);
+	void dibujarCoordenadaYEnConsola(unsigned int coordenadaY);
+	void dibujarParcelaEnConsola(Parcela* parcela);
+	std::string obtenerInformacionAMostrarParcela(Parcela* parcela);
+	std::string obtenerSimboloParcela(Parcela* parcela);
+
+	void mostrarTerrenosJugadorPorImagen(Jugador* jugador);
 	void dibujarTerreno(Terreno* terreno);
 	void dibujarParcela(Parcela* parcela, unsigned int coordenadaX, unsigned int coordenadaY);
 	void dibujarParcelaLimpia(Parcela* parcela, unsigned int coordenadaX, unsigned int coordenadaY);
@@ -55,21 +62,13 @@ private:
 	void dibujarRiego(int coordenadaXEnDibujo, int coordenadaYEnDibujo);
 	void dibujarHoz(Parcela* parcela, int coordenadaXEnDibujo, int coordenadaYEnDibujo);
 	void dibujarCoordenadas(Terreno* terreno);
-	void dibujarCoordenadasX(Terreno* terreno);
-	void dibujarCoordenadasY(Terreno* terreno);
-
+	void dibujarCoordenadasXParcelas(Terreno* terreno);
+	void dibujarCoordenadasYParcelas(Terreno* terreno);
 	void dibujarPoste(int coordenadaXEnDibujo, int coordenadaYEnDibujo);
-	unsigned int obtenerAnchoPoste();
-	unsigned int obtenerLargoPoste();
 	void dibujarAlambrado(int coordenadaXDesde, int coordenadaYDesde, int coordenadaXHasta, int coordenadaYHasta);
 
-	int obtenerAnchoTerreno();
-	int obtenerLargoTerreno();
-	int obtenerAnchoParcela();
-	int obtenerLargoParcela();
-	int obtenerDistanciaAlBorde();
-	int obtenerCoordenadaXEnDibujo(unsigned int coordenadaX);
-	int obtenerCoordenadaYEnDibujo(unsigned int coordenadaY);
+	int obtenerCoordenadaXParcelaEnDibujo(unsigned int coordenadaX);
+	int obtenerCoordenadaYParcelaEnDibujo(unsigned int coordenadaY);
 	std::string obtenerNombreImagenCultivo(Cultivo* cultivo);
 	int obtenerCoordenadaXImagenCultivo(int coordenadaXParcela);
 	int obtenerCoordenadaYImagenCultivo(int coordenadaYParcela);
