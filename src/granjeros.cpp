@@ -67,7 +67,7 @@ void Granjeros::ejecutarAccion(Accion* accion){
 bool Granjeros::ejecutarAccionConfiguracion(Accion* accion){
 
 	bool accionEjecutada = true;
-	switch (accion->obtenerAccion()){
+	switch (accion->obtenerTipoAccion()){
 
 		case accion::CAMBIAR_CANTIDAD_JUGADORES:
 
@@ -107,7 +107,7 @@ bool Granjeros::ejecutarAccionPartida(Accion* accion){
 	// Indica si la accion se ejecuto satisfactoriamente. En caso que 'accion' no pertenezca a las acciones que contempla este metodo queda en false
 	bool accionEjecutadaExistosamente = false;
 
-	switch (accion->obtenerAccion()){
+	switch (accion->obtenerTipoAccion()){
 
 		case accion::COMPRAR_CAPACIDAD_AGUA:
 
@@ -202,7 +202,7 @@ bool Granjeros::ejecutarAccionSalida(Accion* accion){
 
 	bool partidaFinalizada = false;
 	bool accionEjecutada = true;
-	switch (accion->obtenerAccion()){
+	switch (accion->obtenerTipoAccion()){
 
 		case accion::FINALIZAR_TURNO:
 

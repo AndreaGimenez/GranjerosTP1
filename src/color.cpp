@@ -1,10 +1,3 @@
-/*
- * color.cpp
- *
- *  Created on: 18 may. 2018
- *      Author: administrador
- */
-
 #include "color.h"
 
 Color::Color(unsigned char rojo, unsigned char verde, unsigned char azul, unsigned char opacidad){

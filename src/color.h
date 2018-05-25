@@ -1,10 +1,3 @@
-/*
- * color.h
- *
- *  Created on: 18 may. 2018
- *      Author: administrador
- */
-
 #ifndef COLOR_H_
 #define COLOR_H_
 

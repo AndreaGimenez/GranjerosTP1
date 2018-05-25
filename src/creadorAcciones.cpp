@@ -46,9 +46,9 @@ void CreadorAcciones::inicializar(){
 	acciones[accion::SALIR] = new Accion(accion::SALIR);
 }
 
-Accion* CreadorAcciones::crearNuevaAccion(accion::EAccion accion){
+Accion* CreadorAcciones::crearNuevaAccion(accion::Tipo tipoAccion){
 
-	Accion* nuevaAccion = new Accion(acciones[accion]);
+	Accion* nuevaAccion = new Accion(acciones[tipoAccion]);
 	return nuevaAccion;
 }
 

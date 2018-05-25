@@ -42,7 +42,7 @@ private:
 	Menu* subMenu;
 	Accion* accion;
 
-	void inicializar(resultadoOpcion::Tipo tipo, Menu* subMenu, accion::EAccion accion);
+	void inicializar(resultadoOpcion::Tipo tipo, Menu* subMenu, accion::Tipo tipoAccion);
 
 public:
 
@@ -57,7 +57,7 @@ public:
 	 * copia del elemento asociado al parametro 'accion' en 'Granjeros::acciones'.
 	 * No tiene submenu asociado.
 	 */
-	ResultadoOpcion(accion::EAccion accion);
+	ResultadoOpcion(accion::Tipo tipoAccion);
 
 	/*
 	 * Pos: Devuelve el tipo de resultado. Puede ser 'SUBMENU' O 'ACCION'.

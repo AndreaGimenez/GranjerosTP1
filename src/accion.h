@@ -1,10 +1,3 @@
-/*
- * accionMenu.h
- *
- *  Created on: 28 abr. 2018
- *      Author: administrador
- */
-
 #ifndef ACCION_H_
 #define ACCION_H_
 
@@ -16,12 +9,6 @@
 namespace accion{
 
 	enum Tipo{
-
-		CON_PARAMETROS_USUARIO,
-		SIN_PARAMETROS_USUARIO
-	};
-
-	enum EAccion{
 
 		NINGUNA = 0,
 		//ACCIONES DE CONFIGURACION
@@ -49,27 +36,38 @@ namespace accion{
 }
 
 /*
- * 'Accion' representa la accion que realiza un usuario.
- * Cuando un usuario elige una opcion de menu de tipo accion la informacion de la accion realizada junto con los parametros ingresados por el usuario
- * (en caso de que la accion requiera parametros) se almacenan en una 'Accion'.
- * Las acciones posibles se encuentran definidas, para obtener una accion debe llamarse a 'Granjeros::crearNuevaAccion' pasando un 'EAccion' que indica
- * la accion que se realiza. Una vez obtenida la accion se podran completar tanto parametro como 'obtenerCantidadParametros'. Para cambiar los parametros utilizar 'cambiarParametros'.
+ * 'Accion' representa una accion puntual que realiza un usuario.
+ *
+ * Una accion puede ser:
+ * 			De configuracion (cuando se cambia el valor de un parametro de la configuracion)
+ * 			De la partida (jugar, regar, sembrar, etc)
+ * 			Otras como salir, finalizar partida, etc.
+ *
+ * La accion puede tener o parametros de acuerdo como este definida. En caso de utilizar parametros los mismos
+ * deben ser de un tipo determinado. Los tipso permitidos se definen en 'parametro::Tipo'.
+ * Una accion se identifica por su tipo ('accion::Tipo') y por los parametros que tiene almacenados (en caso que requiera).
+ *
+ * Las definiciones de las acciones se encuentran en la clase 'CreadorAcciones'.
+ * Estas acciones se obtienen a traves del metodo 'CreadorAcciones::crearNuevaAccion' pasando por parametro
+ * una 'accion::Tipo'. Una vez obtenida la accion se podran completar tantos parametros como 'obtenerCantidadParametros'.
+ * Para cambiar los parametros utilizar 'cambiarParametros'.
+ *
+ * Cuando un usuario elige una 'OpcionMenu' de tipo 'parametro::ACCION', la informacion de la accion
+ * realizada junto con los parametros ingresados por el usuario (en caso de que la accion requiera parametros)
+ * se almacenan en una 'Accion'.
  */
 
 class Accion {
 
 private:
 
-	accion::Tipo tipo;
-	accion::EAccion accion;
+	accion::Tipo tipoAccion;
 	unsigned int cantidadParametros;
 	Parametro* parametros;
 
 public:
 
-	/*
-	 * Pos: Inicializa la accion sin parametros y sin accion.
-	 */
+	 // Pos: Inicializa la accion sin parametros. La accion es ninguna.
 	Accion();
 
 	/*
@@ -78,34 +76,29 @@ public:
 	 */
 	Accion(Accion* accion);
 
-	/*
-	 * Pos: Inicializa la accion sin parametros.
-	 */
-	Accion(accion::EAccion accion);
+	 // Pos: Inicializa la accion sin parametros y con el tipo indicado en 'tipoAccion'.
+	Accion(accion::Tipo tipoAccion);
 
 	/*
+	 * Pre: 'tiposParametros' debe tener 'cantidadParametros' elementos.
 	 * Pos: Inicializa la accion con la cantidad de parametros 'cantidadParametros'.
-	 * 		Si 'cantidadParametros' es 0, se inicializa sin acciones, es igual que llamar a 'Accion(accion::EAccion accion'.
+	 * 		Si 'cantidadParametros' es 0, se inicializa sin acciones, es igual que llamar a 'Accion(accion::EAccion accion)'.
+	 * 		Si 'cantidadParametros' es 0 el parametro 'tiposParametros' no es usado.
 	 */
-	Accion(accion::EAccion accion, unsigned int cantidadParametros, parametro::Tipo tiposParametros[]);
+	Accion(accion::Tipo accion, unsigned int cantidadParametros, parametro::Tipo tiposParametros[]);
 
-	/*
-	 * Pos: Devuelve el tipo de accion. Puede ser 'SIN_PARAMETROS_USUARIO' o 'CON_PARAMETROS_USUARIO'.
-	 */
-	accion::Tipo obtenerTipo();
+	 // Pos: Indica si la accion requiere que se indiquen parametros para poder ser ejecutada.
+	bool usaParametros();
 
-	/*
-	 * Pos: Devuelve los parametros que se encuentran seteados en la accion.
-	 */
+	 // Pos: Devuelve los parametros que se encuentran seteados en la accion.
 	Parametro* obtenerParametros();
 
-	//Post: Indica si los parametros ingresados por el usuario para la accion son correctos
+	//Post: Indica si los parametros que se encuentran seteados en la accion son de tipo valido de acuerdo a
+	//		los tipos de parametros con los que se inicializo la accion ('tiposParametros').
 	bool validarTipoParametros();
 
-	/*
-	 * Pos: Devuelve la accion asociada.
-	 */
-	accion::EAccion obtenerAccion();
+	// Pos: Devuelve el tipo de accion.
+	accion::Tipo obtenerTipoAccion();
 
 	//Post: Separa 'parametros' por ' ' y carga los valores obtenidos en los parametros de la accion
 	bool cambiarValoresParametros(std::string parametros);
@@ -128,9 +121,7 @@ public:
 	 */
 	bool cambiarParametros(std::string parametros);
 
-	/*
-	 * Pos: Libera los recursos reservados.
-	 */
+	 // Pos: Libera los recursos reservados.
 	~Accion();
 };
 

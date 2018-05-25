@@ -14,20 +14,20 @@ ResultadoOpcion::ResultadoOpcion(Menu* subMenu){
 	this->inicializar(resultadoOpcion::SUBMENU, subMenu, accion::NINGUNA);
 }
 
-ResultadoOpcion::ResultadoOpcion(accion::EAccion accion){
+ResultadoOpcion::ResultadoOpcion(accion::Tipo tipoAccion){
 
-	this->inicializar(resultadoOpcion::ACCION, NULL, accion);
+	this->inicializar(resultadoOpcion::ACCION, NULL, tipoAccion);
 }
 
-void ResultadoOpcion::inicializar(resultadoOpcion::Tipo tipo, Menu* subMenu, accion::EAccion accion){
+void ResultadoOpcion::inicializar(resultadoOpcion::Tipo tipo, Menu* subMenu, accion::Tipo tipoAccion){
 
 	this->tipo = tipo;
 	this->subMenu = subMenu;
 	this->accion = NULL;
 
-	if(accion != accion::NINGUNA){
+	if(tipoAccion != accion::NINGUNA){
 
-		this->accion = CreadorAcciones::crearNuevaAccion(accion);
+		this->accion = CreadorAcciones::crearNuevaAccion(tipoAccion);
 	}
 }
 

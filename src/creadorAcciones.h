@@ -39,7 +39,7 @@ public:
 	/*
 	 * Pos: Devuelve una copia de la accion solicitada, los parametros no se encuentran inicializados.
 	 */
-	static Accion* crearNuevaAccion(accion::EAccion accion);
+	static Accion* crearNuevaAccion(accion::Tipo tipoAccion);
 
 	/*
 	 * Pos: Libera los recursos reservados.

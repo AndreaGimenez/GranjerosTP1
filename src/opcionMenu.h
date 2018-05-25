@@ -55,12 +55,12 @@ private:
 
 	//Atributos para items de tipo accion
 	std::string leyendaIngresoUsuario;
-	accion::EAccion accion;
+	accion::Tipo tipoAccion;
 
 	//Para devolver luego de ejecutar la opcion
 	ResultadoOpcion* resultado;
 
-	void inicializarMenu(opcionMenu::Tipo tipo, std::string descripcion, Menu* subMenu, accion::EAccion accion);
+	void inicializarMenu(opcionMenu::Tipo tipo, std::string descripcion, Menu* subMenu, accion::Tipo tipoAccion);
 
 public:
 
@@ -81,12 +81,12 @@ public:
 	 * 		La leyenda para ingreso usuario es la default.
 	 *
 	 */
-	OpcionMenu(std::string descripcion, accion::EAccion accion);
+	OpcionMenu(std::string descripcion, accion::Tipo tipoAccion);
 
 	/*
 	 * Pos: Inicializa la opcion de menu como tipo 'opcionMenu::ACCION', con la accion, descripcion y leyenda para ingreso usuario pasados por parametros y sin submenu.
 	 */
-	OpcionMenu(std::string descripcion, accion::EAccion accion, std::string leyendaIngresoUsuario);
+	OpcionMenu(std::string descripcion, accion::Tipo tipoAccion, std::string leyendaIngresoUsuario);
 
 	/*
 	 * Pos: Devuelve el tipo de opcion de menu, puede ser 'opcionMenu::SUBMENU' o 'opcionMenu::ACCION'.
@@ -101,7 +101,7 @@ public:
 	/*
 	 * Pos: Devuelve la accion de la opcion de menu. Si el tipo de opcion de menu es 'opcion:SUBMENU' devuelve 'accion::NINGUNA'.
 	 */
-	accion::EAccion obtenerAccion();
+	accion::Tipo obtenerTipoAccion();
 
 	/*
 	 * Pos: Devuelve el submenu de la opcion de menu. Si el tipo de opcion de menu es 'opcion::ACCION' devuelve NULL.
