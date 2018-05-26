@@ -33,17 +33,39 @@ private:
 
 public:
 
-	//Pos:
+	//Pos: Devuelve el simbolo que representa que una parcela esta limpia
 	static std::string obtenerSimboloParcelaLimpia();
+
+	//Pos: Devuelve el simbolo que representa que una parcela esta sembrada
 	static std::string obtenerSimboloParcelaSembrada();
+
+	//Pos: Devuelve el simbolo que representa que una parcela esta seca
 	static std::string obtenerSimboloParcelaSeca();
+
+	//Pos: Devuelve el simbolo que representa que una parcela esta podrida
 	static std::string obtenerSimboloParcelaPodrida();
+
+	//Pos: Devuelve el simbolo que representa que una parcela esta cosechada
 	static std::string obtenerSimboloParcelaCosechada();
+
+	//Pos: Devuelve el simbolo que representa que una parcela esta regada
 	static std::string obtenerSimboloParcelaRegada();
+
+	//Pos: Devuelve el simbolo que representa que una parcela esta sin regar
 	static std::string obtenerSimboloParcelaSinRegar();
+
+	//Pos: Devuelve el simbolo que separa las parcelas unas de otras
 	static std::string obtenerSimboloSeparacionEntreParcelas();
+
+	//Pos: Devuelve el simbolo que representa el suelo de una parcela
 	static std::string obtenerSimboloSueloParcela();
+
+	//Pos: Devuelve el ancho de una parcela. Es la cantidad simbolos que
+	//	   tiene una parcela
 	static unsigned int obtenerAnchoParcela();
+
+	//Pos: Devuelve la distancia al borde izquierdo de la consola.
+	//	   El terreno se comienza a dibujar a partir de esta distancia.
 	static unsigned int obtenerDistanciaBordeIzquierdo();
 
 };

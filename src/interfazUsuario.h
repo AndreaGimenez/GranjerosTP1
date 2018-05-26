@@ -131,25 +131,93 @@ private:
 	void dibujarParcelaPodrida(Parcela* parcela, unsigned int coordenadaX, unsigned int coordenadaY);
 
 	/*
-	 * Pos: Dibuja una parcela sembrada de acuerdo a los parametros definidos en 'PlantillaTerrenoImagen'.
-	 * 		El punto definido por coordenadaX y coordenadaY determina el extremo superior izquierdo
-	 * 		de la parcela.
+	 * Pos: Dibuja el alambrado de una parcela. El alambrado esta definido por 4 postes en cada esquina
+	 * 		de la parcela y un alambrado que une los postes formando un rectangulo.
 	 */
 	void dibujarAlambradoParcela(int coordenadaXEnDibujo, int coordenadaYEnDibujo);
+
+	/*
+	 * Pos: Dibuja las marcas del arado de una parcela cosechada.
+	 * 		El punto definido por coordenadaX y coordenadaY determina el extremo superior izquierdo
+	 * 		de la marca del arado.
+	 */
 	void dibujarMarcasArado(Parcela* parcela, unsigned int coordenadaXEnDibujo, unsigned int coordenadaYEnDibujo);
+
+	/*
+	 * Pos: Dibuja los cultivos de una parcela sembrada.
+	 * 		El punto definido por coordenadaX y coordenadaY determina el extremo superior izquierdo
+	 * 		de la franja del cultivo.
+	 */
 	void dibujarCultivos(Parcela* parcela, unsigned int coordenadaXEnDibujo, unsigned int coordenadaYEnDibujo);
+
+	/*
+	 * Pos: Dibuja una imagen que advierte al usuario que al parcela fue regada.
+	 * 		El punto definido por coordenadaX y coordenadaY determina el extremo superior izquierdo
+	 * 		de la imagen de riego.
+	 */
 	void dibujarRiego(int coordenadaXEnDibujo, int coordenadaYEnDibujo);
+
+	/*
+	 * Pos: Dibuja una imagen que advierte al usuario que al parcela fue cosechada.
+	 * 		El punto definido por coordenadaX y coordenadaY determina el extremo superior izquierdo
+	 * 		de la imagen de la hoz.
+	 */
 	void dibujarHoz(Parcela* parcela, int coordenadaXEnDibujo, int coordenadaYEnDibujo);
+
+	/*
+	 * Pos: Dibuja los valores de las coordenadas X e Y alrededor del terreno.
+	 */
 	void dibujarCoordenadas(Terreno* terreno);
+
+	/*
+	 * Pos: Dibuja los valores de las coordenadas X en la parte superior del terreno
+	 */
 	void dibujarCoordenadasXParcelas(Terreno* terreno);
+
+	/*
+	 * Pos: Dibuja los valores de las coordenadas Y a la izquierda del terreno
+	 */
 	void dibujarCoordenadasYParcelas(Terreno* terreno);
+
+	/*
+	 * Pos: Dibuja un posta en las coordenadas indicadas. Las coordenadas marcan el punto superior
+	 * 		izquierdo del poste.
+	 */
 	void dibujarPoste(int coordenadaXEnDibujo, int coordenadaYEnDibujo);
+
+	/*
+	 * Pos: Dibuja una linea que representa el alambrado entre 2 postes.
+	 */
 	void dibujarAlambrado(int coordenadaXDesde, int coordenadaYDesde, int coordenadaXHasta, int coordenadaYHasta);
 
+	/*
+	 * Pos: Devuelve la coordenada X en el dibujo dada un valor de coordenada de parcela
+	 * 		'coordenadaX' representa valores de coordenadas de parcela dentro del terreno por ejemplo 1.
+	 * 		El valor devuelto es la coordenada X que le corresponde dentro del dibujo a esa coordenada.
+	 */
 	int obtenerCoordenadaXParcelaEnDibujo(unsigned int coordenadaX);
+
+	/*
+	 * Pos: Devuelve la coordenada Y en el dibujo dada un valor de coordenada de parcela
+	 * 		'coordenadaY' representa valores de coordenadas de parcela dentro del terreno por ejemplo 1.
+	 * 		El valor devuelto es la coordenada Y que le corresponde dentro del dibujo a esa coordenada.
+	 */
 	int obtenerCoordenadaYParcelaEnDibujo(unsigned int coordenadaY);
+
+	/*
+	 * Pos: Devuelve el nombre de la imagen del nombre del cultivo.
+	 * 		La imagen se pega en la parcela para representar que cultivo se encuentra sembrado.
+	 */
 	std::string obtenerNombreImagenCultivo(Cultivo* cultivo);
+
+	/*
+	 * Pos: Devuelve la coordenadaX que le corresponde a la imagen del nombre del cultivo dentro de la parcela.
+	 */
 	int obtenerCoordenadaXImagenCultivo(int coordenadaXParcela);
+
+	/*
+	 * Pos: Devuelve la coordenadaY que le corresponde a la imagen del nombre del cultivo dentro de la parcela.
+	 */
 	int obtenerCoordenadaYImagenCultivo(int coordenadaYParcela);
 
 public:
