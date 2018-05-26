@@ -1,10 +1,3 @@
-/*
- * Cultivo.h
- *
- *  Created on: 25 abr. 2018
- *      Author: administrador
- */
-
 #ifndef CULTIVO_H_
 #define CULTIVO_H_
 
@@ -35,27 +28,29 @@ private:
 
 public:
 
-	//Pre: 'nombre' no debe estar vacio, es el identificador del cultivo por lo tanto no debe haber 2 cultivos con el mismo nombre.
-	//Pos: Crea el cultivo con los parametros pasados.
+	/*
+	 * Pre: 'nombre' no debe estar vacio, es el identificador del cultivo por lo tanto no debe haber 2 cultivos con el mismo nombre.
+	 * Pos: Crea el cultivo con los parametros pasados.
+	 */
 	Cultivo(std::string nombre, unsigned int costo, unsigned int tiempoCrecimiento, unsigned int rentabilidad,
 			unsigned int tiempoRecuperacion, unsigned int consumoAgua);
 
-	//Pos: Devuelve el consumo de agua, en unidades de riego, del cultivo.
+	// Pos: Devuelve el consumo de agua, en unidades de riego, del cultivo.
 	unsigned int obtenerConsumoAgua();
 
-	//Pos: Devuelve el costo, en monedas, de comprar el cultivo.
+	// Pos: Devuelve el costo, en monedas, de comprar el cultivo.
 	unsigned int obtenerCosto();
 
-	//Pos: Devuelve el nombre del cultivo.
+	// Pos: Devuelve el nombre del cultivo.
 	std::string obtenerNombre();
 
-	//Pos: Devuelve la rentabilidad que se obtiene al enviar la cosecha a un destino.
+	// Pos: Devuelve la rentabilidad que se obtiene al enviar la cosecha a un destino.
 	unsigned int obtenerRentabilidad();
 
-	//Pos: Devuelve el tiempo, medido en turnos, que es necesario esperar para poder cosechar la parcela.
+	// Pos: Devuelve el tiempo, medido en turnos, que es necesario esperar para poder cosechar la parcela.
 	unsigned int obtenerTiempoCrecimiento();
 
-	//Pos: Devuelve el tiempo, medido en turnos, que es necesario esperar para poder realizar una nueva siembra en la parcela.
+	// Pos: Devuelve el tiempo, medido en turnos, que es necesario esperar para poder realizar una nueva siembra en la parcela.
 	unsigned int obtenerTiempoRecuperacion();
 };
 

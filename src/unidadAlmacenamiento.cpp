@@ -1,10 +1,3 @@
-/*
- * unidadAlmacenamiento.cpp
- *
- *  Created on: 26 abr. 2018
- *      Author: administrador
- */
-
 #include "unidadAlmacenamiento.h"
 
 UnidadAlmacenamiento::UnidadAlmacenamiento(Cultivo* cultivo){

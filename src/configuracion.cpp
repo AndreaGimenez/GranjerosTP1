@@ -1,10 +1,3 @@
-/*
- * Configuracion.cpp
- *
- *  Created on: 25 abr. 2018
- *      Author: administrador
- */
-
 #include <string>
 #include <cstdlib>
 

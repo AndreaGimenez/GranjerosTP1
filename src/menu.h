@@ -1,10 +1,3 @@
-/*
- * menu.h
- *
- *  Created on: 28 abr. 2018
- *      Author: administrador
- */
-
 #ifndef MENU_H_
 #define MENU_H_
 

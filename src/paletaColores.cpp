@@ -1,10 +1,3 @@
-/*
- * paletaColores.cpp
- *
- *  Created on: 18 may. 2018
- *      Author: administrador
- */
-
 #include "paletaColores.h"
 
 PaletaColores::PaletaColores() {

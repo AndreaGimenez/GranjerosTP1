@@ -1,10 +1,3 @@
-/*
- * creadorAcciones.cpp
- *
- *  Created on: 2 may. 2018
- *      Author: administrador
- */
-
 #include "creadorAcciones.h"
 
 unsigned int CreadorAcciones::cantidadAcciones = 17;
@@ -46,9 +39,9 @@ void CreadorAcciones::inicializar(){
 	acciones[accion::SALIR] = new Accion(accion::SALIR);
 }
 
-Accion* CreadorAcciones::crearNuevaAccion(accion::EAccion accion){
+Accion* CreadorAcciones::crearNuevaAccion(accion::Tipo tipoAccion){
 
-	Accion* nuevaAccion = new Accion(acciones[accion]);
+	Accion* nuevaAccion = new Accion(acciones[tipoAccion]);
 	return nuevaAccion;
 }
 

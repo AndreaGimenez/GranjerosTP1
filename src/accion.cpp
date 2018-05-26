@@ -1,10 +1,3 @@
-/*
- * accionMenu.cpp
- *
- *  Created on: 28 abr. 2018
- *      Author: administrador
- */
-
 #include "accion.h"
 #include <cstdlib>
 #include "utils.h"
@@ -14,16 +7,14 @@ using namespace std;
 
 Accion::Accion(){
 
-	this->tipo = accion::SIN_PARAMETROS_USUARIO;
-	this->accion = accion::NINGUNA;
+	this->tipoAccion = accion::NINGUNA;
 	this->cantidadParametros = 0;
 	this->parametros = NULL;
 }
 
 Accion::Accion(Accion* accion){
 
-	this->tipo = accion->obtenerTipo();
-	this->accion = accion->obtenerAccion();
+	this->tipoAccion = accion->obtenerTipoAccion();
 	this->cantidadParametros = accion->obtenerCantidadParametros();
 
 	if(accion->obtenerParametros() != NULL){
@@ -37,24 +28,21 @@ Accion::Accion(Accion* accion){
 	}
 }
 
-Accion::Accion(accion::EAccion accion){
+Accion::Accion(accion::Tipo tipoAccion){
 
-	this->tipo = accion::SIN_PARAMETROS_USUARIO;
-	this->accion = accion;
+	this->tipoAccion = tipoAccion;
 	this->cantidadParametros = 0;
 	this->parametros = NULL;
 }
 
-Accion::Accion(accion::EAccion accion, unsigned int cantidadParametros, parametro::Tipo tiposParametros[]){
+Accion::Accion(accion::Tipo tipoAccion, unsigned int cantidadParametros, parametro::Tipo tiposParametros[]){
 
-	this->accion = accion;
+	this->tipoAccion = tipoAccion;
 	this->cantidadParametros = cantidadParametros;
 
 	if(cantidadParametros == 0){
-		this->tipo = accion::SIN_PARAMETROS_USUARIO;
 		this->parametros = NULL;
 	}else{
-		this->tipo = accion::CON_PARAMETROS_USUARIO;
 		this->parametros = new Parametro[this->cantidadParametros];
 
 		for(unsigned int i = 0; i < cantidadParametros; i++){
@@ -63,8 +51,8 @@ Accion::Accion(accion::EAccion accion, unsigned int cantidadParametros, parametr
 	}
 }
 
-accion::Tipo Accion::obtenerTipo(){
-	return this->tipo;
+bool Accion::usaParametros(){
+	return (this->parametros != NULL);
 }
 
 Parametro* Accion::obtenerParametros(){
@@ -121,8 +109,8 @@ bool Accion::validarTipoParametros(){
 	return parametrosCorrectos;
 }
 
-accion::EAccion Accion::obtenerAccion(){
-	return this->accion;
+accion::Tipo Accion::obtenerTipoAccion(){
+	return this->tipoAccion;
 }
 
 unsigned int Accion::obtenerCantidadParametros(){

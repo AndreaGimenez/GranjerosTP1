@@ -1,10 +1,3 @@
-/*
- * partida.h
- *
- *  Created on: 20 Apr 2018
- *      Author: Usuario
- */
-
 #ifndef PARTIDA_H_
 #define PARTIDA_H_
 

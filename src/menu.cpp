@@ -1,10 +1,3 @@
-/*
- * menu.cpp
- *
- *  Created on: 28 abr. 2018
- *      Author: administrador
- */
-
 #include "menu.h"
 #include <iostream>
 #include "utils.h"

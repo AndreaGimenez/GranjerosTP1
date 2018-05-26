@@ -1,10 +1,3 @@
-/*
- * Cultivo.cpp
- *
- *  Created on: 25 abr. 2018
- *      Author: administrador
- */
-
 #include "cultivo.h"
 
 using namespace std;

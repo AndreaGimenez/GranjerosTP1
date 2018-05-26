@@ -1,10 +1,3 @@
-/*
- * granjeros.cpp
- *
- *  Created on: 29 abr. 2018
- *      Author: administrador
- */
-
 #include "granjeros.h"
 #include <iostream>
 #include <ctime>
@@ -50,11 +43,11 @@ void Granjeros::ejecutarAccion(Accion* accion){
 
 	bool accionEjecutada = false; //Indica si la accion ya se ejecuto en alguno de los metodos
 
-	//Acciones que son estrictamente d  configuracion previa a la partida
+	//Acciones que son estrictamente de configuracion previa a la partida
 	accionEjecutada = ejecutarAccionConfiguracion(accion);
 
 	if(!accionEjecutada)
-		//Acciones que tienen que ver estrictametne con la partida
+		//Acciones que tienen que ver estrictamente con la partida
 		accionEjecutada = ejecutarAccionPartida(accion);
 
 	if(!accionEjecutada)
@@ -67,7 +60,7 @@ void Granjeros::ejecutarAccion(Accion* accion){
 bool Granjeros::ejecutarAccionConfiguracion(Accion* accion){
 
 	bool accionEjecutada = true;
-	switch (accion->obtenerAccion()){
+	switch (accion->obtenerTipoAccion()){
 
 		case accion::CAMBIAR_CANTIDAD_JUGADORES:
 
@@ -107,7 +100,7 @@ bool Granjeros::ejecutarAccionPartida(Accion* accion){
 	// Indica si la accion se ejecuto satisfactoriamente. En caso que 'accion' no pertenezca a las acciones que contempla este metodo queda en false
 	bool accionEjecutadaExistosamente = false;
 
-	switch (accion->obtenerAccion()){
+	switch (accion->obtenerTipoAccion()){
 
 		case accion::COMPRAR_CAPACIDAD_AGUA:
 
@@ -202,7 +195,7 @@ bool Granjeros::ejecutarAccionSalida(Accion* accion){
 
 	bool partidaFinalizada = false;
 	bool accionEjecutada = true;
-	switch (accion->obtenerAccion()){
+	switch (accion->obtenerTipoAccion()){
 
 		case accion::FINALIZAR_TURNO:
 

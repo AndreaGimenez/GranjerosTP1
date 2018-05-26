@@ -1,10 +1,3 @@
-/*
- * terreno.cpp
- *
- *  Created on: 29 abr. 2018
- *      Author: jonathan
- */
-
 #include "terreno.h"
 #include "cultivo.h"
 #include "configuracion.h"

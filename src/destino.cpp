@@ -1,10 +1,3 @@
-/*
- * Destino.cpp
- *
- *  Created on: 25 abr. 2018
- *      Author: administrador
- */
-
 #include "destino.h"
 
 using namespace std;

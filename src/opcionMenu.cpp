@@ -1,10 +1,3 @@
-/*
- * menuItem.cpp
- *
- *  Created on: 28 abr. 2018
- *      Author: administrador
- */
-
 #include "opcionMenu.h"
 #include <iostream>
 #include "accion.h"
@@ -22,22 +15,22 @@ OpcionMenu::OpcionMenu(std::string descripcion, Menu* subMenu){
 }
 
 
-OpcionMenu::OpcionMenu(std::string descripcion, accion::EAccion accion){
-	inicializarMenu(opcionMenu::ACCION, descripcion, NULL, accion);
+OpcionMenu::OpcionMenu(std::string descripcion, accion::Tipo tipoAccion){
+	inicializarMenu(opcionMenu::ACCION, descripcion, NULL, tipoAccion);
 }
 
-OpcionMenu::OpcionMenu(std::string descripcion, accion::EAccion accion, string leyendaIngresoUsuario){
+OpcionMenu::OpcionMenu(std::string descripcion, accion::Tipo tipoAccion, string leyendaIngresoUsuario){
 
-	inicializarMenu(opcionMenu::ACCION, descripcion, NULL, accion);
+	inicializarMenu(opcionMenu::ACCION, descripcion, NULL, tipoAccion);
 	this->leyendaIngresoUsuario = leyendaIngresoUsuario;
 }
 
-void OpcionMenu::inicializarMenu(opcionMenu::Tipo tipo, string descripcion, Menu* subMenu, accion::EAccion accion){
+void OpcionMenu::inicializarMenu(opcionMenu::Tipo tipo, string descripcion, Menu* subMenu, accion::Tipo tipoAccion){
 
 	this->tipo = tipo;
 	this->descripcion = descripcion;
 	this->subMenu = subMenu;
-	this->accion = accion;
+	this->tipoAccion = tipoAccion;
 	this->leyendaIngresoUsuario = "";
 	this->resultado = NULL;
 }
@@ -47,8 +40,8 @@ string OpcionMenu::obtenerDescripcion(){
 	return this->descripcion;
 }
 
-accion::EAccion OpcionMenu::obtenerAccion(){
-	return this->accion;
+accion::Tipo OpcionMenu::obtenerTipoAccion(){
+	return this->tipoAccion;
 }
 
 Menu* OpcionMenu::obtenerSubMenu(){
@@ -72,31 +65,25 @@ ResultadoOpcion* OpcionMenu::ejecutar(){
 		case opcionMenu::ACCION:
 
 			string parametrosIngresados = "";
-			resultado = new ResultadoOpcion(this->obtenerAccion());
+			resultado = new ResultadoOpcion(this->obtenerTipoAccion());
 			Accion* accion = resultado->obtenerAccion();
 
 			bool parametrosCorrectos = false;
-			switch(accion->obtenerTipo()){
+			if(accion->usaParametros()){
 
-				case accion::CON_PARAMETROS_USUARIO:
+				while(!parametrosCorrectos){
 
-					while(!parametrosCorrectos){
+					cout << this->leyendaIngresoUsuario << ": ";
+					cout.flush();
 
-						cout << this->leyendaIngresoUsuario << ": ";
-						cout.flush();
+					getline(cin, parametrosIngresados);
 
-						getline(cin, parametrosIngresados);
+					parametrosCorrectos = accion->cambiarParametros(parametrosIngresados);
 
-						parametrosCorrectos = accion->cambiarParametros(parametrosIngresados);
-
-						if(!parametrosCorrectos){
-							cout << "Los parametros ingresados no son correctos" << endl;
-						}
+					if(!parametrosCorrectos){
+						cout << "Los parametros ingresados no son correctos" << endl;
 					}
-
-					break;
-
-				default:;
+				}
 			}
 	}
 

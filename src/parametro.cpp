@@ -1,10 +1,3 @@
-/*
- * parametro.cpp
- *
- *  Created on: 13 may. 2018
- *      Author: administrador
- */
-
 #include "parametro.h"
 #include "utils.h"
 

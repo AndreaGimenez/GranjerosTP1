@@ -1,10 +1,3 @@
-/*
- * plantillaTerrenoConsola.h
- *
- *  Created on: 23 may. 2018
- *      Author: administrador
- */
-
 #ifndef PLANTILLATERRENOCONSOLA_H_
 #define PLANTILLATERRENOCONSOLA_H_
 

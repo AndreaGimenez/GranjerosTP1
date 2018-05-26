@@ -1,10 +1,3 @@
-/*
- * dibujante.cpp
- *
- *  Created on: 18 may. 2018
- *      Author: administrador
- */
-
 #include "creadorImagen.h"
 #include <cstdlib>
 #include <ctime>

@@ -1,10 +1,3 @@
-/*
- * unidadAlmacenamiento.h
- *
- *  Created on: 26 abr. 2018
- *      Author: administrador
- */
-
 #ifndef UNIDADALMACENAMIENTO_H_
 #define UNIDADALMACENAMIENTO_H_
 

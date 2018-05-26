@@ -1,10 +1,3 @@
-/*
- * partida.cpp
- *
- *  Created on: 20 Apr 2018
- *      Author: Usuario
- */
-
 #include <iostream>
 #include <string>
 

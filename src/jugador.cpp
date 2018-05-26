@@ -1,10 +1,3 @@
-/*
- * jugador.cpp
- *
- *  Created on: 19 Apr 2018
- *      Author: Andrea
- */
-
 #include <iostream>
 #include <string>
 
