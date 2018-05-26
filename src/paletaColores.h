@@ -23,6 +23,9 @@ enum EColor{
 	ROJO
 };
 
+/*
+ * Define una gama de colores predefinidos.
+ */
 class PaletaColores {
 
 private:
@@ -32,8 +35,13 @@ private:
 
 public:
 
+	// Pos: Inicializa los colores de la paleta
 	PaletaColores();
+
+	// Pos: Devuelve el color correspondiente a 'color'
 	Color* obtenerColor(EColor color);
+
+	//Pos: Libera los recursos reservados
 	~PaletaColores();
 };
 

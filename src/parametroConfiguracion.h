@@ -1,6 +1,8 @@
 #ifndef PARAMETROCONFIGURACION_H_
 #define PARAMETROCONFIGURACION_H_
 
+#include <string>
+
 //Dificultades del juego, determinan los recursos iniciales de los que dispondra cada jugar.
 enum Dificultad{
 
@@ -39,8 +41,26 @@ public:
 	//Pos: Cambia la dificultad a la indicada en el parametro.
 	void cambiarDificultad(Dificultad dificultad);
 
+	//Pos: Cambia la dificultad a la indicada en el parametro.
+	//		Si intDificultad no corresponde a ningun valor validiod e dificultad
+	//		arroja una excepcion
+	bool cambiarDificultad(int intDificultad);
+
+	//Pos: Indica si 'dificultad' coincide con algun valor de Dificultad
+	bool validarDificultad(int dificultad);
+
 	//Pos: Devuelve la dificultad actual.
 	Dificultad obtenerDificultad();
+
+	// Pos: Convierte el valor intDificultad a enum Dificultad. En caso de no
+	//		poder realizarse la conversion arroja una excepcion
+	static Dificultad convertirIntToDificultad(int intDificultad);
+
+	// Pos: Convierte el valor dificultad a int.
+	static int convertirDificultadToInt(Dificultad dificultad);
+
+	//Pos: Devuelve el nombre de la dificultad.
+	static std::string obtenerNombreDificultad(Dificultad dificultad);
 
 	//Pre: 'cantidadJugadores' debe ser mayor a 0.
 	//Pos: Cambia la cantidad de jugadores a 'cantidadJugadores'

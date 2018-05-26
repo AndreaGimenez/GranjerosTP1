@@ -47,22 +47,29 @@ bool Utils::esChar(std::string cadena){
 	return (cadena.size() == 1);
 }
 
-int Utils::stringToInt(string valor){
+int Utils::stringToInt(string cadena){
 
-	return atoi(valor.c_str());
+	return atoi(cadena.c_str());
 }
 
-unsigned int Utils::stringToUnsignedInt(string valor){
+unsigned int Utils::stringToUnsignedInt(string cadena){
 
-	return atoi(valor.c_str());
+	return atoi(cadena.c_str());
 }
 
-char Utils::stringToChar(std::string valor){
+char Utils::stringToChar(std::string cadena){
 
-	return valor.c_str()[0];
+	return cadena.c_str()[0];
 }
 
 string Utils::unsignedIntToString(unsigned int valor){
+
+	ostringstream ss;
+	ss << valor;
+	return ss.str();
+}
+
+string Utils::intToString(int valor){
 
 	ostringstream ss;
 	ss << valor;

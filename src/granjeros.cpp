@@ -60,7 +60,17 @@ void Granjeros::ejecutarAccion(Accion* accion){
 bool Granjeros::ejecutarAccionConfiguracion(Accion* accion){
 
 	bool accionEjecutada = true;
+	bool accionEjecutadaCorrectamente = true;
+
 	switch (accion->obtenerTipoAccion()){
+
+		case accion::CAMBIAR_DIFICULTAD:
+
+			accionEjecutadaCorrectamente = this->parametrosConfiguracion->cambiarDificultad(Utils::stringToUnsignedInt(accion->obtenerParametros()[0].obtenerValor()));
+			if(accionEjecutadaCorrectamente){
+				cout << "La dificultad ahora es: " << ParametroConfiguracion::obtenerNombreDificultad(this->parametrosConfiguracion->obtenerDificultad()) << endl;
+			}
+			break;
 
 		case accion::CAMBIAR_CANTIDAD_JUGADORES:
 
@@ -88,6 +98,10 @@ bool Granjeros::ejecutarAccionConfiguracion(Accion* accion){
 
 		default:
 			accionEjecutada = false;
+	}
+
+	if(!accionEjecutadaCorrectamente){
+		cout << "No se pudo realizar la accion" << endl;
 	}
 
 	return accionEjecutada;

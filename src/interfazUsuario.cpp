@@ -86,7 +86,7 @@ bool InterfazUsuario::salir(){
 
 void InterfazUsuario::mostrarDespedida(){
 
-	cout << "CHAU!" << endl << endl;
+	cout << "HASTA LA PROXIMA!" << endl << endl;
 }
 
 void InterfazUsuario::agregarMenu(Menu* menu){
@@ -106,21 +106,33 @@ Menu* InterfazUsuario::crearMenuPrincipal() {
 
 Menu* InterfazUsuario::crearMenuConfiguracion() {
 
-	Menu* menu = new Menu("CONFIGURACION", 4);
+	Menu* menu = new Menu("CONFIGURACION", 5);
 
-	menu->cambiarOpcion(1, OpcionMenu("Cambiar Cantidad de Jugadores",
+	string leyendaDificultad = "Indique la nueva dificultad ("
+							  + Utils::intToString(ParametroConfiguracion::convertirDificultadToInt(FACIL)) + "-"
+							  + ParametroConfiguracion::obtenerNombreDificultad(FACIL) + ", "
+							  + Utils::intToString(ParametroConfiguracion::convertirDificultadToInt(MEDIO)) + "-"
+			  	  	  	  	  + ParametroConfiguracion::obtenerNombreDificultad(MEDIO) + ", "
+							  + Utils::intToString(ParametroConfiguracion::convertirDificultadToInt(DIFICIL)) + "-"
+							  + ParametroConfiguracion::obtenerNombreDificultad(DIFICIL) + ")";
+
+	menu->cambiarOpcion(1, OpcionMenu("Cambiar Dificultad",
+									  accion::CAMBIAR_DIFICULTAD,
+									  leyendaDificultad));
+
+	menu->cambiarOpcion(2, OpcionMenu("Cambiar Cantidad de Jugadores",
 									  accion::CAMBIAR_CANTIDAD_JUGADORES,
 									  "Indique la cantidad de jugadores"));
 
-	menu->cambiarOpcion(2, OpcionMenu("Cambiar Parametro N",
+	menu->cambiarOpcion(3, OpcionMenu("Cambiar Parametro N",
 									  accion::CAMBIAR_PARAMETRO_N,
 									  "Indique el nuevo valor del parametro: "));
 
-	menu->cambiarOpcion(3, OpcionMenu("Cambiar Parametro M",
+	menu->cambiarOpcion(4, OpcionMenu("Cambiar Parametro M",
 									  accion::CAMBIAR_PARAMETRO_M,
 									  "Indique el nuevo valor del parametro"));
 
-	menu->cambiarOpcion(4, OpcionMenu("Cambiar Cantidad de Turnos",
+	menu->cambiarOpcion(5, OpcionMenu("Cambiar Cantidad de Turnos",
 									  accion::CAMBIAR_CANTIDAD_TURNOS,
 									  "Indique la cantidad de turnos a jugar en cada partida"));
 

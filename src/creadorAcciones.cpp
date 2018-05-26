@@ -1,6 +1,6 @@
 #include "creadorAcciones.h"
 
-unsigned int CreadorAcciones::cantidadAcciones = 17;
+unsigned int CreadorAcciones::cantidadAcciones = 18;
 Accion** CreadorAcciones::acciones = NULL;
 
 CreadorAcciones::CreadorAcciones() {
@@ -13,6 +13,7 @@ void CreadorAcciones::inicializar(){
 	parametro::Tipo tipos[] = {parametro::UNSIGNED_INT};
 
 	acciones[accion::NINGUNA] = new Accion(accion::NINGUNA);
+	acciones[accion::CAMBIAR_DIFICULTAD] = new Accion(accion::CAMBIAR_DIFICULTAD, 1, tipos);
 	acciones[accion::CAMBIAR_CANTIDAD_JUGADORES] = new Accion(accion::CAMBIAR_CANTIDAD_JUGADORES, 1, tipos);
 	acciones[accion::CAMBIAR_PARAMETRO_N] = new Accion(accion::CAMBIAR_PARAMETRO_N, 1, tipos);
 	acciones[accion::CAMBIAR_PARAMETRO_M] = new Accion(accion::CAMBIAR_PARAMETRO_M, 1, tipos);
@@ -47,7 +48,7 @@ Accion* CreadorAcciones::crearNuevaAccion(accion::Tipo tipoAccion){
 
 void CreadorAcciones::destruirAcciones(){
 
-	for(unsigned int iAccion = 0; iAccion < 16; iAccion++){
+	for(unsigned int iAccion = 0; iAccion < CreadorAcciones::cantidadAcciones; iAccion++){
 		delete acciones[iAccion];
 	}
 	delete[] acciones;

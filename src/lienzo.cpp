@@ -40,9 +40,9 @@ void Lienzo::pegarImagenConTransparencia(std::string nombreImagen, int coordenad
 	RangedPixelToPixelCopyTransparent(imagen, 0, imagen.TellWidth(), 0, imagen.TellHeight(), *this->bmp, coordenadaX, coordenadaY, transparencia);
 }
 
-void Lienzo::guardar(string nombre){
+void Lienzo::guardar(string nombreImagen){
 
-	this->bmp->WriteToFile(nombre.c_str());
+	this->bmp->WriteToFile(nombreImagen.c_str());
 }
 
 Lienzo::~Lienzo(){

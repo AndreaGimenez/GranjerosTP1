@@ -8,7 +8,8 @@
 #include "creadorImagen.h"
 
 /*
- * 'InterfazUsuario' permite la interaccion con el usuario, tanto la salida como la entrada.
+ * 'InterfazUsuario' permite la interaccion con el usuario, tanto la salida (por consola e imagenes BMP)
+ * como la entrada.
  * Se encarga de crear los menues y gestionarlos. Permite cargar y mostrar los menues principal
  * y de la partida así como ejecutar las acciones de esos menues.
  */
@@ -23,33 +24,117 @@ private:
 
 	CreadorImagen* creadorImagen;
 
+	//Pos: Crea un menu con las opciones de menu del menu principal
 	Menu* crearMenuPrincipal();
+
+	//Pos: Crea un menu con las opciones de menu del menu de configuracion
 	Menu* crearMenuConfiguracion();
+
+	//Pos: Crea un menu con las opciones de menu del menu de partida
 	Menu* crearMenuPartida();
+
+	//Pos: Agrega 'menu' a la pila de menues. 'menu' pasa a ser el menu actual.
 	void agregarMenu(Menu* menu);
 
+	//Pos: Muestra por consola los datos de la partida.
 	void mostrarDatosPartida(Partida* partida);
+
+	//Pos: Muestra por consola los recursos que posee 'jugador'
 	void mostrarRecursosJugador(Jugador* jugador);
+
+	//Pos: Muestra por consola el jugador que gano
 	void mostrarGanador(unsigned int cantidadJugadores, Jugador** jugadores);
+
+	//Pos: Muestra por consola una lista con las posiciones de los jugadores
 	void mostrarPosiciones(unsigned int cantidadJugadores, Jugador** jugadores);
 
+	//Pos: Muestra los terrenos de 'jugador' por consola
 	void mostrarTerrenosJugadorPorConsola(Jugador* jugador);
+
+	//Pos: Muestra 'terreno' por consola, con el estado de sus parcelas
 	void dibujarTerrenoConsola(Terreno* terreno);
+
+	//Pos: Muestra por consola los valores de las coordenadas X del terreno
 	void dibujarCoordenadasXEnConsola(Terreno* terreno);
+
+	//Pos: Muestra por consola los valores de la coordenada Y
 	void dibujarCoordenadaYEnConsola(unsigned int coordenadaY);
+
+	//Pos: Muestra por consola 'parcela'. De acuerdo al estado de la parcela se muestra de manera diferente
 	void dibujarParcelaEnConsola(Parcela* parcela);
+
+	//Pos: Muestra por consola el suelo de la parcela
 	void dibujarSueloTerrenoEnConsola(Terreno* terreno);
+
+	//Pos: Devuelve la informacion a mostrar dentro de la parcela de acuerdo al estado de la misma
 	std::string obtenerInformacionAMostrarParcela(Parcela* parcela);
+
+	//Pos: Devuelve el simbolo que se debe dibujar dentro de la parcela para indicar su estado
 	std::string obtenerSimboloParcela(Parcela* parcela);
 
+	/*
+	 * Pos: Crea una imagen BMP por cada terreno de 'jugador'. Las imagenes se crean en el mismo directorio
+	 * 		que el entorno de ejecucion del programa.
+	 * 		Los nombres de las imagenes son: "NombreJugador_Terreno_NumeroTerreno"
+	 * 		Ejemplo: "Jugador1_Terreno_1"
+	 */
 	void mostrarTerrenosJugadorPorImagen(Jugador* jugador);
+
+	/*
+	 * Pos: Crea una imagen BMP de 'terreno' de acuerdo a los parametros definidos en 'PlantillaTerrenoImagen'.
+	 * 		La imagen se crean en el mismo directorio que el entorno de ejecucion del programa.
+	 * 		Los nombres de las imagenes son: "NombreJugador_Terreno_NumeroTerreno"
+	 * 		Ejemplo: "Jugador1_Terreno_1"
+	 */
 	void dibujarTerreno(Terreno* terreno);
+
+	/*
+	 * Pos: Dibuja una parcela de acuerdo a los parametros definidos en 'PlantillaTerrenoImagen'.
+	 * 		El punto definido por coordenadaX y coordenadaY determina el extremo superior izquierdo
+	 * 		de la parcela. El dibujo de la parcela dependera del estado de la misma.
+	 */
 	void dibujarParcela(Parcela* parcela, unsigned int coordenadaX, unsigned int coordenadaY);
+
+	/*
+	 * Pos: Dibuja una parcela limpia de acuerdo a los parametros definidos en 'PlantillaTerrenoImagen'.
+	 * 		El punto definido por coordenadaX y coordenadaY determina el extremo superior izquierdo
+	 * 		de la parcela.
+	 */
 	void dibujarParcelaLimpia(Parcela* parcela, unsigned int coordenadaX, unsigned int coordenadaY);
+
+	/*
+	 * Pos: Dibuja una parcela cosechada de acuerdo a los parametros definidos en 'PlantillaTerrenoImagen'.
+	 * 		El punto definido por coordenadaX y coordenadaY determina el extremo superior izquierdo
+	 * 		de la parcela.
+	 */
 	void dibujarParcelaCosechada(Parcela* parcela, unsigned int coordenadaX, unsigned int coordenadaY);
+
+	/*
+	 * Pos: Dibuja una parcela sembrada de acuerdo a los parametros definidos en 'PlantillaTerrenoImagen'.
+	 * 		El punto definido por coordenadaX y coordenadaY determina el extremo superior izquierdo
+	 * 		de la parcela.
+	 */
 	void dibujarParcelaSembrada(Parcela* parcela,unsigned int coordenadaX, unsigned int coordenadaY);
+
+	/*
+	 * Pos: Dibuja una seca sembrada de acuerdo a los parametros definidos en 'PlantillaTerrenoImagen'.
+	 * 		El punto definido por coordenadaX y coordenadaY determina el extremo superior izquierdo
+	 * 		de la parcela.
+	 */
 	void dibujarParcelaSeca(Parcela* parcela, unsigned int coordenadaX, unsigned int coordenadaY);
+
+	/*
+	 * Pos: Dibuja una parcela podrida de acuerdo a los parametros definidos en 'PlantillaTerrenoImagen'.
+	 * 		El punto definido por coordenadaX y coordenadaY determina el extremo superior izquierdo
+	 * 		de la parcela.
+	 */
 	void dibujarParcelaPodrida(Parcela* parcela, unsigned int coordenadaX, unsigned int coordenadaY);
+
+	/*
+	 * Pos: Dibuja una parcela sembrada de acuerdo a los parametros definidos en 'PlantillaTerrenoImagen'.
+	 * 		El punto definido por coordenadaX y coordenadaY determina el extremo superior izquierdo
+	 * 		de la parcela.
+	 */
 	void dibujarAlambradoParcela(int coordenadaXEnDibujo, int coordenadaYEnDibujo);
 	void dibujarMarcasArado(Parcela* parcela, unsigned int coordenadaXEnDibujo, unsigned int coordenadaYEnDibujo);
 	void dibujarCultivos(Parcela* parcela, unsigned int coordenadaXEnDibujo, unsigned int coordenadaYEnDibujo);

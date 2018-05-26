@@ -3,6 +3,12 @@
 
 #include <string>
 
+/*
+ * Define las dimensiones de un terreno dibujado por consola.
+ * Define los simbolos para los diferentes estados de las parceles
+ * (SEMBRADA, LIMPIA, etc), el simbolo de separacion entre parcelas,
+ * el anchos de las parcelas, los bordes, etc.
+ */
 class PlantillaTerrenoConsola {
 
 private:
@@ -19,10 +25,15 @@ private:
 	static unsigned int anchoParcela;
 	static unsigned int distanciaBordeIzquierdo;
 
+	/*
+	 * El constructor es privado para que no se pueda instanciar,
+	 * dado que no es necesario
+	 */
 	PlantillaTerrenoConsola();
 
 public:
 
+	//Pos:
 	static std::string obtenerSimboloParcelaLimpia();
 	static std::string obtenerSimboloParcelaSembrada();
 	static std::string obtenerSimboloParcelaSeca();
