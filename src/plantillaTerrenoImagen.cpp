@@ -1,10 +1,3 @@
-/*
- * plantillaTerrenoImagen.cpp
- *
- *  Created on: 23 may. 2018
- *      Author: administrador
- */
-
 #include "plantillaTerrenoImagen.h"
 #include "configuracion.h"
 

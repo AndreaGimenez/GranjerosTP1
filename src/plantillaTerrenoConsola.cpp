@@ -1,10 +1,3 @@
-/*
- * plantillaTerrenoConsola.cpp
- *
- *  Created on: 23 may. 2018
- *      Author: administrador
- */
-
 #include "plantillaTerrenoConsola.h"
 
 using namespace std;

@@ -1,10 +1,3 @@
-/*
- * parametro.h
- *
- *  Created on: 13 may. 2018
- *      Author: administrador
- */
-
 #ifndef PARAMETRO_H_
 #define PARAMETRO_H_
 

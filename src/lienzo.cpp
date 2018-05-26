@@ -1,10 +1,3 @@
-/*
- * lienzo.cpp
- *
- *  Created on: 18 may. 2018
- *      Author: administrador
- */
-
 #include "lienzo.h"
 
 using namespace std;

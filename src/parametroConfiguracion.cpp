@@ -1,10 +1,3 @@
-/*
- * parametroConfiguracion.cpp
- *
- *  Created on: 27 abr. 2018
- *      Author: administrador
- */
-
 #include "parametroConfiguracion.h"
 #include "configuracion.h"
 

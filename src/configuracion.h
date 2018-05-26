@@ -1,10 +1,3 @@
-/*
- * Configuracion.h
- *
- *  Created on: 25 abr. 2018
- *      Author: administrador
- */
-
 #ifndef CONFIGURACION_H_
 #define CONFIGURACION_H_
 
@@ -20,10 +13,15 @@ int const COSTO_UNITARIO_ALMACENAMIENTO_TANQUE = 2 ;
 
 /*
  * Clase que representa las configuraciones del juego.
- * Contiene los valores iniciales, dificultades, realiza todos los calculos que dependan de la dificultad del juego, contiene los recursos disponibles, constantes, etc.
- * La configuracion es comun a tode el juego por ende no debe instanciarse en cada lugar, debe inicializarse una unica vez y luego utilizarse de manera estatica.
+ * Contiene los valores iniciales, dificultades, realiza todos los calculos que dependan
+ * de la dificultad del juego, contiene los recursos disponibles, constantes, etc.
+ * La configuracion es comun a tode el juego por ende no debe instanciarse en cada lugar,
+ * debe inicializarse una unica vez y luego utilizarse de manera estatica.
  *
- * Los archivos de configuracion deben estar en resources/
+ * Tambien incluye los path relativos donde se almacenan los archivos que necesita el juego.
+ * Path de archivos de cultivos: resources/cultivos.txt
+ * Path de archivos de destinos: resources/destinos.txt
+ * Path de archivos de imagenes: resources/img
  */
 class Configuracion {
 
@@ -45,112 +43,158 @@ private:
 	//Para evitar que sea instanciada el constructor es private, debe usarse de manera estatica.
 	Configuracion();
 
-	//Pre: En el archivo 'cultivos.txt' no puede haber mas de 1 linea con el mismo cultivo.
-	//Pos: Carga los cultivos con la informacion del archivo 'cultivos.txt'.
+	/*
+	 * Pre: En el archivo 'cultivos.txt' no puede haber mas de 1 linea con el mismo cultivo.
+	 * Pos: Carga los cultivos con la informacion del archivo 'cultivos.txt'.
+	 */
 	static void cargarCultivos();
 
+	// Pos: Devuelve la ruta completa con el nombre del archivo de cultivos.
 	static std::string obtenerArchivoCultivos();
 
-	//Pre: En el archivo 'destinos.txt' no puede haber mas de 1 destino para cada cultivo.
-	//Pos: Carga los destinos con la informacion del archivo 'destinos.txt'.
+	/*
+	 * Pre: En el archivo 'destinos.txt' no puede haber mas de 1 destino para cada cultivo.
+	 * Pos: Carga los destinos con la informacion del archivo 'destinos.txt'.
+	 */
 	static void cargarDestinos();
 
+	// Pos: Devuelve la ruta completa con el nombre del archivo de destinos.
 	static std::string obtenerArchivoDestinos();
 
-	//Pos: Devuelve el coeficiente que se utilizara para calcular:
-	//			- Creditos iniciales
-	//			- Capacidad inicial del tanque
-	//			- Capacidad inicial del almacen
+	/*
+	 * Pos: Devuelve el coeficiente que se utilizara para calcular:
+	 * 			- Creditos iniciales
+	 *			- Capacidad inicial del tanque
+	 *			- Capacidad inicial del almacen
+	 */
 	static unsigned int obtenerCoeficienteDificultad();
 
-	//Pos: Libera memoria pedida para los cultivos
+	// Pos: Libera memoria pedida para los cultivos
 	static void destruirCultivos();
 
-	//Pos: Libera memoria pedida para los destinos
+	// Pos: Libera memoria pedida para los destinos
 	static void destruirDestinos();
 
 
 public:
 
-	//Pos: Inicializa la configuracion de acuerdo a los parametros del juego y archivos de configuracion.
+	// Pos: Inicializa la configuracion de acuerdo a los parametros del juego y archivos de configuracion.
 	static void inicializar(ParametroConfiguracion* parametros);
 
-	//Pre: Se debe haber inicializado la configuracion con 'inicializar'.
-	//Pos: Devuelve la dificultad configurada.
+	/*
+	 * Pre: Se debe haber inicializado la configuracion con 'inicializar'.
+	 * Pos: Devuelve la dificultad configurada.
+	 */
 	static Dificultad obtenerDificultad();
 
-	//Pre: Se debe haber inicializado la configuracion con 'inicializar'.
-	//Pos: Devuelve la cantidad de terrenos iniciales para un jugador.
+	/*
+	 * Pre: Se debe haber inicializado la configuracion con 'inicializar'.
+	 * Pos: Devuelve la cantidad de terrenos iniciales para un jugador.
+	 */
 	static unsigned int obtenerCantidadTerrenosIniciales();
 
-	//Pre: Se debe haber inicializado la configuracion con 'inicializar'.
-	//Pos: Devuelve la cantidad de jugadores de la partida
+	/*
+	 * Pre: Se debe haber inicializado la configuracion con 'inicializar'.
+	 * Pos: Devuelve la cantidad de jugadores de la partida
+	 */
 	static unsigned int obtenerCantidadJugadores();
 
-	//Pre: Se debe haber inicializado la configuracion con 'inicializar'.
-	//Pos: Devuelve el largo del terreno, la dimension representada por las filas.
+	/*
+	 * Pre: Se debe haber inicializado la configuracion con 'inicializar'.
+	 * Pos: Devuelve el largo del terreno, la dimension representada por las filas.
+	 */
 	static unsigned int obtenerLargoTerreno();
 
-	//Pre: Se debe haber inicializado la configuracion con 'inicializar'.
-	//Pos: Devuelve el ancho del terreno, la dimension representada por las columnas.
+	/*
+	 * Pre: Se debe haber inicializado la configuracion con 'inicializar'.
+	 * Pos: Devuelve el ancho del terreno, la dimension representada por las columnas.
+	 */
 	static unsigned int obtenerAnchoTerreno();
 
-	//Pre: Se debe haber inicializado la configuracion con 'inicializar'.
-	//Pos: Devuelve la cantidad de creditos iniciales de la partida.
+	/*
+	 * Pre: Se debe haber inicializado la configuracion con 'inicializar'.
+	 * Pos: Devuelve la cantidad de creditos iniciales de la partida.
+	 */
 	static unsigned int obtenerCreditosIniciales();
 
-	//Pre: Se debe haber inicializado la configuracion con 'inicializar'.
-	//Pos: Devuelve la capacidad inicial del tanque.
+	/*
+	 * Pre: Se debe haber inicializado la configuracion con 'inicializar'.
+	 * Pos: Devuelve la capacidad inicial del tanque.
+	 */
 	static unsigned int obtenerCapacidadInicialTanque();
 
-	//Pre: Se debe haber inicializado la configuracion con 'inicializar'.
-	//Pos: Devuelve la cantidad de turnos.
+	/*
+	 * Pre: Se debe haber inicializado la configuracion con 'inicializar'.
+	 * Pos: Devuelve la cantidad de turnos.
+	 */
 	static unsigned int obtenerCantidadTurnos();
 
-	//Pre: Se debe haber inicializado la configuracion con 'inicializar'.
-	//Pos: Devuelve la capacidad inicial del almacen.
+	/*
+	 * Pre: Se debe haber inicializado la configuracion con 'inicializar'.
+	 * Pos: Devuelve la capacidad inicial del almacen.
+	 */
 	static unsigned int obtenerCapacidadInicialAlmacen();
 
-	//Pre: Se debe haber inicializado la configuracion con 'inicializar'.
-	//	   'numeroTerrenoAComprar' debe ser la cantidad de terrenos del jugador + 1.
-	//Pos: Devuelve el costo de comprar el terreno.
+	/*
+	 * Pre: Se debe haber inicializado la configuracion con 'inicializar'.
+	 * 	   'numeroTerrenoAComprar' debe ser la cantidad de terrenos del jugador + 1.
+	 * Pos: Devuelve el costo de comprar el terreno.
+	 */
 	static unsigned int obtenerCostoTerreno(unsigned int numeroTerrenoAComprar);
 
-	//Pre: Se debe haber inicializado la configuracion con 'inicializar'.
-	//Pos: Devuelve el costo de comprar las undiades de almacenamiento indicadas en 'aumentoAlmacenamiento'.
+	/*
+	 * Pre: Se debe haber inicializado la configuracion con 'inicializar'.
+	 * Pos: Devuelve el costo de comprar las undiades de almacenamiento indicadas en 'aumentoAlmacenamiento'.
+	 */
 	static unsigned int obtenerCostoAumentoAlmacenamientoAlmacen(unsigned int aumentoAlmacenamiento);
 
-	//Pre:
-	//Post: Devuelve el costo de comprar las undiades de almacenamiento indicadas en 'aumentoVolumen'.
+	/*
+	 * Pre: Se debe haber inicializado la configuracion con 'inicializar'.
+	 * Pos: Devuelve el costo de comprar las undiades de almacenamiento indicadas en 'aumentoVolumen'.
+	 */
 	static unsigned int obtenerCostoAumentoCapacidadTanque(unsigned int aumentoVolumen);
 
-	//Pre: Se debe haber inicializado la configuracion con 'inicializar'.
-	//Pos: Devuelve los cultivos disponibles para que utilicen los jugadores.
-	//	   Los mismos dependerán de la configuración del archivo 'cultivos.txt'.
+	/*
+	 * Pre: Se debe haber inicializado la configuracion con 'inicializar'.
+	 * Pos: Devuelve los cultivos disponibles para que utilicen los jugadores.
+	 *      Los mismos dependerán de la configuración del archivo 'cultivos.txt'.
+	 */
 	static Lista<Cultivo*>* obtenerCultivos();
 
-	//Pre: Se debe haber inicializado la configuracion con 'inicializar'.
-	//Pos: Devuelve el cultivo que corresponde al nombre pasa por parametro 'nombreCultivo'.
-	//	   En caso que 'nombreCultivo' no pertenezca a ningun cultivo disponible devuelve NULL.
+	/*
+	 * Pre: Se debe haber inicializado la configuracion con 'inicializar'.
+	 * Pos: Devuelve el cultivo que corresponde al nombre pasa por parametro 'nombreCultivo'.
+	 * 	    En caso que 'nombreCultivo' no pertenezca a ningun cultivo disponible devuelve NULL.
+	 */
 	static Cultivo* obtenerCultivo(std::string nombreCultivo);
 
-	//Pre: Se debe haber inicializado la configuracion con 'inicializar'.
-	//Pos: Devuelve los destinos disponibles a los cuales se podrán enviar las cosechas almacenadas.
-	//	   Los mismos dependerán de la configuración del archivo 'destinos.txt'.
+	/*
+	 * Pre: Se debe haber inicializado la configuracion con 'inicializar'.
+	 * Pos: Devuelve los destinos disponibles a los cuales se podrán enviar las cosechas almacenadas.
+	 * 	    Los mismos dependerán de la configuración del archivo 'destinos.txt'.
+	 */
 	static Lista<Destino*>* obtenerDestinos();
 
-	//Pre: Se debe haber inicializado la configuracion con 'inicializar'.
-	//Pos: Devuelve el destino que corresponde al cultivo pasado por parametro 'cultivo'.
-	//	   En caso que no haya ningun destino para el cultivo devuelve NULL.
+	/*
+	 * Pre: Se debe haber inicializado la configuracion con 'inicializar'.
+	 * Pos: Devuelve el destino que corresponde al cultivo pasado por parametro 'cultivo'.
+	 * 	    En caso que no haya ningun destino para el cultivo devuelve NULL.
+	 */
 	static Destino* obtenerDestino(Cultivo* cultivo);
 
+	/*
+	 * Pre: Se debe haber inicializado la configuracion con 'inicializar'.
+	 * Pos: Devuelve la rentabilidad de enviar 'cantidad' de cosechas de 'cultivo.
+	 */
 	static unsigned int calcularRentabilidad(Cultivo* cultivo, unsigned int cantidad);
 
+	// Pos: Devuelve la rentabilidad de enviar 'cantidad' de cosechas de 'cultivo.
 	static std::string obtenerResourcesPath();
 
+	// Pos: Devuelve el directorio de imagenes, donde se encuentran las imagenes necesarias para el juego.
 	static std::string obtenerImagesPath();
 
-	//Pos: Libera la memoria reservada para los cultivos y destinos.
+	// Pos: Libera la memoria reservada para los cultivos y destinos.
 	~Configuracion();
 };
 

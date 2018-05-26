@@ -1,10 +1,3 @@
-/*
- * parametroConfiguracion.h
- *
- *  Created on: 27 abr. 2018
- *      Author: administrador
- */
-
 #ifndef PARAMETROCONFIGURACION_H_
 #define PARAMETROCONFIGURACION_H_
 

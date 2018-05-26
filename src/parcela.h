@@ -1,10 +1,3 @@
-/*
- * parcela.h
- *
- *  Created on: 2 may. 2018
- *      Author: administrador
- */
-
 #ifndef PARCELA_H_
 #define PARCELA_H_
 

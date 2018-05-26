@@ -1,10 +1,3 @@
-/*
- * plantillaTerrenoImagen.h
- *
- *  Created on: 23 may. 2018
- *      Author: administrador
- */
-
 #ifndef PLANTILLATERRENOIMAGEN_H_
 #define PLANTILLATERRENOIMAGEN_H_
 

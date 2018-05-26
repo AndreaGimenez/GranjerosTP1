@@ -1,10 +1,3 @@
-/*
- * tanque.h
- *
- *  Created on: 20 Apr 2018
- *      Author: Usuario
- */
-
 #ifndef TANQUE_H_
 #define TANQUE_H_
 

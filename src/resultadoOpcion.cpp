@@ -1,10 +1,3 @@
-/*
- * respuestaMenu.cpp
- *
- *  Created on: 28 abr. 2018
- *      Author: administrador
- */
-
 #include "resultadoOpcion.h"
 #include "creadorAcciones.h"
 

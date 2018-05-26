@@ -1,10 +1,3 @@
-/*
- * fileReader.cpp
- *
- *  Created on: 25 abr. 2018
- *      Author: administrador
- */
-
 #include "fileParser.h"
 
 using namespace std;

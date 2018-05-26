@@ -1,10 +1,3 @@
-/*
- * terreno.h
- *
- *  Created on: 29 abr. 2018
- *      Author: jonathan
- */
-
 #ifndef TERRENO_H_
 #define TERRENO_H_
 

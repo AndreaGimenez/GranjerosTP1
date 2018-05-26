@@ -1,10 +1,3 @@
-/*
- * interfazUsuario.cpp
- *
- *  Created on: 28 abr. 2018
- *      Author: administrador
- */
-
 #include "interfazUsuario.h"
 #include <cstdlib>
 #include <iostream>

@@ -1,10 +1,3 @@
-/*
- * creadorAcciones.cpp
- *
- *  Created on: 2 may. 2018
- *      Author: administrador
- */
-
 #include "creadorAcciones.h"
 
 unsigned int CreadorAcciones::cantidadAcciones = 17;

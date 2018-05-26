@@ -1,10 +1,3 @@
-/*
- * respuestaMenu.h
- *
- *  Created on: 28 abr. 2018
- *      Author: administrador
- */
-
 #ifndef RESULTADOOPCION_H_
 #define RESULTADOOPCION_H_
 

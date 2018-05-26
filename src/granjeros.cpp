@@ -1,10 +1,3 @@
-/*
- * granjeros.cpp
- *
- *  Created on: 29 abr. 2018
- *      Author: administrador
- */
-
 #include "granjeros.h"
 #include <iostream>
 #include <ctime>
@@ -50,11 +43,11 @@ void Granjeros::ejecutarAccion(Accion* accion){
 
 	bool accionEjecutada = false; //Indica si la accion ya se ejecuto en alguno de los metodos
 
-	//Acciones que son estrictamente d  configuracion previa a la partida
+	//Acciones que son estrictamente de configuracion previa a la partida
 	accionEjecutada = ejecutarAccionConfiguracion(accion);
 
 	if(!accionEjecutada)
-		//Acciones que tienen que ver estrictametne con la partida
+		//Acciones que tienen que ver estrictamente con la partida
 		accionEjecutada = ejecutarAccionPartida(accion);
 
 	if(!accionEjecutada)

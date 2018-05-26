@@ -1,10 +1,3 @@
-/*
- * utils.cpp
- *
- *  Created on: 29 abr. 2018
- *      Author: administrador
- */
-
 #include "utils.h"
 #include <cstdlib>
 #include <sstream>

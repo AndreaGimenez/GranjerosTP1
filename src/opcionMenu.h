@@ -1,10 +1,3 @@
-/*
- * menuItem.h
- *
- *  Created on: 28 abr. 2018
- *      Author: administrador
- */
-
 #ifndef OPCIONMENU_H_
 #define OPCIONMENU_H_
 

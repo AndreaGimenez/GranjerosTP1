@@ -1,10 +1,3 @@
-/*
- * lienzo.h
- *
- *  Created on: 18 may. 2018
- *      Author: administrador
- */
-
 #ifndef LIENZO_H_
 #define LIENZO_H_
 

@@ -1,10 +1,3 @@
-/*
- * utils.h
- *
- *  Created on: 29 abr. 2018
- *      Author: administrador
- */
-
 #ifndef UTILS_H_
 #define UTILS_H_
 

@@ -1,10 +1,3 @@
-/*
- * menuItem.cpp
- *
- *  Created on: 28 abr. 2018
- *      Author: administrador
- */
-
 #include "opcionMenu.h"
 #include <iostream>
 #include "accion.h"

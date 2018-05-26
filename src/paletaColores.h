@@ -1,10 +1,3 @@
-/*
- * paletaColores.h
- *
- *  Created on: 18 may. 2018
- *      Author: administrador
- */
-
 #ifndef PALETACOLORES_H_
 #define PALETACOLORES_H_
 
