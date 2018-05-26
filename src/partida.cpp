@@ -70,8 +70,14 @@ bool Partida::ejecutarAccionCosechar(unsigned int numeroTerreno, std::string coo
 
 bool Partida::ejecutarAccionEnviarCosecha(std::string nombreCultivo){
 
+	bool ejecutarAccionCosecha = false;
+
 	Cultivo* cultivo = Configuracion::obtenerCultivo(nombreCultivo);
-	return this->verJugadorActual()->enviar(cultivo);
+	if(cultivo != NULL){
+		ejecutarAccionCosecha = this->verJugadorActual()->enviar(cultivo);
+	}
+
+	return ejecutarAccionCosecha;
 }
 
 bool Partida::ejecutarAccionRegar(unsigned int numeroTerreno, std::string coordenadasParcela){
@@ -81,8 +87,14 @@ bool Partida::ejecutarAccionRegar(unsigned int numeroTerreno, std::string coorde
 
 bool Partida::ejecutarAccionSembrar(unsigned int numeroTerreno, std::string coordenadasParcela, std::string nombreCultivo){
 
+	bool ejecutarAccionSembrar = false;
+
 	Cultivo* cultivo = Configuracion::obtenerCultivo(nombreCultivo);
-	return this->verJugadorActual()->sembrar(numeroTerreno, coordenadasParcela, cultivo);
+	if(cultivo != NULL){
+		ejecutarAccionSembrar = this->verJugadorActual()->sembrar(numeroTerreno, coordenadasParcela, cultivo);
+	}
+
+	return ejecutarAccionSembrar;
 }
 
 bool Partida::ejecutarAccionVenderTerreno(unsigned int numeroTerreno){
