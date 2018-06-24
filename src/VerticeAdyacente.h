@@ -10,6 +10,8 @@
 
 #include "Vertice.h"
 
+template <class T> class Vertice;
+
 template<class T> class VerticeAdyacente {
 
 private:

@@ -11,8 +11,13 @@
 template<class T> class Comparador{
 
 public:
-	virtual bool sonIguales(T dato1, T dato2);
-	virtual ~Comparador();
+	bool sonIguales(T dato1, T dato2);
 };
+
+template<class T>
+bool Comparador<T>::sonIguales(T dato1, T dato2){
+
+	return (dato1 == dato2);
+}
 
 #endif /* COMPARADOR_H_ */

@@ -9,28 +9,28 @@
 #define GRAFO_H_
 
 #include "Vertice.h"
-#include "Arista.h"
+#include "Comparador.h"
 
 template<class T> class Grafo {
 
 private:
 
 	Lista<Vertice<T>*>* vertices;
-	unsigned int tamanio;
 
-	Comparador<T> comparador;
+	Comparador<T>* comparador;
+	Comparador<T>* comparadorDefault;
 
 public:
 
 	Grafo();
+	Grafo(Comparador<T> comparador);
 
-	void cambiarComparador(Comparador<T> comparador);
-	bool existeVertice(Vertice<T>* vertice);
-	void insertarVertice(Vertice<T>* vertice);
-	bool existeArista(Arista<T>* arista);
-	void insertarArista(Arista<T>* arista);
-	void borrarVertice(Vertice<T>* vertice);
-	void borrarArista(Arista<T>* arista);
+	bool existeNodo(T dato);
+	void insertarNodo(T dato);
+	bool existeArista(T datoOrigen, T datoDestino);
+	void insertarArista(T datoOrigen, T datoDestino, unsigned int peso);
+	void borrarNodo(T dato);
+	void borrarArista(T datoOrigen, T datoDestino);
 
 	~Grafo();
 
@@ -39,71 +39,85 @@ private:
 	/*
 	 * pos: devuelve el vertice del grafo que coincida con los datos de vertice, de acuerdo al comparador
 	 */
-	Vertice<T>* obtenerVertice(Vertice<T>* vertice);
+	Vertice<T>* obtenerNodo(T dato);
+	bool sonIguales(T dato1, T dato2);
+	Comparador<T>* getComparador();
 };
 
 template<class T>
 Grafo<T>::Grafo(){
 
 	this->vertices = new Lista<Vertice<T>*>;
-	tamanio = 0;
+	this->comparador = NULL;
+	this->comparadorDefault = new Comparador<T>;
 }
 
 template<class T>
-void Grafo<T>::cambiarComparador(Comparador<T> comparador){
+Grafo<T>::Grafo(Comparador<T> comparador){
 
+	this->vertices = new Lista<Vertice<T>*>;
 	this->comparador = comparador;
+	this->comparadorDefault = new Comparador<T>;
 }
 
 template<class T>
-bool Grafo<T>::existeVertice(Vertice<T>* vertice){
+Comparador<T>* Grafo<T>::getComparador(){
 
-	bool existeVertice = false;
+	return (this->comparador == NULL)?this->comparadorDefault:this->comparador;
+}
+
+template<class T>
+bool Grafo<T>::existeNodo(T dato){
+
+	bool existeNodo = false;
 	this->vertices->iniciarCursor();
 
-	while(this->vertices->avanzarCursor() && !existeVertice){
+	while(this->vertices->avanzarCursor() && !existeNodo){
 
 		Vertice<T>* verticeAAnalizar = this->vertices->obtenerCursor();
-		existeVertice = this->comparador.sonIguales(verticeAAnalizar->obtenerDato(), vertice->obtenerDato());
+		existeNodo = this->getComparador()->sonIguales(verticeAAnalizar->obtenerDato(), dato);
 	}
 
-	return existeVertice;
+	return existeNodo;
 }
 
 template<class T>
-void Grafo<T>::insertarVertice(Vertice<T>* vertice){
+void Grafo<T>::insertarNodo(T dato){
 
-	if(!this->existeVertice(vertice)){
+	if(!this->existeNodo(dato)){
 
-		this->vertices->agregar(vertice);
+		Vertice<T>* nuevoVertice = new Vertice<T>(dato);
+		this->vertices->agregar(nuevoVertice);
 	}
 }
 
 template<class T>
-bool Grafo<T>::existeArista(Arista<T>* arista){
+bool Grafo<T>::existeArista(T datoOrigen, T datoDestino){
 
 	bool existeArista = false;
 
-	Vertice<T>* verticeDelGrafo = this->obtenerVertice(arista->obtenerVerticeOrigen());
+	Vertice<T>* verticeDelGrafo = this->obtenerNodo(datoOrigen);
 	if(verticeDelGrafo != NULL){
-		existeArista = verticeDelGrafo->existeAdyacencia(arista->obtenerVerticeDestino(), this->comparador);
+		existeArista = verticeDelGrafo->existeAdyacencia(datoDestino, this->getComparador());
 	}
 
 	return existeArista;
 }
 
 template<class T>
-void Grafo<T>::insertarArista(Arista<T>* arista){
+void Grafo<T>::insertarArista(T datoOrigen, T datoDestino, unsigned int peso){
 
-	if(!this->existeArista(arista)){
+	if(!this->existeArista(datoOrigen, datoDestino)){
 
-		Vertice<T>* verticeDelGrafo = this->obtenerVertice(arista->obtenerVerticeOrigen());
-		verticeDelGrafo->agregarAdyacencia(arista);
+		Vertice<T>* verticeDelGrafoOrigen = this->obtenerNodo(datoOrigen);
+		Vertice<T>* verticeDelGrafoDestino = this->obtenerNodo(datoDestino);
+
+		verticeDelGrafoOrigen->agregarAdyacencia(verticeDelGrafoDestino, peso);
 	}
 }
 
 template<class T>
-void Grafo<T>::borrarVertice(Vertice<T>* vertice){
+void Grafo<T>::borrarNodo(T dato){
 
 	unsigned int indice = 0;
 	bool verticeEncontrado = false;
@@ -114,7 +128,7 @@ void Grafo<T>::borrarVertice(Vertice<T>* vertice){
 		indice++;
 		Vertice<T>* verticeActual = this->vertices->obtenerCursor();
 
-		if(this->comparador.comparar(verticeActual->obtenerDato(), vertice->obtenerDato())){
+		if(this->getComparador().sonIguales(verticeActual->obtenerDato(), dato)){
 
 			verticeEncontrado = true;
 			if(!verticeActual->tieneAlgunaAdyacencia()){
@@ -126,7 +140,7 @@ void Grafo<T>::borrarVertice(Vertice<T>* vertice){
 }
 
 template<class T>
-void Grafo<T>::borrarArista(Arista<T>* arista){
+void Grafo<T>::borrarArista(T datoOrigen, T datoDestino){
 
 	bool verticeEncontrado = false;
 
@@ -134,15 +148,38 @@ void Grafo<T>::borrarArista(Arista<T>* arista){
 	while(this->vertices->avanzarCursor() && !verticeEncontrado){
 		Vertice<T>* verticeActual = this->vertices->obtenerCursor();
 
-		if(this->comparador.comparar(verticeActual->obtenerDato(), arista->obtenerVerticeOrigen()->obtenerDato())){
+		if(this->getComparador().sonIguales(verticeActual->obtenerDato(), datoOrigen)){
 
-			verticeActual->borrarAdyacencia(arista);
+			verticeActual->borrarAdyacencia(datoDestino);
 		}
 	}
 }
 
 template<class T>
+Vertice<T>* Grafo<T>::obtenerNodo(T dato){
+
+	Vertice<T>* verticeDelGrafo = NULL;
+
+	this->vertices->iniciarCursor();
+	while(this->vertices->avanzarCursor() && verticeDelGrafo == NULL){
+
+		Vertice<T>* verticeActual = this->vertices->obtenerCursor();
+		if(this->getComparador()->sonIguales(verticeActual->obtenerDato(), dato)){
+
+			verticeDelGrafo = verticeActual;
+		}
+	}
+
+	return verticeDelGrafo;
+}
+
+template<class T>
 Grafo<T>::~Grafo(){
+
+	this->vertices->iniciarCursor();
+	while(this->vertices->avanzarCursor()){
+		delete this->vertices->obtenerCursor();
+	}
 
 	delete this->vertices;
 }

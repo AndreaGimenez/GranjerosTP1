@@ -9,6 +9,8 @@
 #define VERTICE_H_
 
 #include "lista.h"
+#include "VerticeAdyacente.h"
+#include "Comparador.h"
 
 template<class T> class Vertice {
 
@@ -18,11 +20,12 @@ private:
 	T dato;
 
 public:
+
 	Vertice(T dato);
 
 	T obtenerDato();
-	void agregarAdyacencia(Arista<T>* arista);
-	bool existeAdyacencia(Vertice<T>* vertice, Comparador<T>* comparador);
+	void agregarAdyacencia(Vertice<T>* verticeAdyacente, unsigned int peso);
+	bool existeAdyacencia(T dato, Comparador<T>* comparador);
 	bool tieneAlgunaAdyacencia();
 
 	~Vertice();
@@ -31,7 +34,7 @@ public:
 template<class T>
 Vertice<T>::Vertice(T dato){
 
-	this->adyacencias = new Lista<VerticeAdyacente*>;
+	this->adyacencias = new Lista<VerticeAdyacente<T>*>;
 	this->dato = dato;
 }
 
@@ -42,14 +45,14 @@ T Vertice<T>::obtenerDato(){
 }
 
 template<class T>
-void Vertice<T>::agregarAdyacencia(Arista<T>* arista){
+void Vertice<T>::agregarAdyacencia(Vertice<T>* verticeAdyacente, unsigned int peso){
 
-	VerticeAdyacente* nuevaAdyacencia = new VerticeAdyacente(arista->obtenerVerticeDestino(), arista->obtenerPeso());
+	VerticeAdyacente<T>* nuevaAdyacencia = new VerticeAdyacente<T>(verticeAdyacente, peso);
 	this->adyacencias->agregar(nuevaAdyacencia);
 }
 
 template<class T>
-bool Vertice<T>::existeAdyacencia(Vertice<T>* vertice, Comparador<T>* comparador){
+bool Vertice<T>::existeAdyacencia(T dato, Comparador<T>* comparador){
 
 	bool existeAdyacencia = false;
 
@@ -57,7 +60,7 @@ bool Vertice<T>::existeAdyacencia(Vertice<T>* vertice, Comparador<T>* comparador
 	while(this->adyacencias->avanzarCursor() && !existeAdyacencia){
 
 		VerticeAdyacente<T>* verticeAdyacente = this->adyacencias->obtenerCursor();
-		existeAdyacencia = comparador->sonIguales(verticeAdyacente, vertice);
+		existeAdyacencia = comparador->sonIguales(verticeAdyacente->obtenerVertice()->obtenerDato(), dato);
 	}
 
 	return existeAdyacencia;
@@ -73,7 +76,7 @@ template<class T>
 Vertice<T>::~Vertice(){
 
 	this->adyacencias->iniciarCursor();
-	while(this->adyacencias->avanzarCursor() && !existeAdyacencia){
+	while(this->adyacencias->avanzarCursor()){
 
 		delete this->adyacencias->obtenerCursor();
 	}
