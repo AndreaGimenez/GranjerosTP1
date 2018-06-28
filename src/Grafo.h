@@ -23,19 +23,52 @@ private:
 
 public:
 
+	/*
+	 * Post: grafo generado vacío
+	 */
 	Grafo();
 	Grafo(Comparador<T> comparador);
 
+	/*
+	 * Post: retorna un valor logico indicando si el nodo existe en el grafo.
+	 */
 	bool existeNodo(T dato);
+
+	/*
+	 * Pre: el dato a insertar no pertenece al grafo
+     * Post: el grafo queda modificado por el agregado del nuevo vértice
+	 */
 	void insertarNodo(T dato);
+
+	/*
+	 * Post: retorna un valor logico indicando si la arista existe
+	 */
 	bool existeArista(T datoOrigen, T datoDestino);
+
+	/*
+	 * Pre: los vértices de origen y destino pertenecen al grafo. La nueva arista que los une no pertenecía al grafo.
+     * Post: el grafo queda modificado por el agregado de la nueva arista
+	 */
 	void insertarArista(T datoOrigen, T datoDestino, unsigned int peso);
+
+	/*
+	 * Pre: el vértice a eliminar pertenece al grafo y no tiene aristas incidentes en él.
+	 * Post: el grafo queda modificado por la eliminación del vértice
+	 */
 	void borrarNodo(T dato);
+
+	/*
+     * Pre: la arista pertenece al grafo.
+     * Post: el grafo queda modificado por la eliminación de la arista
+	 */
 	void borrarArista(T datoOrigen, T datoDestino);
 
 	Lista<ElementoResultadoDijkstra<T>*>* obtenerResultadoDijkstra(T origen);
 	void destruirResultadoDijkstra(Lista<ElementoResultadoDijkstra<T>*>* resultado);
 
+	/*
+	 * Pre: el grafo existe
+	 */
 	~Grafo();
 
 private:
