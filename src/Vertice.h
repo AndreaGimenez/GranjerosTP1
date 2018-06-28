@@ -18,6 +18,7 @@ private:
 
 	Lista<VerticeAdyacente<T>*>* adyacencias;
 	T dato;
+	unsigned int numeroVertice;
 
 public:
 
@@ -32,7 +33,7 @@ public:
 };
 
 template<class T>
-Vertice<T>::Vertice(T dato){
+Vertice<T>::Vertice(T dato, unsigned int numeroVertice){
 
 	this->adyacencias = new Lista<VerticeAdyacente<T>*>;
 	this->dato = dato;

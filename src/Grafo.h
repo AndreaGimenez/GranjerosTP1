@@ -10,6 +10,7 @@
 
 #include "Vertice.h"
 #include "Comparador.h"
+#include <climits>
 
 template<class T> class Grafo {
 
@@ -31,6 +32,9 @@ public:
 	void insertarArista(T datoOrigen, T datoDestino, unsigned int peso);
 	void borrarNodo(T dato);
 	void borrarArista(T datoOrigen, T datoDestino);
+
+	Lista<ElementoResultadoDijkstra<T>*>* obtenerResultadoDijkstra(T origen);
+	void destruirResultadoDijkstra(Lista<ElementoResultadoDijkstra<T>*>* resultado);
 
 	~Grafo();
 
@@ -174,6 +178,63 @@ Vertice<T>* Grafo<T>::obtenerNodo(T dato){
 }
 
 template<class T>
+Lista<ElementoResultadoDijkstra<T>*>* Grafo<T>::obtenerResultadoDijkstra(T origen){
+
+	Lista<ElementoResultadoDijkstra<T>*>* resultado = new Lista<ElementoResultadoDijkstra<T>*>;
+	ColaPrioridad<ElementoResultadoDijkstra<T>*>* pesosMinimos = new ColaPrioridad<ElementoResultadoDijkstra<T>*>;
+
+	//Busco el nodo origen
+	Vertice<T>* nodoOrigen = NULL;
+
+	this->vertices->iniciarCursor();
+	while(this->vertices->avanzarCursor() && nodoOrigen == NULL){
+
+		if(this->comparador->sonIguales(origen, this->vertices->obtenerCursor()->obtenerDato())){
+			nodoOrigen = this->vertices->obtenerCursor();
+		}
+	}
+
+	pesosMinimos->acolar(ElementoResultadoDijkstra(nodoOrigen->obtenerDato(), 0));
+
+	while(!pesosMinimos->estaVacia()){
+
+		//Obtengo nodo con menor peso de la cola
+		ElementoResultadoDijkstra* elementoConPesoMinimo = pesosMinimos->desacolar();
+
+		//Agrego el elemento con menor peso al resultado
+		resultado->agregar(elementoConPesoMinimo);
+
+		//Agrego nodos adyacentes del elemento que agregue a la cola de pesos
+		//El peso con el que se agregan los nodos adyacentes es el peso del nodo agregado mas el peso del nodo adyacente
+		Lista<VerticeAdyacente*>* adyacencias = nodoOrigen->obtenerAdyacencias();
+
+		adyacencias->iniciarCursor();
+		while(adyacencias->avanzarCursor()){
+
+			VerticeAdyacente* adyacencia = adyacencias->obtenerCursor();
+			if(!this->adyacenciaEstaEnResultado(adyacencia)){
+				pesosMinimos->acolar(new ElementoResultadoDijkstra(adyacencia->obtenerVertice()->obtenerDato(), elementoConPesoMinimo->obtenerPeso() + adyacencia->obtenerPeso()));
+			}
+		}
+	}
+
+	delete pesosMinimos;
+
+	return resultado;
+}
+
+template<class T>
+void Grafo<T>::destruirResultadoDijkstra(Lista<ElementoResultadoDijkstra<T>*>* resultado){
+
+	resultado->iniciarCursor();
+	while(resultado->avanzarCursor()){
+		delete resultado->obtenerCursor();
+	}
+
+	delete resultado;
+}
+
+template<class T>
 Grafo<T>::~Grafo(){
 
 	this->vertices->iniciarCursor();
@@ -182,6 +243,7 @@ Grafo<T>::~Grafo(){
 	}
 
 	delete this->vertices;
+	delete this->comparadorDefault;
 }
 
 #endif /* GRAFO_H_ */
