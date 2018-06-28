@@ -1,8 +1,8 @@
-#include "heap.h"
 #include <stdlib.h>
 #include <stdbool.h>
 #include <stddef.h>
 #include <stdio.h>
+#include "heap_.h"
 
 #define MAX 0
 #define TAM 31

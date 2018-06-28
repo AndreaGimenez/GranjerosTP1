@@ -15,7 +15,7 @@ class ComparadorDestino: public Comparador<Destino> {
 
 public:
 
-	bool sonIguales(Destino* destino1, Destino* destino2);
+	int comparar(Destino* destino1, Destino* destino2);
 };
 
 #endif /* COMPARADORDESTINO_H_ */

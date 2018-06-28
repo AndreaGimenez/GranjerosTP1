@@ -63,8 +63,8 @@ public:
 	 */
 	void borrarArista(T datoOrigen, T datoDestino);
 
-	Lista<ElementoResultadoDijkstra<T>*>* obtenerResultadoDijkstra(T origen);
-	void destruirResultadoDijkstra(Lista<ElementoResultadoDijkstra<T>*>* resultado);
+	Lista<ElementoDijkstra<T>*>* obtenerResultadoDijkstra(T origen);
+	void destruirResultadoDijkstra(Lista<ElementoDijkstra<T>*>* resultado);
 
 	/*
 	 * Pre: el grafo existe
@@ -77,7 +77,6 @@ private:
 	 * pos: devuelve el vertice del grafo que coincida con los datos de vertice, de acuerdo al comparador
 	 */
 	Vertice<T>* obtenerNodo(T dato);
-	bool sonIguales(T dato1, T dato2);
 	Comparador<T>* getComparador();
 };
 
@@ -112,7 +111,7 @@ bool Grafo<T>::existeNodo(T dato){
 	while(this->vertices->avanzarCursor() && !existeNodo){
 
 		Vertice<T>* verticeAAnalizar = this->vertices->obtenerCursor();
-		existeNodo = this->getComparador()->sonIguales(verticeAAnalizar->obtenerDato(), dato);
+		existeNodo = (this->getComparador()->sonIguales(verticeAAnalizar->obtenerDato(), dato) == 0);
 	}
 
 	return existeNodo;
@@ -165,7 +164,7 @@ void Grafo<T>::borrarNodo(T dato){
 		indice++;
 		Vertice<T>* verticeActual = this->vertices->obtenerCursor();
 
-		if(this->getComparador().sonIguales(verticeActual->obtenerDato(), dato)){
+		if(this->getComparador().comparar(verticeActual->obtenerDato(), dato) == 0){
 
 			verticeEncontrado = true;
 			if(!verticeActual->tieneAlgunaAdyacencia()){
@@ -185,7 +184,7 @@ void Grafo<T>::borrarArista(T datoOrigen, T datoDestino){
 	while(this->vertices->avanzarCursor() && !verticeEncontrado){
 		Vertice<T>* verticeActual = this->vertices->obtenerCursor();
 
-		if(this->getComparador().sonIguales(verticeActual->obtenerDato(), datoOrigen)){
+		if(this->getComparador().sonIguales(verticeActual->obtenerDato(), datoOrigen) == 0){
 
 			verticeActual->borrarAdyacencia(datoDestino);
 		}
@@ -201,7 +200,7 @@ Vertice<T>* Grafo<T>::obtenerNodo(T dato){
 	while(this->vertices->avanzarCursor() && verticeDelGrafo == NULL){
 
 		Vertice<T>* verticeActual = this->vertices->obtenerCursor();
-		if(this->getComparador()->sonIguales(verticeActual->obtenerDato(), dato)){
+		if(this->getComparador()->sonIguales(verticeActual->obtenerDato(), dato) == 0){
 
 			verticeDelGrafo = verticeActual;
 		}
@@ -211,10 +210,10 @@ Vertice<T>* Grafo<T>::obtenerNodo(T dato){
 }
 
 template<class T>
-Lista<ElementoResultadoDijkstra<T>*>* Grafo<T>::obtenerResultadoDijkstra(T origen){
+Lista<ElementoDijkstra<T>*>* Grafo<T>::obtenerResultadoDijkstra(T origen){
 
-	Lista<ElementoResultadoDijkstra<T>*>* resultado = new Lista<ElementoResultadoDijkstra<T>*>;
-	ColaPrioridad<ElementoResultadoDijkstra<T>*>* pesosMinimos = new ColaPrioridad<ElementoResultadoDijkstra<T>*>;
+	Lista<ElementoDijkstra<T>*>* resultado = new Lista<ElementoDijkstra<T>*>;
+	ColaPrioridad<ElementoDijkstra<T>*>* pesosMinimos = new ColaPrioridad<ElementoDijkstra<T>*>;
 
 	//Busco el nodo origen
 	Vertice<T>* nodoOrigen = NULL;
@@ -222,17 +221,17 @@ Lista<ElementoResultadoDijkstra<T>*>* Grafo<T>::obtenerResultadoDijkstra(T orige
 	this->vertices->iniciarCursor();
 	while(this->vertices->avanzarCursor() && nodoOrigen == NULL){
 
-		if(this->comparador->sonIguales(origen, this->vertices->obtenerCursor()->obtenerDato())){
+		if(this->comparador->sonIguales(origen, this->vertices->obtenerCursor()->obtenerDato()) == 0){
 			nodoOrigen = this->vertices->obtenerCursor();
 		}
 	}
 
-	pesosMinimos->acolar(ElementoResultadoDijkstra(nodoOrigen->obtenerDato(), 0));
+	pesosMinimos->acolar(ElementoDijkstra(nodoOrigen->obtenerDato(), 0));
 
 	while(!pesosMinimos->estaVacia()){
 
 		//Obtengo nodo con menor peso de la cola
-		ElementoResultadoDijkstra* elementoConPesoMinimo = pesosMinimos->desacolar();
+		ElementoDijkstra* elementoConPesoMinimo = pesosMinimos->desacolar();
 
 		//Agrego el elemento con menor peso al resultado
 		resultado->agregar(elementoConPesoMinimo);
@@ -246,7 +245,7 @@ Lista<ElementoResultadoDijkstra<T>*>* Grafo<T>::obtenerResultadoDijkstra(T orige
 
 			VerticeAdyacente* adyacencia = adyacencias->obtenerCursor();
 			if(!this->adyacenciaEstaEnResultado(adyacencia)){
-				pesosMinimos->acolar(new ElementoResultadoDijkstra(adyacencia->obtenerVertice()->obtenerDato(), elementoConPesoMinimo->obtenerPeso() + adyacencia->obtenerPeso()));
+				pesosMinimos->acolar(new ElementoDijkstra(adyacencia->obtenerVertice()->obtenerDato(), elementoConPesoMinimo->obtenerPeso() + adyacencia->obtenerPeso()));
 			}
 		}
 	}
@@ -257,7 +256,7 @@ Lista<ElementoResultadoDijkstra<T>*>* Grafo<T>::obtenerResultadoDijkstra(T orige
 }
 
 template<class T>
-void Grafo<T>::destruirResultadoDijkstra(Lista<ElementoResultadoDijkstra<T>*>* resultado){
+void Grafo<T>::destruirResultadoDijkstra(Lista<ElementoDijkstra<T>*>* resultado){
 
 	resultado->iniciarCursor();
 	while(resultado->avanzarCursor()){

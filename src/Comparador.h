@@ -11,13 +11,21 @@
 template<class T> class Comparador{
 
 public:
-	bool sonIguales(T dato1, T dato2);
+	int comparar(T dato1, T dato2);
 };
 
 template<class T>
-bool Comparador<T>::sonIguales(T dato1, T dato2){
+int Comparador<T>::comparar(T dato1, T dato2){
 
-	return (dato1 == dato2);
+	int resultado = 0;
+
+	if(dato1 > dato2){
+		resultado = 1;
+	}else if(dato1 < dato2){
+		resultado = -1;
+	}
+
+	return resultado;
 }
 
 #endif /* COMPARADOR_H_ */

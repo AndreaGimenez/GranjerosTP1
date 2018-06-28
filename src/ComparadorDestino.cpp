@@ -7,7 +7,7 @@
 
 #include "ComparadorDestino.h"
 
-bool ComparadorDestino::sonIguales(Destino* destino1, Destino* destino2){
+int ComparadorDestino::comparar(Destino* destino1, Destino* destino2){
 
-	return (destino1->obtenerNombre() == destino2->obtenerNombre());
+	return (destino1->obtenerNombre() == destino2->obtenerNombre())?0:-1;
 }
