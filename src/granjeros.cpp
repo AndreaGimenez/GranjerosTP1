@@ -151,7 +151,7 @@ bool Granjeros::ejecutarAccionPartida(Accion* accion){
 
 		case accion::ENVIAR_COSECHA:
 
-			accionEjecutadaExistosamente = partida->ejecutarAccionEnviarCosecha(accion->obtenerParametros()[0].obtenerValor());
+			accionEjecutadaExistosamente = partida->ejecutarAccionEnviarCosecha(accion->obtenerParametros()[0].obtenerValor(), accion->obtenerParametros()[1].obtenerValor());
 			if(accionEjecutadaExistosamente){
 				cout << "ENVIASTE LA COSECHA!" << endl << endl;
 			}

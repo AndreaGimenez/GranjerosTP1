@@ -2,6 +2,8 @@
 #define CULTIVO_H_
 
 #include <string>
+#include "trayecto.h"
+#include "GrafoMatriz.h"
 
 /*
  * 'Cultivo' representa cada semilla que se puede sembrar en una parcela.
@@ -25,6 +27,8 @@ private:
 	unsigned int rentabilidad;
 	unsigned int tiempoRecuperacion;
 	unsigned int consumoAgua;
+
+	GrafoMatriz<Lugar*>* trayectos;
 
 public:
 
@@ -52,6 +56,14 @@ public:
 
 	// Pos: Devuelve el tiempo, medido en turnos, que es necesario esperar para poder realizar una nueva siembra en la parcela.
 	unsigned int obtenerTiempoRecuperacion();
+
+	// Pos: Agrega un trayecto posible para el cultivo.
+	void agregarTrayecto(Trayecto* trayecto);
+
+	// Pos: Devuelve el costo de realizar el envio a 'lugar'.
+	unsigned int obtenerCostoEnvio(Lugar* lugar);
+
+	void calcularCostoMinimoDestinos();
 };
 
 #endif /* CULTIVO_H_ */
