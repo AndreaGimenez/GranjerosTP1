@@ -26,8 +26,8 @@ void CreadorAcciones::inicializar(){
 	acciones[accion::REGAR] = new Accion(accion::REGAR, 2, tiposRiegoCosecha);
 	acciones[accion::COSECHAR] = new Accion(accion::COSECHAR, 2, tiposRiegoCosecha);
 
-	parametro::Tipo tiposEnvioCosecha[] = {parametro::CHAR};
-	acciones[accion::ENVIAR_COSECHA] = new Accion(accion::ENVIAR_COSECHA, 1, tiposEnvioCosecha);
+	parametro::Tipo tiposEnvioCosecha[] = {parametro::CHAR, parametro::STRING};
+	acciones[accion::ENVIAR_COSECHA] = new Accion(accion::ENVIAR_COSECHA, 2, tiposEnvioCosecha);
 	acciones[accion::COMPRAR_TERRENO] = new Accion(accion::COMPRAR_TERRENO);
 
 	parametro::Tipo tiposVentaTerreno[] = {parametro::UNSIGNED_INT};

@@ -116,7 +116,6 @@ unsigned int Almacen::enviarCosecha(UnidadAlmacenamiento* unidadAlmacenamientoCo
 		if(unidadAlmacenamientoCosechaAEnviar->desalmacenar(cantidadAEnviar)){
 
 			this->volumenUtilizado -= cantidadAEnviar;
-
 			rentabilidadObtenida = Configuracion::calcularRentabilidad(cultivoAEnviar, cantidadAEnviar);
 		}
 	}
@@ -124,29 +123,15 @@ unsigned int Almacen::enviarCosecha(UnidadAlmacenamiento* unidadAlmacenamientoCo
 	return rentabilidadObtenida;
 }
 
-unsigned int Almacen::enviarCosechas(){
-
-	unsigned int rentabilidadObtenida = 0;
-
-	this->cosechasAlmacenadas.iniciarCursor();
-	while(this->cosechasAlmacenadas.avanzarCursor()){
-		rentabilidadObtenida += this->enviarCosecha(this->cosechasAlmacenadas.obtenerCursor());
-	}
-
-	return rentabilidadObtenida;
-}
-
-unsigned int Almacen::obtenerCostoEnvio(Cultivo* cultivoAEnviar){
+unsigned int Almacen::obtenerCostoEnvio(Cultivo* cultivoAEnviar, Lugar* destino){
 
 	unsigned int costo = 0;
 	unsigned int cantidadAlmacenada = this->obtenerCantidadAlmacenada(cultivoAEnviar);
 
 	if(cantidadAlmacenada > 0){
 
-		Destino* destino = Configuracion::obtenerDestino(cultivoAEnviar);
-
 		if(destino != NULL){
-			costo = cantidadAlmacenada * destino->obtenerPrecio();
+			costo = cantidadAlmacenada * cultivoAEnviar->obtenerCostoEnvio(destino);
 		}
 	}
 

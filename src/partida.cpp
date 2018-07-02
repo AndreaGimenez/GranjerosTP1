@@ -68,13 +68,15 @@ bool Partida::ejecutarAccionCosechar(unsigned int numeroTerreno, std::string coo
 	return this->verJugadorActual()->cosechar(numeroTerreno, coordenadasParcela);
 }
 
-bool Partida::ejecutarAccionEnviarCosecha(std::string nombreCultivo){
+bool Partida::ejecutarAccionEnviarCosecha(std::string nombreCultivo, std::string nombreDestino){
 
 	bool ejecutarAccionCosecha = false;
 
 	Cultivo* cultivo = Configuracion::obtenerCultivo(nombreCultivo);
-	if(cultivo != NULL){
-		ejecutarAccionCosecha = this->verJugadorActual()->enviar(cultivo);
+	Lugar* destino = Configuracion::obtenerLugar(nombreDestino);
+
+	if(cultivo != NULL && destino != NULL){
+		ejecutarAccionCosecha = this->verJugadorActual()->enviar(cultivo, destino);
 	}
 
 	return ejecutarAccionCosecha;

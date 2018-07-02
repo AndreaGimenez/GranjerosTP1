@@ -271,18 +271,18 @@ bool Jugador::consumirUnidadesRiego(unsigned int unidadesRiego){
 	return consumirUnidadesRiego;
 }
 
-bool Jugador::puedeEnviar(Cultivo* cultivo){
+bool Jugador::puedeEnviar(Cultivo* cultivo, Lugar* destino){
 
-	return (this->puedeGastarMonedas(almacen->obtenerCostoEnvio(cultivo)));
+	return (this->puedeGastarMonedas(almacen->obtenerCostoEnvio(cultivo, destino)));
 }
 
-bool Jugador::enviar(Cultivo* cultivo){
+bool Jugador::enviar(Cultivo* cultivo, Lugar* destino){
 
-	bool enviar = puedeEnviar(cultivo);
+	bool enviar = puedeEnviar(cultivo, destino);
 
 	if(enviar){
 
-		unsigned int costoEnvio = almacen->obtenerCostoEnvio(cultivo);
+		unsigned int costoEnvio = almacen->obtenerCostoEnvio(cultivo, destino);
 		this->agregarMonedas(almacen->enviarCosecha(cultivo));
 		this->gastarMonedas(costoEnvio);
 	}

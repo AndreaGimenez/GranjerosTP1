@@ -3,6 +3,7 @@
 
 #include "configuracion.h"
 #include "fileParser.h"
+#include "utils.h"
 
 using namespace std;
 
@@ -12,14 +13,30 @@ unsigned int Configuracion::cantidadJugadores = 1;
 unsigned int Configuracion::parametroN = 5;
 unsigned int Configuracion::parametroM = 10;
 unsigned int Configuracion::cantidadTurnos = 10;
+Lista<Lugar*>* Configuracion::lugares = NULL;
 Lista<Cultivo*>* Configuracion::cultivos = NULL;
-Lista<Destino*>* Configuracion::destinos = NULL;
+Lista<Trayecto*>* Configuracion::trayectos = NULL;
 
 string Configuracion::resourcesPath = "resources/";
 string Configuracion::imagesPath = resourcesPath + "img/";
 
 string Configuracion::cultivosFileName = "cultivos.txt";
 string Configuracion::destinosFileName = "destinos.txt";
+
+const unsigned int CULTIVOS_CANTIDAD_DATOS = 6;
+const unsigned int POSICION_CULTIVOS_CULTIVO = 0;
+const unsigned int POSICION_DESTINOS_COSTO = 1;
+const unsigned int POSICION_DESTINOS_TIEMPO_CRECIMIENTO = 2;
+const unsigned int POSICION_DESTINOS_RENTABILIDAD = 3;
+const unsigned int POSICION_DESTINOS_TIEMPO_RECUPERACION = 4;
+const unsigned int POSICION_DESTINOS_CONSUMO_AGUA = 5;
+
+const unsigned int DESTINOS_CANTIDAD_DATOS = 5;
+const unsigned int POSICION_DESTINOS_ORIGEN = 0;
+const unsigned int POSICION_DESTINOS_DESTINO = 1;
+const unsigned int POSICION_DESTINOS_DISTANCIA = 2;
+const unsigned int POSICION_DESTINOS_PRECIO = 3;
+const unsigned int POSICION_DESTINOS_CULTIVO = 4;
 
 
 Configuracion::Configuracion(){
@@ -42,15 +59,16 @@ void Configuracion::cargarCultivos(){
 
 	cultivos = new Lista<Cultivo*>();
 
-	FileParser parser(obtenerArchivoCultivos(), ",", 6);
+	FileParser parser(obtenerArchivoCultivos(), ",", CULTIVOS_CANTIDAD_DATOS);
 	parser.abrir();
 
 	while(!parser.esFinArchivo()){
 
 		string* lineaParseada = parser.leerLinea();
 
-		Cultivo* cultivo = new Cultivo(lineaParseada[0], atoi(lineaParseada[1].c_str()), atoi(lineaParseada[2].c_str()), atoi(lineaParseada[3].c_str()),
-										atoi(lineaParseada[4].c_str()), atoi(lineaParseada[5].c_str()));
+		Cultivo* cultivo = new Cultivo(lineaParseada[POSICION_CULTIVOS_CULTIVO], atoi(lineaParseada[POSICION_DESTINOS_COSTO].c_str()),
+										atoi(lineaParseada[POSICION_DESTINOS_TIEMPO_CRECIMIENTO].c_str()), atoi(lineaParseada[POSICION_DESTINOS_RENTABILIDAD].c_str()),
+										atoi(lineaParseada[POSICION_DESTINOS_TIEMPO_RECUPERACION].c_str()), atoi(lineaParseada[POSICION_DESTINOS_CONSUMO_AGUA].c_str()));
 
 		cultivos->agregar(cultivo);
 	}
@@ -64,21 +82,59 @@ string Configuracion::obtenerArchivoCultivos(){
 
 void Configuracion::cargarDestinos(){
 
-	destinos = new Lista<Destino*>();
+	lugares = new Lista<Lugar*>;
+	trayectos = new Lista<Trayecto*>;
 
-	FileParser parser(obtenerArchivoDestinos(), ",", 4);
+	FileParser parser(obtenerArchivoDestinos(), ",", DESTINOS_CANTIDAD_DATOS);
 	parser.abrir();
 
 	while(!parser.esFinArchivo()){
 
 		string* lineaParseada = parser.leerLinea();
 
-		Destino* destino = new Destino(lineaParseada[0], atoi(lineaParseada[1].c_str()), atoi(lineaParseada[2].c_str()), lineaParseada[3]);
+		Cultivo* cultivo = obtenerCultivo(lineaParseada[POSICION_DESTINOS_CULTIVO]);
+		Lugar* lugarOrigen = obtenerLugar(lineaParseada[POSICION_DESTINOS_ORIGEN]);
+		Lugar* lugarDestino = obtenerLugar(lineaParseada[POSICION_DESTINOS_DESTINO]);
 
-		destinos->agregar(destino);
+		Trayecto* trayecto = new Trayecto(lugarOrigen, lugarDestino,
+										  Utils::stringToUnsignedInt(lineaParseada[POSICION_DESTINOS_PRECIO]),
+										  Utils::stringToUnsignedInt(lineaParseada[POSICION_DESTINOS_DISTANCIA]));
+		trayectos->agregar(trayecto);
+		cultivo->agregarTrayecto(trayecto);
 	}
 
+	calcularCostoMinimoDestinos();
+
 	parser.cerrar();
+}
+
+void Configuracion::calcularCostoMinimoDestinos(){
+
+	cultivos->iniciarCursor();
+	while(cultivos->avanzarCursor()){
+
+		Cultivo* cultivo = cultivos->obtenerCursor();
+		cultivo->calcularCostoMinimoDestinos();
+	}
+}
+
+Lugar* Configuracion::obtenerLugar(string nombreLugar){
+
+	Lugar* lugar = NULL;//Este es el valor a devolver
+
+	lugares->iniciarCursor();
+	while(lugares->avanzarCursor() && lugar == NULL){
+		if((lugares->obtenerCursor()->obtenerNombre() == nombreLugar)){
+			lugar = lugares->obtenerCursor();
+		}
+	}
+
+	if(lugar == NULL){
+		lugar = new Lugar(nombreLugar);
+		lugares->agregar(lugar);
+	}
+
+	return lugar;
 }
 
 string Configuracion::obtenerArchivoDestinos(){
@@ -179,30 +235,6 @@ Cultivo* Configuracion::obtenerCultivo(string nombreCultivo){
 	return cultivo;
 }
 
-Lista<Destino*>* Configuracion::obtenerDestinos(){
-
-	return destinos;
-}
-
-Destino* Configuracion::obtenerDestino(Cultivo* cultivo){
-
-	Destino* destino = NULL;
-
-	Lista<Destino*>* destinosDisponibles = Configuracion::obtenerDestinos();
-	destinosDisponibles->iniciarCursor();
-
-	while(destinosDisponibles->avanzarCursor() && destino == NULL){
-
-		Destino* destinoActual = destinosDisponibles->obtenerCursor();
-		if(destinoActual->obtenerNombreCultivo() == cultivo->obtenerNombre()){
-
-			destino = destinoActual;
-		}
-	}
-
-	return destino;
-}
-
 void Configuracion::destruirCultivos(){
 
 	if(!cultivos->estaVacia()){
@@ -217,18 +249,32 @@ void Configuracion::destruirCultivos(){
 	delete cultivos;
 }
 
-void Configuracion::destruirDestinos(){
+void Configuracion::destruirLugares(){
 
-	if(!destinos->estaVacia()){
+	if(!lugares->estaVacia()){
 
-		destinos->iniciarCursor();
+		lugares->iniciarCursor();
 
-		while(!destinos->avanzarCursor()){
-			delete destinos->obtenerCursor();
+		while(!lugares->avanzarCursor()){
+			delete lugares->obtenerCursor();
 		}
 	}
 
-	delete destinos;
+	delete lugares;
+}
+
+void Configuracion::destruirTrayectos(){
+
+	if(!trayectos->estaVacia()){
+
+		trayectos->iniciarCursor();
+
+		while(!trayectos->avanzarCursor()){
+			delete trayectos->obtenerCursor();
+		}
+	}
+
+	delete trayectos;
 }
 
 unsigned int Configuracion::calcularRentabilidad(Cultivo* cultivo, unsigned int cantidad){
@@ -248,7 +294,8 @@ string Configuracion::obtenerImagesPath(){
 
 Configuracion::~Configuracion() {
 
+	destruirTrayectos();
 	destruirCultivos();
-	destruirDestinos();
+	destruirLugares();
 }
 

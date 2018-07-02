@@ -7,7 +7,6 @@
 
 #include "lista.h"
 #include "unidadAlmacenamiento.h"
-#include "destino.h"
 #include "cultivo.h"
 
 /*
@@ -95,24 +94,18 @@ public:
 	unsigned int enviarCosecha(UnidadAlmacenamiento* unidadAlmacenamientoCosechaAEnviar, unsigned int cantidadAEnviar);
 
 	/*
-	 * Pos: Envia todas las cosechas almacenadas. El valor devuelto es la rentabilidad obtenida
-	 *		del envio. Si no hay ninguna cosecha almacenada o las cantidades son 0 devuelve 0.
-	 */
-	unsigned int enviarCosechas();
-
-	/*
 	 * Pre: 'cultivoAEnviar' debe encontrarse almacenado.
 	 * Pos: Obtiene el costo de enviar 'obtenerCantidadAlmacenada' de 'cultivoAEnviar' de acuerdo a los precios de los destinos definidos en 'destinos.txt'.
 	 * 		En caso que el cultivo no esté almacenado devuelve 0.
 	 */
-	unsigned int obtenerCostoEnvio(Cultivo* cultivoAEnviar);
+	unsigned int obtenerCostoEnvio(Cultivo* cultivoAEnviar, Lugar* destino);
 
 	/*
 	 * Pre: 'cultivoAEnviar' debe encontrarse almacenado.
 	 * Pos: Obtiene el costo de enviar 'cantidadAEnviar' de 'cultivoAEnviar' de acuerdo a los precios de los destinos definidos en 'destinos.txt'.
 	 * 		En caso que el cultivo no esté almacenado devuelve 0.
 	 */
-	unsigned int obtenerCostoEnvio(Cultivo* cultivoAEnviar, unsigned int cantidadAEnviar);
+	unsigned int obtenerCostoEnvio(Cultivo* cultivoAEnviar, Lugar* destino, unsigned int cantidadAEnviar);
 
 	// Pos: Aumenta la capacidad maxima de almacenamiento en 'unidadesAmpliacion'. La nueva capacidad maxima va a ser 'obtenerCapacidad' + 'unidadesAmpliacion'.
 	void ampliarAlmacen(unsigned int unidadesAmpliacion);

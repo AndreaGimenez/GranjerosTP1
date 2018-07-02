@@ -43,9 +43,6 @@ public:
 	/*Post: Agrega un nodo a la matriz de vertices*/
 	void insertarNodo(T dato);
 
-	/*Post: Verifica que no exista la arista para que no haya repetidas*/
-	bool existeArista(T datoOrigen, T datoDestino);
-
 	/*Post: Genera una conexion entre los vertices indicando el peso para llegar desde el origen
 			hasta el destino*/
 	void insertarArista(T datoOrigen, T datoDestino, unsigned int peso);
@@ -81,7 +78,7 @@ private:
         void inicializarPesosMinimos();
 
         /*Post: Devuelve el menor valor del vector pesosMinimos, exceptuando el valor 0*/
-         unsigned int obtenerMenorValor();
+         unsigned int obtenerMenorValor(unsigned int j);
 
         /*Post: Devuelve la posicion del menor valor del vector pesosMinimos*/
         unsigned short int obtenerSiguienteFila(unsigned int adyacencia);
@@ -118,10 +115,10 @@ void GrafoMatriz<T>::inicializarMatriz(){
 template<class T>
 void GrafoMatriz<T>::inicializarPesosMinimos(){
     for(int i=0;i<CANT_PROVINCIAS;i++){
-        if(i=0){
-            this->pesosMinimos=0;
+        if(i==0){
+            this->pesosMinimos[i]=0;
         }else{
-            this->pesosMinimos=INDEF;            
+            this->pesosMinimos[i]=INDEF;
         }
     }
 }
@@ -135,7 +132,7 @@ unsigned int GrafoMatriz<T>::obtenerPesoMinimoDesdeOrigenA(T dato){
     unsigned short int posicion;
     this->listaElementos->iniciarCursor();
     while(this->listaElementos->avanzarCursor()){
-        if(this->listaElementos()->obtenerCursor()==dato){
+        if(this->listaElementos->obtenerCursor()==dato){
             posicion=contador;
         }
         contador++;
@@ -159,7 +156,7 @@ unsigned int GrafoMatriz<T>::obtenerPesoEntre(T origen, T destino){
     while(this->listaElementos->avanzarCursor()){
         if(this->listaElementos->obtenerCursor()==origen){
             fila=contador;
-        }else if(this->listaElementos->obtenerCursor()=destino){
+        }else if(this->listaElementos->obtenerCursor()==destino){
             columna=contador;
         } 
         contador++;
@@ -172,7 +169,7 @@ bool GrafoMatriz<T>::existeNodo(T dato){
 	bool existeNodo = false;
 	this->listaElementos->iniciarCursor();
     while(this->listaElementos->avanzarCursor()){
-        if(this->listaElementos->obtenerCursor==dato){
+        if(this->listaElementos->obtenerCursor()==dato){
             existeNodo=true;
         }
     }
@@ -191,16 +188,27 @@ void GrafoMatriz<T>::insertarArista(T datoOrigen, T datoDestino, unsigned int pe
 		if(!this->existeNodo(datoOrigen) || !this->existeNodo(datoDestino)){
             throw std::string("Error: datos no validos");
         }
-        this->matrizPesos[datoOrigen][datoDestino]=peso;
+        unsigned short int contador=0, posicionOrigen, posicionDestino;
+
+        this->listaElementos->iniciarCursor();
+        while(this->listaElementos->avanzarCursor()){
+            if(this->listaElementos->obtenerCursor()==datoOrigen){
+                posicionOrigen=contador;
+            }else if(this->listaElementos->obtenerCursor()==datoDestino){
+                posicionDestino=contador;
+            }
+            contador++;
+        }
+        this->matrizPesos[posicionOrigen][posicionDestino]=peso;
 }
 
 template<class T>
 void GrafoMatriz<T>::borrarNodo(T dato){
     if(this->existeNodo(dato)){
         unsigned short int contador=0, posicion;
-	    this->listaEnteros->iniciarCursor();
-        while(this->listaEnteros->avanzarCursor()){
-            if(this->listaEnteros->obtenerCursor()==dato){
+	    this->listaElementos->iniciarCursor();
+        while(this->listaElementos->avanzarCursor()){
+            if(this->listaElementos->obtenerCursor()==dato){
                 posicion=contador;
             }
             contador++;
@@ -233,7 +241,7 @@ void GrafoMatriz<T>::borrarArista(T datoOrigen, T datoDestino){
     while(this->listaElementos->avanzarCursor()){
         if(this->listaElementos->obtenerCursor()==datoOrigen){
             posicionOrigen=contador;
-        }else if(this->listaElementos->obtenerCursor()=datoDestino){
+        }else if(this->listaElementos->obtenerCursor()==datoDestino){
             posicionDestino=contador;
         }
         contador++;
@@ -243,12 +251,12 @@ void GrafoMatriz<T>::borrarArista(T datoOrigen, T datoDestino){
 }
 
 template<class T>
-unsigned int GrafoMatriz<T>::obtenerMenorValor(){
+unsigned int GrafoMatriz<T>::obtenerMenorValor(unsigned int j){
    
     unsigned int auxiliar=INDEF;
    
-    for(int i=0;i<this->listaElementos->contarElementos();i++){
-        if(this->PesosMinimos[i]<auxiliar && this->pesosMinimos[i]!=0){
+    for(unsigned int i=0;i<this->listaElementos->contarElementos();i++){
+        if(this->pesosMinimos[i]<auxiliar && this->pesosMinimos[i]!=0 && this->matrizPesos[j][i] < INDEF){
             auxiliar=this->pesosMinimos[i];
         }
     }
@@ -260,7 +268,7 @@ template<class T>
 unsigned short int GrafoMatriz<T>::obtenerSiguienteFila(unsigned int adyacencia){
     unsigned short int siguienteFila;
     for(unsigned short int i=0;i<this->listaElementos->contarElementos();i++){
-        if(adyacencia=this->pesosMinimos[i]){
+        if(adyacencia==this->pesosMinimos[i]){
             siguienteFila=i;
         }
     }
@@ -282,13 +290,13 @@ void GrafoMatriz<T>::calcularPesosMinimos(){
 
     for(int i=1;i<tamanioVector;i++){
         
-        adyacencia=this->obtenerMenorValor();
+        adyacencia=this->obtenerMenorValor(i);
         siguienteFila=this->obtenerSiguienteFila(adyacencia);
         
         for(int j=1;j<tamanioVector;j++){
-            if(this->pesosMinimos[j]+adyacencia<this->matrizPesos[siguienteFila][j] 
+            if(this->pesosMinimos[j]>this->matrizPesos[siguienteFila][j] + adyacencia
             && !fueVisitado[siguienteFila]){
-                this->pesosMinimos[j]=this->matrizPesos[siguienteFila][j];
+                this->pesosMinimos[j]=this->matrizPesos[siguienteFila][j] + adyacencia;
             }            
         }
         fueVisitado[siguienteFila]=true;
@@ -307,4 +315,3 @@ GrafoMatriz<T>::~GrafoMatriz(){
 }
 
 #endif /* GrafoMatriz_H_ */
-

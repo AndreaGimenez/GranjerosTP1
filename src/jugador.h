@@ -227,7 +227,7 @@ class Jugador{
 		 * 		 		 El precio se obtiene del archivo 'destinos.txt'
 		 * 		En caso de no poder realizar la accion devuelve false.
 		 */
-		bool puedeEnviar(Cultivo* cultivo);
+		bool puedeEnviar(Cultivo* cultivo, Lugar* destino);
 
 		/*
 		 * Pre: 'puedeEnviar' debe ser true.
@@ -239,7 +239,7 @@ class Jugador{
 		 * 		El precio se obtiene del archivo 'destinos.txt'
 		 * 		En caso de no poder realizar la accion devuelve false.
 		 */
-		bool enviar(Cultivo* cultivo);
+		bool enviar(Cultivo* cultivo, Lugar* destino);
 
 		/*
 		 * Pos: Indica si el jugador puede comprar un nuevo terreno.

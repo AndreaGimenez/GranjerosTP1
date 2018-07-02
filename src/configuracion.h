@@ -2,9 +2,9 @@
 #define CONFIGURACION_H_
 
 #include "cultivo.h"
-#include "destino.h"
 #include "lista.h"
 #include "parametroConfiguracion.h"
+#include "lugar.h"
 
 int const COSTO_MINIMO = 20;
 int const COSTO_UNITARIO_ALMACENAMIENTO_ALMACEN = 2;
@@ -33,8 +33,9 @@ private:
 	static unsigned int parametroN;
 	static unsigned int parametroM;
 	static unsigned int cantidadTurnos;
+	static Lista<Lugar*>* lugares;
 	static Lista<Cultivo*>* cultivos;
-	static Lista<Destino*>* destinos;
+	static Lista<Trayecto*>* trayectos;
 	static std::string resourcesPath;
 	static std::string imagesPath;
 	static std::string cultivosFileName;
@@ -73,8 +74,13 @@ private:
 	static void destruirCultivos();
 
 	// Pos: Libera memoria pedida para los destinos
-	static void destruirDestinos();
+	static void destruirLugares();
 
+	// Pos: Libera memoria pedida para los trayectos
+	static void destruirTrayectos();
+
+	// Pos: Calcula los costos minimos para cada destino de los cultivos
+	static void calcularCostoMinimoDestinos();
 
 public:
 
@@ -170,17 +176,9 @@ public:
 
 	/*
 	 * Pre: Se debe haber inicializado la configuracion con 'inicializar'.
-	 * Pos: Devuelve los destinos disponibles a los cuales se podrán enviar las cosechas almacenadas.
-	 * 	    Los mismos dependerán de la configuración del archivo 'destinos.txt'.
+	 * Pos: Devuelve el lugar cuyo nombre se corresponde con 'nombreLugar'.
 	 */
-	static Lista<Destino*>* obtenerDestinos();
-
-	/*
-	 * Pre: Se debe haber inicializado la configuracion con 'inicializar'.
-	 * Pos: Devuelve el destino que corresponde al cultivo pasado por parametro 'cultivo'.
-	 * 	    En caso que no haya ningun destino para el cultivo devuelve NULL.
-	 */
-	static Destino* obtenerDestino(Cultivo* cultivo);
+	static Lugar* obtenerLugar(std::string nombreLugar);
 
 	/*
 	 * Pre: Se debe haber inicializado la configuracion con 'inicializar'.

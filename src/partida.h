@@ -112,7 +112,7 @@ class Partida{
 		 * 		 calculado como precio * cantidad enviada. El precio se determina del archivo 'destinos.txt'.
 		 * 		 En caso que la accion no se pueda realizar devuelve false.
 		 */
-		bool ejecutarAccionEnviarCosecha(std::string nombreCultivo);
+		bool ejecutarAccionEnviarCosecha(std::string nombreCultivo, std::string nombreDestino);
 
 		/*
 		 * Pre: 'coordenadasParcela' debe tener el formato "x,y" donde 'x' indica el numero de fila e 'y' el numero de columna.
